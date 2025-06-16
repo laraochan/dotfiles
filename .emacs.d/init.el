@@ -12,6 +12,15 @@
 
 (load-theme 'leuven t)
 
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+
+(use-package nyan-mode
+  :config
+  (nyan-mode)
+  (setq nyan-animate-nyancat t))
+
 (use-package exec-path-from-shell
   :ensure t
   :config
@@ -24,7 +33,9 @@
 
 
 (use-package go-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq tab-width 2))
 
 (use-package lsp-mode
   :ensure t
@@ -48,8 +59,12 @@
 (use-package projectile
   :config
   (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (use-package ripgrep))
 
+(use-package which-key
+  :config
+  (which-key-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
