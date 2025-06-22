@@ -1,7 +1,46 @@
+local pluginsDir = vim.fn.stdpath("config") .. "/plugins/"
+local plugins = {
+  "hrsh7th/nvim-cmp",
+  "rktjmp/lush.nvim",
+  "zenbones-theme/zenbones.nvim",
+}
+
+if not vim.loop.fs_stat(pluginsDir) then
+  vim.notify("make plugins directory...")
+  vim.cmd("redraw")
+  vim.fn.mkdir(pluginsDir, "p")
+  vim.notify("done!")
+  vim.cmd("redraw")
+end
+
+for _, repo in ipairs(plugins) do
+  local name = repo:match("([^/]+)/?$")
+  local fullpath = pluginsDir .. name
+  if not vim.loop.fs_stat(fullpath) then
+    vim.notify("Installing " .. string.format("%s", repo))
+    vim.cmd("redraw")
+    local clone_cmd = {
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/" .. repo,
+      fullpath
+    }
+    vim.fn.system(clone_cmd)
+    vim.notify("Installed " .. string.format("%s", repo))
+    vim.cmd("redraw")
+  end
+
+  vim.opt.runtimepath:prepend(pluginsDir .. name)
+end
+
+vim.cmd.colorscheme("zenbones")
+
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.swapfile = false
 vim.opt.shiftround = true
+vim.opt.cursorline = true
 
 vim.opt.signcolumn = "yes"
 
