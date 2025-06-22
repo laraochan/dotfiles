@@ -1,10 +1,8 @@
 local pluginsDir = vim.fn.stdpath("config") .. "/plugins/"
 local plugins = {
-	-- colorscheme
+  "vim-denops/denops.vim",
 	"rktjmp/lush.nvim",
 	"zenbones-theme/zenbones.nvim",
-
-	-- git
 	"lewis6991/gitsigns.nvim",
 }
 

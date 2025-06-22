@@ -3,21 +3,29 @@ import {
   type ConfigArguments,
   type ConfigReturn,
 } from "jsr:@shougo/dpp-vim/config";
-import { type Plugin } from "jsr:@shougo/dpp-vim/types";
-
+import { type Toml } from "jsr:@shougo/dpp-ext-toml";
 
 export class Config extends BaseConfig {
-  override async config(args: ConfigArguments): ConfigReturn {
+  override async config(args: ConfigArguments): Promise<ConfigReturn> {
     args.contextBuilder.setGlobal({
       protocols: ["git"],
-    });
+    })
 
-    const plugins: Plugin[] = [
-      { name: "Shougo/ddu.vim" },
-    ];
+    const [context, options] = await args.contextBuilder.get(args.denops);
+
+    const tomlPlugins: Toml = await args.dpp.extAction(
+      args.denops,
+      context,
+      options,
+      "toml",
+      "load",
+      {
+        path: await args.denops.call("expand", "~/.config/vim/plugins.toml"),
+      },
+    );
 
     return {
-      plugins: plugins,
+      plugins: tomlPlugins.plugins || [],
     };
   }
 }

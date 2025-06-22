@@ -1,0 +1,6 @@
+[[plugins]]
+repo = 'lambdalisue/vim-fern'
+hook_add = '''
+let g:fern#default_hidden=1
+nnoremap <leader>fe <cmd>Fern .<cr>
+'''
