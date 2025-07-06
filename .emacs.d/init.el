@@ -1,52 +1,94 @@
-;; <leaf-install-code>
-(eval-and-compile
-  (customize-set-variable
-   'package-archives '(("org" . "https://orgmode.org/elpa/")
-                       ("melpa" . "https://melpa.org/packages/")
-                       ("gnu" . "https://elpa.gnu.org/packages/")))
-  (package-initialize)
-  (unless (package-installed-p 'leaf)
-    (package-refresh-contents)
-    (package-install 'leaf))
+(require 'package)
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu"   . "https://elpa.gnu.org/packages/")))
+(package-initialize)
 
-  (leaf leaf-keywords
-    :ensure t
-    :init
-    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
-    (leaf hydra :ensure t)
-    (leaf el-get :ensure t)
-    (leaf blackout :ensure t)
+(which-key-mode +1)
+(global-display-line-numbers-mode +1)
+(setq make-backup-files nil
+      auto-save-default nil
+      create-lockfiles nil)
 
-    :config
-    ;; initialize leaf-keywords.el
-    (leaf-keywords-init)))
-;; </leaf-install-code>
-
-(leaf exec-path-from-shell
+(use-package exec-path-from-shell
   :ensure t
   :config
   (exec-path-from-shell-initialize))
 
-(leaf dashboard
+(use-package doom-themes
   :ensure t
   :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner 'logo))
+  (load-theme 'doom-dracula t))
 
-(leaf magit
-  :ensure t)
+(use-package org
+  :ensure t
+  :init
+  (setq org-directory "~/org"
+        org-daily-tasks-file (format "%s/tasks.org" org-directory)
+	org-capture-templates '(("d" "daily" entry (file org-daily-tasks-file) "%[~/org/templates/daily.org]" :empty-lines-before 1 :prepend t))
+	org-startup-folded 'overview)
+  :config
+  (global-set-key (kbd "C-c c n") #'org-capture)
+  (global-set-key (kbd "C-c c o") (lambda () (interactive)
+				    (find-file "~/org/tasks.org"))))
 
-(leaf vterm
-  :ensure t)
-
-(leaf projectile
+(use-package projectile
   :ensure t
   :config
   (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (when (executable-find "ghq")
+  (setq projectile-known-projects
+        (mapcar
+         (lambda (x) (abbreviate-file-name x))
+         (split-string (shell-command-to-string "ghq list --full-path"))))))
 
-(leaf which-key
-  :ensure t)
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  (corfu-popupinfo-mode)
+  (setq corfu-auto t
+	corfu-quit-no-match 'separator
+	corfu-cycle t
+	corfu-popupinfo-delay 1.0))
+
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+
+(use-package treesit
+  :init
+  (setq treesit-language-source-alist
+	'((go "https://github.com/tree-sitter/tree-sitter-go" "master" "src")
+	  (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+	  ))
+  :config
+  (setq treesit-font-lock-level 4))
+
+(use-package go-ts-mode
+  :mode (("\\.go\\'" . go-ts-mode)
+         ("go\\.mod\\'" . go-mod-ts-mode))
+  :config
+  (setq go-ts-mode-indent-offset 4
+	indent-tabs-mode t))
+(use-package tsx-ts-mode
+  :mode (("\\.ts[x]?\\'" . tsx-ts-mode)
+         ("\\.[m]ts\\'" . tsx-ts-mode)
+         ("\\.js[x]?\\'" . tsx-ts-mode)
+         ("\\.[mc]js\\'" . tsx-ts-mode)))
+
+(use-package eglot
+  :ensure t
+  :hook
+  (typescript-ts-mode . eglot-ensure)
+  (tsx-ts-mode . eglot-ensure)
+  (go-ts-mode . eglot-ensure))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
