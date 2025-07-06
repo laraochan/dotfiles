@@ -38,6 +38,9 @@
   :config
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (setq projectile-switch-project-action
+      (lambda ()
+        (eshell)))
   (when (executable-find "ghq")
   (setq projectile-known-projects
         (mapcar
@@ -101,6 +104,18 @@
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
   (go-ts-mode . eglot-ensure))
+
+(use-package flycheck
+  :ensure t)
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode +1))
+
+(use-package flycheck-phpstan
+  :ensure t)
 
 (use-package magit
   :ensure t)
