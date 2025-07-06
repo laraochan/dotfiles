@@ -6,6 +6,7 @@
 
 (which-key-mode +1)
 (global-display-line-numbers-mode +1)
+(electric-pair-mode +1)
 (setq make-backup-files nil
       auto-save-default nil
       create-lockfiles nil)
@@ -53,6 +54,13 @@
 	corfu-cycle t
 	corfu-popupinfo-delay 1.0))
 
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
 (use-package kind-icon
   :ensure t
   :after corfu
@@ -67,6 +75,7 @@
 	  (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
 	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
 	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+	  (php "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src")
 	  ))
   :config
   (setq treesit-font-lock-level 4))
@@ -85,10 +94,16 @@
 
 (use-package eglot
   :ensure t
+  :config
+  (add-to-list 'eglot-server-programs
+	       '(php-ts-mode . ("intelephense" "--stdio")))
   :hook
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
   (go-ts-mode . eglot-ensure))
+
+(use-package magit
+  :ensure t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
