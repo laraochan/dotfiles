@@ -1,4 +1,4 @@
-# New larao dotfiles
+# laraoのdotfiles
 # Emacs
 ## emacs-plusが好きなのでインストール
 状況によって変わることがあるため逐次変更
