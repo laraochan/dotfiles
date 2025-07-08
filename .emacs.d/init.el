@@ -11,10 +11,22 @@
       auto-save-default nil
       create-lockfiles nil)
 
+(use-package tramp
+  :config
+  (add-to-list 'tramp-remote-path "/home/larao/.nvm/versions/node/v22.17.0/bin"))
+
+(use-package diff-hl
+  :ensure t
+  :init
+  (global-diff-hl-mode))
+
 (use-package exec-path-from-shell
   :ensure t
   :config
   (exec-path-from-shell-initialize))
+
+(use-package vterm
+  :ensure t)
 
 (use-package doom-themes
   :ensure t
@@ -77,8 +89,13 @@
 	'((go "https://github.com/tree-sitter/tree-sitter-go" "master" "src")
 	  (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
 	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+	  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+	  (jsdoc "https://github.com/tree-sitter/tree-sitter-jsdoc" "master" "src")
 	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
 	  (php "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src")
+	  (phpdoc "https://github.com/claytonrcarter/tree-sitter-phpdoc" "master" "src")
+	  (html "https://github.com/tree-sitter/tree-sitter-html" "master" "src")
+	  (css "https://github.com/tree-sitter/tree-sitter-css" "master" "src")
 	  ))
   :config
   (setq treesit-font-lock-level 4))
@@ -94,6 +111,8 @@
          ("\\.[m]ts\\'" . tsx-ts-mode)
          ("\\.js[x]?\\'" . tsx-ts-mode)
          ("\\.[mc]js\\'" . tsx-ts-mode)))
+(use-package php-ts-mode
+  :mode (("\\.php\\'" . php-ts-mode)))
 
 (use-package eglot
   :ensure t
@@ -103,7 +122,8 @@
   :hook
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
-  (go-ts-mode . eglot-ensure))
+  (go-ts-mode . eglot-ensure)
+  (php-ts-mode . eglot-ensure))
 
 (use-package flycheck
   :ensure t)
@@ -120,11 +140,29 @@
 (use-package magit
   :ensure t)
 
+(setq tramp-remote-path
+      (append tramp-remote-path
+              '("~/.nvm/versions/node/v22.17.0/bin"
+                tramp-own-remote-path)))
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("f1e8339b04aef8f145dd4782d03499d9d716fdc0361319411ac2efc603249326"
+     "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098"
+     "e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
+     "8d3ef5ff6273f2a552152c7febc40eabca26bae05bd12bc85062e2dc224cde9a"
+     "df6dfd55673f40364b1970440f0b0cb8ba7149282cf415b81aaad2d98b0f0290"
+     "7ec8fd456c0c117c99e3a3b16aaf09ed3fb91879f6601b1ea0eeaee9c6def5d9"
+     "088cd6f894494ac3d4ff67b794467c2aa1e3713453805b93a8bcb2d72a0d1b53"
+     "dd4582661a1c6b865a33b89312c97a13a3885dc95992e2e5fc57456b4c545176"
+     "4594d6b9753691142f02e67b8eb0fda7d12f6cc9f1299a49b819312d6addad1d"
+     "d97ac0baa0b67be4f7523795621ea5096939a47e8b46378f79e78846e0e4ad3d"
+     default))
  '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
