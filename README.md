@@ -60,8 +60,3 @@ Includes Homebrew GCC paths and CommandLineTools SDK libraries."
 (when (eq system-type 'darwin)
   (setup-macos-native-comp-library-paths))
 ```
-## やりたいこと
-### Emacs
-- orgを導入
-- 細かいマクロを定義
-- bufferやframeなどをもっと管理しやすいように設定
