@@ -1,8 +1,9 @@
 # laraoのdotfiles - 新しく0から整備しているdotfiles
-# Environment
+ほぼお仕事用前提
+## Environment
 - MacOS
-# Emacs
-## emacs-plusが好きなのでインストール
+## Emacs
+### emacs-plusが好きなのでインストール
 状況によって変わることがあるため逐次変更
 ```sh
 brew tap d12frosted/emacs-plus
