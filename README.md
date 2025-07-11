@@ -1,5 +1,5 @@
 # laraoのdotfiles - 新しく0から整備しているdotfiles
-ほぼお仕事用前提なのでMacOS前提になっている
+ほぼお仕事用前提なのでMacOS前提になっている  
 また、お仕事の中で調整しているので更新頻度は遅め
 ## Environment
 - MacOS
