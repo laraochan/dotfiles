@@ -1,4 +1,6 @@
-# laraoのdotfiles
+# laraoのdotfiles - 新しく0から整備しているdotfiles
+# Environment
+- MacOS
 # Emacs
 ## emacs-plusが好きなのでインストール
 状況によって変わることがあるため逐次変更
