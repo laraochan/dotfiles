@@ -1,73 +1,77 @@
-(require 'package)
-(setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
-        ("gnu"   . "https://elpa.gnu.org/packages/")))
-(package-initialize)
+;; <leaf-install-code>
+(eval-and-compile
+  (customize-set-variable
+   'package-archives '(("org" . "https://orgmode.org/elpa/")
+                       ("melpa" . "https://melpa.org/packages/")
+                       ("gnu" . "https://elpa.gnu.org/packages/")))
+  (package-initialize)
+  (unless (package-installed-p 'leaf)
+    (package-refresh-contents)
+    (package-install 'leaf))
 
-(which-key-mode +1)
-(global-display-line-numbers-mode +1)
-(electric-pair-mode +1)
-(setq make-backup-files nil
-      auto-save-default nil
-      create-lockfiles nil)
+  (leaf leaf-keywords
+    :ensure t
+    :init
+    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
+    (leaf hydra :ensure t)
+    (leaf el-get :ensure t)
+    (leaf blackout :ensure t)
 
-(use-package tramp
+    :config
+    ;; initialize leaf-keywords.el
+    (leaf-keywords-init)))
+;; </leaf-install-code>
+
+(leaf emacs
   :config
-  (add-to-list 'tramp-remote-path "/home/larao/.nvm/versions/node/v22.17.0/bin"))
+  (set-frame-font "Hack Nerd Font Mono 16" nil t)
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (which-key-mode)
+  (global-auto-revert-mode)
+  (delete-selection-mode)
+  (setq make-backup-files nil
+      auto-save-default nil
+      create-lockfiles nil))
 
-(use-package diff-hl
+(leaf vterm
+  :ensure t)
+
+(leaf treesit
+  :config
+  (setq treesit-language-source-alist
+      '((json "https://github.com/tree-sitter/tree-sitter-json")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+	(rust "https://github.com/tree-sitter/tree-sitter-rust")
+	(php "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src")
+        )))
+
+(leaf cyberpunk-theme
   :ensure t
-  :init
-  (global-diff-hl-mode))
+  :config
+  (load-theme 'cyberpunk t))
 
-(use-package exec-path-from-shell
+(leaf exec-path-from-shell
   :ensure t
   :config
   (exec-path-from-shell-initialize))
 
-(use-package vterm
-  :ensure t)
-
-(use-package doom-themes
+(leaf corfu
   :ensure t
+  :custom
+  (corfu-auto . t)
+  (corfu-quit-no-match . 'separator)
+  :global-minor-mode global-corfu-mode corfu-popupinfo-mode)
+
+(leaf kind-icon
+  :ensure t
+  :after corfu
   :config
-  (load-theme 'doom-dracula t))
-
-(use-package org
-  :ensure t
-  :init
-  (setq org-directory "~/org"
-        org-daily-tasks-file (format "%s/tasks.org" org-directory)
-	org-capture-templates '(("d" "daily" entry (file org-daily-tasks-file) "%[~/org/templates/daily.org]" :empty-lines-before 1 :prepend t))
-	org-startup-folded 'overview)
-  :config
-  (global-set-key (kbd "C-c c n") #'org-capture)
-  (global-set-key (kbd "C-c c o") (lambda () (interactive)
-				    (find-file "~/org/tasks.org"))))
-
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (setq projectile-switch-project-action
-      (lambda ()
-        (eshell)))
-  (when (executable-find "ghq")
-  (setq projectile-known-projects
-        (mapcar
-         (lambda (x) (abbreviate-file-name x))
-         (split-string (shell-command-to-string "ghq list --full-path"))))))
-
-(use-package corfu
-  :ensure t
-  :init
-  (global-corfu-mode)
-  (corfu-popupinfo-mode)
-  (setq corfu-auto t
-	corfu-quit-no-match 'separator
-	corfu-cycle t
-	corfu-popupinfo-delay 1.0))
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package orderless
   :ensure t
@@ -76,29 +80,34 @@
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
-(use-package kind-icon
+(leaf diff-hl
+  :ensure 
+  :global-minor-mode global-diff-hl-mode)
+
+(leaf vertico
   :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  :global-minor-mode t)
 
+(leaf marginalia
+  :ensure t
+  :global-minor-mode t)
 
-(use-package treesit
-  :init
-  (setq treesit-language-source-alist
-	'((go "https://github.com/tree-sitter/tree-sitter-go" "master" "src")
-	  (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-	  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-	  (jsdoc "https://github.com/tree-sitter/tree-sitter-jsdoc" "master" "src")
-	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-	  (php "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src")
-	  (phpdoc "https://github.com/claytonrcarter/tree-sitter-phpdoc" "master" "src")
-	  (html "https://github.com/tree-sitter/tree-sitter-html" "master" "src")
-	  (css "https://github.com/tree-sitter/tree-sitter-css" "master" "src")
-	  ))
+(leaf projectile
+  :ensure t
   :config
-  (setq treesit-font-lock-level 4))
+  (projectile-mode +1)
+  (when (executable-find "ghq")
+  (setq projectile-known-projects
+        (mapcar
+         (lambda (x) (abbreviate-file-name x))
+         (split-string (shell-command-to-string "ghq list --full-path")))))
+  :bind-keymap (("s-p" . 'projectile-command-map)))
+
+(leaf rust-ts-mode
+  :mode "\\.rs\\'")
+
+(leaf php-ts-mode
+  :mode ("\\.php\\'"))
 
 (use-package go-ts-mode
   :mode (("\\.go\\'" . go-ts-mode)
@@ -106,24 +115,34 @@
   :config
   (setq go-ts-mode-indent-offset 4
 	indent-tabs-mode t))
+
 (use-package tsx-ts-mode
   :mode (("\\.ts[x]?\\'" . tsx-ts-mode)
          ("\\.[m]ts\\'" . tsx-ts-mode)
          ("\\.js[x]?\\'" . tsx-ts-mode)
          ("\\.[mc]js\\'" . tsx-ts-mode)))
-(use-package php-ts-mode
-  :mode (("\\.php\\'" . php-ts-mode)))
 
-(use-package eglot
-  :ensure t
+(leaf toml-ts-mode
+  :mode ("\\.toml\\'"))
+
+(leaf json-ts-mode
+  :mode ("\\.json\\'"))
+
+(leaf eglot
   :config
-  (add-to-list 'eglot-server-programs
-	       '(php-ts-mode . ("intelephense" "--stdio")))
-  :hook
-  (typescript-ts-mode . eglot-ensure)
-  (tsx-ts-mode . eglot-ensure)
-  (go-ts-mode . eglot-ensure)
-  (php-ts-mode . eglot-ensure))
+  (setq jsonrpc-event-hook nil
+	eglot-events-buffer-size 0)
+  :hook (
+  (eglot-managed-mode-hook . (lambda () (eglot-inlay-hints-mode -1)))
+  (rust-ts-mode-hook . eglot-ensure)
+  (tsx-ts-mode-hook . eglot-ensure)
+  (typescript-ts-mode-hook . eglot-ensure)))
+
+(leaf eglot-booster
+  :when (executable-find "emacs-lsp-booster")
+  :vc (:url "https://github.com/jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
 
 (use-package flycheck
   :ensure t)
@@ -134,36 +153,20 @@
   :config
   (global-flycheck-eglot-mode +1))
 
-(use-package flycheck-phpstan
+;; TODO: setup org-mode
+(leaf org)
+
+(leaf magit
   :ensure t)
-
-(use-package magit
-  :ensure t)
-
-(setq tramp-remote-path
-      (append tramp-remote-path
-              '("~/.nvm/versions/node/v22.17.0/bin"
-                tramp-own-remote-path)))
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("f1e8339b04aef8f145dd4782d03499d9d716fdc0361319411ac2efc603249326"
-     "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098"
-     "e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
-     "8d3ef5ff6273f2a552152c7febc40eabca26bae05bd12bc85062e2dc224cde9a"
-     "df6dfd55673f40364b1970440f0b0cb8ba7149282cf415b81aaad2d98b0f0290"
-     "7ec8fd456c0c117c99e3a3b16aaf09ed3fb91879f6601b1ea0eeaee9c6def5d9"
-     "088cd6f894494ac3d4ff67b794467c2aa1e3713453805b93a8bcb2d72a0d1b53"
-     "dd4582661a1c6b865a33b89312c97a13a3885dc95992e2e5fc57456b4c545176"
-     "4594d6b9753691142f02e67b8eb0fda7d12f6cc9f1299a49b819312d6addad1d"
-     "d97ac0baa0b67be4f7523795621ea5096939a47e8b46378f79e78846e0e4ad3d"
-     default))
- '(package-selected-packages nil))
+ '(package-selected-packages nil)
+ '(package-vc-selected-packages
+   '((eglot-booster :url "https://github.com/jdtsmith/eglot-booster"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
