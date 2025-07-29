@@ -73,15 +73,15 @@
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
-(use-package orderless
+(leaf orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
-  (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))))
+  (completion-styles . '(orderless basic))
+  (completion-category-defaults . nil)
+  (completion-category-overrides . '((file (styles partial-completion)))))
 
 (leaf diff-hl
-  :ensure 
+  :ensure t
   :global-minor-mode global-diff-hl-mode)
 
 (leaf vertico
@@ -109,14 +109,14 @@
 (leaf php-ts-mode
   :mode ("\\.php\\'"))
 
-(use-package go-ts-mode
+(leaf go-ts-mode
   :mode (("\\.go\\'" . go-ts-mode)
          ("go\\.mod\\'" . go-mod-ts-mode))
   :config
   (setq go-ts-mode-indent-offset 4
 	indent-tabs-mode t))
 
-(use-package tsx-ts-mode
+(leaf tsx-ts-mode
   :mode (("\\.ts[x]?\\'" . tsx-ts-mode)
          ("\\.[m]ts\\'" . tsx-ts-mode)
          ("\\.js[x]?\\'" . tsx-ts-mode)
@@ -144,10 +144,10 @@
   :after eglot
   :config (eglot-booster-mode))
 
-(use-package flycheck
+(leaf flycheck
   :ensure t)
 
-(use-package flycheck-eglot
+(leaf flycheck-eglot
   :ensure t
   :after (flycheck eglot)
   :config
