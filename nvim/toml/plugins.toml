@@ -158,9 +158,9 @@ local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
     	null_ls.builtins.diagnostics.phpstan.with({
-		command = "dev-script/phpstan",
-		extra_args = { "--configuration", "phpstan.neon.dist" },
-	}),
+        command = "dev-script/phpstan",
+		    extra_args = { "--configuration", "phpstan.neon.dist" },
+	    }),
     },
 })
 '''
