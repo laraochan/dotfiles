@@ -46,6 +46,7 @@ vim.api.nvim_create_user_command("DppUpdate", function(opts)
 	vim.fn["dpp#async_ext_action"]("installer", "update", { names = args })
 end, { nargs = "*" })
 
+vim.g.mapleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.signcolumn = "yes"
 vim.diagnostic.config({
