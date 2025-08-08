@@ -148,24 +148,6 @@ repo = 'Shougo/ddc-source-lsp'
 repo = 'Shougo/ddc-converter_remove_overlap'
 
 [[plugins]]
-repo = 'nvim-lua/plenary.nvim'
-
-[[plugins]]
-repo = 'nvimtools/none-ls.nvim'
-lua_add = '''
-local null_ls = require("null-ls")
-
-null_ls.setup({
-    sources = {
-    	null_ls.builtins.diagnostics.phpstan.with({
-        command = "dev-script/phpstan",
-		    extra_args = { "--configuration", "phpstan.neon.dist" },
-	    }),
-    },
-})
-'''
-
-[[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
 call ddu#custom#patch_local('filer', 'ui', 'filer')
