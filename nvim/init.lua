@@ -48,6 +48,7 @@ vim.api.nvim_create_user_command("DppUpdate", function(opts)
 	vim.fn["dpp#async_ext_action"]("installer", "update", { names = args })
 end, { nargs = "*" })
 
+vim.o.cursorline = true
 vim.o.clipboard = "unnamedplus"
 vim.o.smartindent = true
 vim.o.ignorecase = true
