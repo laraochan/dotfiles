@@ -6,12 +6,6 @@ vim.keymap.set('n', 's', function() flash.jump() end)
 '''
 
 [[plugins]]
-repo = 'rktjmp/lush.nvim'
-
-[[plugins]]
-repo = 'zenbones-theme/zenbones.nvim'
-
-[[plugins]]
 repo = 'EdenEast/nightfox.nvim'
 lua_add = '''
 -- Default options
@@ -60,7 +54,7 @@ require('nightfox').setup({
 })
 
 -- setup must be called before loading
-vim.cmd('colorscheme carbonfox')
+vim.cmd('colorscheme nightfox')
 '''
 
 [[plugins]]
@@ -80,6 +74,7 @@ lua_add = '''
 vim.lsp.enable('intelephense')
 vim.lsp.enable('gopls')
 vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('ts_ls')
 '''
 
 [[plugins]]
@@ -172,8 +167,6 @@ function! s:ddu_filer_setting() abort
 	nnoremap <buffer><silent> q
 		\ <Cmd>call ddu#ui#do_action('quit')<CR>
 endfunction
-
-nnoremap <Space>ff <Cmd>call ddu#start({ 'name': 'filer' })<CR>
 '''
 
 [[plugins]]
@@ -187,3 +180,15 @@ repo = 'Shougo/ddu-kind-file'
 
 [[plugins]]
 repo = 'Shougo/ddu-column-filename'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+hook_add = '''
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+'''

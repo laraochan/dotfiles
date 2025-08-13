@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 local denopsSrc = vim.fn.stdpath("cache") .. "/dpp/repos/github.com/vim-denops/denops.vim"
 local denopsHello = vim.fn.stdpath("cache") .. "/dpp/repos/github.com/vim-denops/denops-helloworld.vim"
 
@@ -46,13 +48,13 @@ vim.api.nvim_create_user_command("DppUpdate", function(opts)
 	vim.fn["dpp#async_ext_action"]("installer", "update", { names = args })
 end, { nargs = "*" })
 
-vim.g.mapleader = " "
 vim.o.clipboard = "unnamedplus"
 vim.o.smartindent = true
 vim.o.ignorecase = true
-vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
+vim.o.shiftwidth = 2
+vim.o.expandtab = true
 vim.o.smartcase = true
 vim.o.swapfile = false
 vim.o.signcolumn = "yes"
