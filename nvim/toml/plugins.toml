@@ -145,16 +145,21 @@ repo = 'Shougo/ddc-converter_remove_overlap'
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
-call ddu#custom#patch_local('filer', 'ui', 'filer')
-call ddu#custom#patch_local('filer', 'uiParams', #{
-	\ filer: #{
-	\	split: 'floating',
-	\ }})
-call ddu#custom#patch_local('filer', 'sources', [{ 'name': 'file', 'params': {} }])
-call ddu#custom#patch_local('filer', 'sourceOptions', #{
-	\ _: #{
-	\	columns: ['filename'],
-	\ }})
+call ddu#custom#patch_local('filer', #{
+  \ ui: 'filer',
+  \ uiParams: #{
+  \   filer: #{
+  \     split: 'floating',
+  \     sort: 'filename',
+  \     sortTreesFirst: v:true,
+  \   },
+  \ },
+  \ sources: [#{ name: 'file' }],
+  \ sourceOptions: #{
+  \   _: #{
+  \     columns: ['icon_filename'],
+  \   },
+  \ }})
 autocmd FileType ddu-filer call s:ddu_filer_setting()
 function! s:ddu_filer_setting() abort
 	nnoremap <buffer><silent> <CR>
@@ -167,10 +172,14 @@ function! s:ddu_filer_setting() abort
 	nnoremap <buffer><silent> q
 		\ <Cmd>call ddu#ui#do_action('quit')<CR>
 endfunction
+nnoremap <leader>ff <Cmd>call ddu#start(#{ name: 'filer' })<CR>
 '''
 
 [[plugins]]
 repo = 'Shougo/ddu-ui-filer'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-file'
@@ -179,16 +188,10 @@ repo = 'Shougo/ddu-source-file'
 repo = 'Shougo/ddu-kind-file'
 
 [[plugins]]
-repo = 'Shougo/ddu-column-filename'
+repo = 'ryota2357/ddu-column-icon_filename'
 
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
-repo = 'nvim-telescope/telescope.nvim'
-hook_add = '''
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-'''
+repo = 'uga-rosa/ddu-source-lsp'
