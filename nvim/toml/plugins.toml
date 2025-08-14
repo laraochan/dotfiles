@@ -165,6 +165,7 @@ call ddu#custom#patch_global(#{
   \ }})
 
 call ddu#custom#patch_local('filer', #{
+  \ sync: v:true,
   \ ui: 'filer',
   \ uiParams: #{
   \   filer: #{
@@ -177,6 +178,7 @@ call ddu#custom#patch_local('filer', #{
   \ sourceOptions: #{
   \   _: #{
   \     columns: ['icon_filename'],
+  \     matchers: ['matcher_fzf'],
   \   },
   \ }})
 autocmd FileType ddu-filer call s:ddu_filer_setting()
@@ -195,6 +197,8 @@ function! s:ddu_filer_setting() abort
     \ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'rename' })<CR>
   nnoremap <buffer><silent> u
     \ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'undo' })<CR>
+  nnoremap <buffer><silent> i
+    \ <Cmd>call ddu#ui#do_action('openFilterWindow')<CR>
 	nnoremap <buffer><silent> q
 		\ <Cmd>call ddu#ui#do_action('quit')<CR>
 endfunction
