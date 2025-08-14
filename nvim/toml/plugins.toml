@@ -211,7 +211,7 @@ call ddu#custom#patch_local('fuzzyfinder', #{
   \ sourceOptions: #{
   \   _: #{
   \     columns: ['icon_filename'],
-  \     matchers: ['matcher_substring'],
+  \     matchers: ['matcher_fzf'],
   \   }
   \ }})
 autocmd FileType ddu-ff call s:ddu_fuzzyfinder_setting()
@@ -301,6 +301,9 @@ repo = 'ryota2357/ddu-column-icon_filename'
 
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
+
+[[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
 
 [[plugins]]
 repo = 'uga-rosa/ddu-source-lsp'
