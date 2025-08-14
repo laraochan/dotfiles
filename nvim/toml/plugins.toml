@@ -78,6 +78,12 @@ vim.lsp.enable('ts_ls')
 '''
 
 [[plugins]]
+repo = 'numToStr/Comment.nvim'
+lua_add = '''
+require('Comment').setup()
+'''
+
+[[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
 lua_add = '''
 require('gitsigns').setup()
@@ -145,6 +151,19 @@ repo = 'Shougo/ddc-converter_remove_overlap'
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
+call ddu#custom#patch_global(#{
+  \ kindOptions: #{
+  \   file: #{
+  \     defaultAction: 'open',
+  \   },
+  \   lsp: #{
+  \     defaultAction: 'open',
+  \   },
+  \   lsp_codeAction: #{
+  \     defaultAction: 'apply,'
+  \   },
+  \ }})
+
 call ddu#custom#patch_local('filer', #{
   \ ui: 'filer',
   \ uiParams: #{
@@ -192,16 +211,74 @@ call ddu#custom#patch_local('fuzzyfinder', #{
   \ sourceOptions: #{
   \   _: #{
   \     columns: ['icon_filename'],
+  \     matchers: ['matcher_substring'],
   \   }
   \ }})
 autocmd FileType ddu-ff call s:ddu_fuzzyfinder_setting()
 function! s:ddu_fuzzyfinder_setting() abort
 	nnoremap <buffer><silent> <CR>
 		\ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'open' })<CR>
+	nnoremap <buffer><silent> i
+		\ <Cmd>call ddu#ui#do_action('openFilterWindow')<CR>
 	nnoremap <buffer><silent> q
 		\ <Cmd>call ddu#ui#do_action('quit')<CR>
 endfunction
 nnoremap <leader>ff <Cmd>call ddu#start(#{ name: 'fuzzyfinder' })<CR>
+
+call ddu#custom#patch_local('lsp-definition_definition', #{
+  \ sync: v:true,
+  \ ui: 'ff',
+  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/definition' } }],
+  \ uiParams: #{
+  \   ff: #{
+  \     immediateAction: 'open',
+  \   }
+  \ }})
+nnoremap <leader>gd <Cmd>call ddu#start(#{ name: 'lsp-definition_definition' })<CR>
+
+call ddu#custom#patch_local('lsp-definition_typeDefinition', #{
+  \ sync: v:true,
+  \ ui: 'ff',
+  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/typeDefinition' } }],
+  \ uiParams: #{
+  \   ff: #{
+  \     immediateAction: 'open',
+  \   }
+  \ }})
+nnoremap <leader>gD <Cmd>call ddu#start(#{ name: 'lsp-definition_typeDefinition' })<CR>
+
+call ddu#custom#patch_local('lsp-definition_implementation', #{
+  \ sync: v:true,
+  \ ui: 'ff',
+  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/implementation' } }],
+  \ uiParams: #{
+  \   ff: #{
+  \     immediateAction: 'open',
+  \   }
+  \ }})
+nnoremap <leader>gi <Cmd>call ddu#start(#{ name: 'lsp-definition_implementation' })<CR>
+
+call ddu#custom#patch_local('lsp-references', #{
+  \ sync: v:true,
+  \ ui: 'ff',
+  \ sources: [#{ name: 'lsp_references' }],
+  \ uiParams: #{
+  \   ff: #{
+  \     immediateAction: 'open',
+  \   },
+  \ }})
+nnoremap <leader>gR <Cmd>call ddu#start(#{ name: 'lsp-references' })<CR>
+
+call ddu#custom#patch_local('lsp-codeAction', #{
+  \ sync: v:true,
+  \ ui: 'ff',
+  \ sources: [#{ name: 'lsp_codeAction' }],
+  \ uiParams: #{
+  \   ff: #{
+  \     immediateAction: 'open',
+  \   },
+  \ }})
+nnoremap <leader>ca <Cmd>call ddu#start(#{ name: 'lsp-codeAction' })<CR>
 '''
 
 [[plugins]]
@@ -223,7 +300,8 @@ repo = 'Shougo/ddu-kind-file'
 repo = 'ryota2357/ddu-column-icon_filename'
 
 [[plugins]]
-repo = 'nvim-lua/plenary.nvim'
+repo = 'Shougo/ddu-filter-matcher_substring'
 
 [[plugins]]
 repo = 'uga-rosa/ddu-source-lsp'
+
