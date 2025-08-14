@@ -19,6 +19,8 @@ DIRS=(
   zellij
   alacritty
   aerospace
+  yabai
+  skhd
 )
 
 for dir in "${DIRS[@]}"; do
