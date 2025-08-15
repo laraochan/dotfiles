@@ -21,6 +21,7 @@ esac
 COMMON_DIRS=(
   vim
   nvim
+  emacs
   zellij
   alacritty
 )
