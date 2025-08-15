@@ -1,4 +1,7 @@
 #!/bin/bash
+set -eu
+
+echo "Start: setup_dpp.sh"
 
 BASE_DIR="$HOME/.cache/nvim/dpp/repos/github.com"
 
@@ -26,5 +29,5 @@ for repo in "${REPOS[@]}"; do
     fi
 done
 
-echo "Done!"
+echo "End: setup_dpp.sh"
 

@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eu
 
+echo "Start: setup_symlink.sh"
+
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 CONFIG_DIR="$HOME/.config"
 case "$(uname -s)" in
@@ -91,4 +93,7 @@ for dir in "${DIRS[@]}"; do
   ln -s "$src" "$dest"
 done
 
-echo "Done!"
+echo "Run: setup_dpp.sh"
+$DOTFILES_DIR/nvim/setup_dpp.sh
+
+echo "End: setup_symlink.sh"
