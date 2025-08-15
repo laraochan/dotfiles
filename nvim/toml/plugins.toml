@@ -283,6 +283,18 @@ call ddu#custom#patch_local('lsp-codeAction', #{
   \   },
   \ }})
 nnoremap <leader>ca <Cmd>call ddu#start(#{ name: 'lsp-codeAction' })<CR>
+
+call ddu#custom#patch_local('buffer', #{
+  \ sync: v:true,
+  \ ui: 'ff',
+  \ sources: [#{ name: 'buffer' }],
+  \ sourceParams: #{
+  \   file_rec: #{
+  \     ignoreDirectories: ['.git', 'node_modules'],
+  \   },
+  \ }})
+
+nnoremap <leader>fb <Cmd>call ddu#start(#{ name: 'buffer' })<CR>
 '''
 
 [[plugins]]
@@ -311,4 +323,7 @@ repo = 'yuki-yano/ddu-filter-fzf'
 
 [[plugins]]
 repo = 'uga-rosa/ddu-source-lsp'
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
 
