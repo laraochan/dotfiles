@@ -19,6 +19,7 @@ case "$(uname -s)" in
 esac
 
 COMMON_DIRS=(
+  vim
   nvim
   zellij
   alacritty
