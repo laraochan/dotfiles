@@ -93,7 +93,4 @@ for dir in "${DIRS[@]}"; do
   ln -s "$src" "$dest"
 done
 
-echo "Run: setup_dpp.sh"
-$DOTFILES_DIR/nvim/setup_dpp.sh
-
 echo "End: setup_symlink.sh"
