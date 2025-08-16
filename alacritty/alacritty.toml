@@ -3,9 +3,12 @@ TERM = "xterm-256color"
 
 [general]
 import = [
-    "~/.config/alacritty/themes/themes/nightfox.toml"
+  '~/.config/alacritty/themes/themes/terminal_app.toml'
 ]
 
 [font]
 size = 16
 normal = { family = "FiraCode Nerd Font"  }
+
+[window]
+opacity = 0.85
