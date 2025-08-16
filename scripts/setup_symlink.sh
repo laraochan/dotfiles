@@ -3,7 +3,7 @@ set -eu
 
 echo "Start: setup_symlink.sh"
 
-DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd | sed 's:/scripts$::')"
 CONFIG_DIR="$HOME/.config"
 case "$(uname -s)" in
   "Darwin")
@@ -22,6 +22,7 @@ COMMON_DIRS=(
   vim
   nvim
   emacs
+  starship
   zellij
   alacritty
 )
@@ -91,7 +92,7 @@ for dir in "${DIRS[@]}"; do
     fi
   fi
   
-  echo "$dest → $src"
+  echo "$src → $dest"
   ln -s "$src" "$dest"
 done
 
