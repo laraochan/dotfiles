@@ -1,8 +1,9 @@
-syntax on
+syntax enable
 
 set nocompatible
 set clipboard+=unnamed
 set termguicolors
+set background=dark
 
 const s:denops_src=expand('~/.cache/vim/dpp/repos/github.com/vim-denops/denops.vim')
 const s:denops_hello=expand('~/.cache/vim/dpp/repos/github.com/vim-denops/denops-helloworld.vim')
@@ -27,8 +28,8 @@ const s:dpp_config=expand('~/.config/vim/dpp.ts')
 
 if s:dpp_base->dpp#min#load_state()
 	autocmd User DenopsReady
-  	\ : echohl WarningMsg
-  	\ | echomsg 'dpp load_state() is failed'
+  \ : echohl WarningMsg
+ 	\ | echomsg 'dpp load_state() is failed'
 	\ | echohl NONE
 	\ | call dpp#make_state(s:dpp_base, s:dpp_config)
 endif
