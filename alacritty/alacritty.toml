@@ -8,7 +8,7 @@ import = [
 
 [font]
 size = 16
-normal = { family = "FiraCode Nerd Font"  }
+normal = { family = "Hack Nerd Font Mono" }
 
 [window]
 opacity = 0.85

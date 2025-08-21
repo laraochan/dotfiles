@@ -3,9 +3,11 @@ set -eu
 
 echo "Start: setup_dpp.sh"
 
-BASE_DIR="$HOME/.cache/nvim/dpp/repos/github.com"
+VIM_BASE_DIR="$HOME/.cache/vim/dpp/repos/github.com"
+NVIM_BASE_DIR="$HOME/.cache/nvim/dpp/repos/github.com"
 
-mkdir -p "$BASE_DIR"
+mkdir -p "$VIM_BASE_DIR"
+mkdir -p "$NVIM_BASE_DIR"
 
 REPOS=(
     "vim-denops/denops.vim"
@@ -19,7 +21,18 @@ REPOS=(
 )
 
 for repo in "${REPOS[@]}"; do
-    dest="$BASE_DIR/$repo"
+    dest="$VIM_BASE_DIR/$repo"
+    if [ -d "$dest" ]; then
+        echo "Already exists: $dest"
+    else
+        echo "Cloning $repo..."
+        mkdir -p "$(dirname "$dest")"
+        git clone "https://github.com/$repo.git" "$dest"
+    fi
+done
+
+for repo in "${REPOS[@]}"; do
+    dest="$NVIM_BASE_DIR/$repo"
     if [ -d "$dest" ]; then
         echo "Already exists: $dest"
     else

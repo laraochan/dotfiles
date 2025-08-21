@@ -10,7 +10,7 @@ set $menu wofi --show drun --allow-images
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 
 # Output configuration
-output * bg ~/Pictures/chu_gumi.png fill
+output * bg ~/Pictures/reni_wallpaper.jpg fill
 
 output eDP-1 resolution 1920x1200 position 0,1080
 output DP-1 resolution 1920x1080 position 0,0

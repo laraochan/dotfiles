@@ -1,0 +1,9 @@
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+hook_add = '''
+let g:solarized_termcolors=256
+colorscheme solarized
+'''
