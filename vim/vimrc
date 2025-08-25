@@ -2,6 +2,8 @@ syntax enable
 
 set nowritebackup
 set nobackup
+set noswapfile
+
 set virtualedit=block
 set ambiwidth=double
 set wildmenu
@@ -11,14 +13,15 @@ set smartcase
 set wrapscan
 set incsearch
 set hlsearch
-
 set noerrorbells
-
+set smartindent
 
 set nocompatible
 set clipboard+=unnamed
 set termguicolors
 set background=dark
+
+set mouse=a
 
 let mapleader = "\<Space>"
 
@@ -45,7 +48,7 @@ const s:dpp_config=expand('~/.config/vim/dpp.ts')
 
 if s:dpp_base->dpp#min#load_state()
 	autocmd User DenopsReady
-  \ : echohl WarningMsg
+  	\ : echohl WarningMsg
  	\ | echomsg 'dpp load_state() is failed'
 	\ | echohl NONE
 	\ | call dpp#make_state(s:dpp_base, s:dpp_config)

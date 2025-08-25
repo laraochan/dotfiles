@@ -93,6 +93,8 @@ call popup_preview#enable()
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
+call ddu#custom#action('kind', 'file', 'open', #{ command: 'edit' })
+
 call ddu#custom#patch_global(#{
   \ kindOptions: #{
   \   file: #{
@@ -111,7 +113,6 @@ call ddu#custom#patch_local('filer', #{
   \ ui: 'filer',
   \ uiParams: #{
   \   filer: #{
-  \     split: 'floating',
   \     sort: 'filename',
   \     sortTreesFirst: v:true,
   \   },
@@ -174,63 +175,43 @@ nnoremap <leader>ff <Cmd>call ddu#start(#{ name: 'fuzzyfinder' })<CR>
 call ddu#custom#patch_local('lsp-definition_definition', #{
   \ sync: v:true,
   \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/definition' } }],
+  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/definition', clientName: 'vim-lsp' } }],
   \ uiParams: #{
   \   ff: #{
   \     immediateAction: 'open',
   \   }
-  \ },
-  \ sourceParams: #{
-  \   lsp: #{
-  \     clientName: 'vim-lsp',
-  \   },
   \ }})
 nnoremap <leader>gd <Cmd>call ddu#start(#{ name: 'lsp-definition_definition' })<CR>
 
 call ddu#custom#patch_local('lsp-definition_typeDefinition', #{
   \ sync: v:true,
   \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/typeDefinition' } }],
+  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/typeDefinition', clientName: 'vim-lsp' } }],
   \ uiParams: #{
   \   ff: #{
   \     immediateAction: 'open',
   \   }
-  \ },
-  \ sourceParams: #{
-  \   lsp: #{
-  \     clientName: 'vim-lsp',
-  \   },
   \ }})
 nnoremap <leader>gD <Cmd>call ddu#start(#{ name: 'lsp-definition_typeDefinition' })<CR>
 
 call ddu#custom#patch_local('lsp-definition_implementation', #{
   \ sync: v:true,
   \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/implementation' } }],
+  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/implementation', clientName: 'vim-lsp' } }],
   \ uiParams: #{
   \   ff: #{
   \     immediateAction: 'open',
   \   }
-  \ },
-  \ sourceParams: #{
-  \   lsp: #{
-  \     clientName: 'vim-lsp',
-  \   },
   \ }})
 nnoremap <leader>gi <Cmd>call ddu#start(#{ name: 'lsp-definition_implementation' })<CR>
 
 call ddu#custom#patch_local('lsp-references', #{
   \ sync: v:true,
   \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_references' }],
+  \ sources: [#{ name: 'lsp_references', params: #{ clientName: 'vim-lsp' } }],
   \ uiParams: #{
   \   ff: #{
   \     immediateAction: 'open',
-  \   },
-  \ },
-  \ sourceParams: #{
-  \   lsp: #{
-  \     clientName: 'vim-lsp',
   \   },
   \ }})
 nnoremap <leader>gR <Cmd>call ddu#start(#{ name: 'lsp-references' })<CR>
@@ -238,15 +219,10 @@ nnoremap <leader>gR <Cmd>call ddu#start(#{ name: 'lsp-references' })<CR>
 call ddu#custom#patch_local('lsp-codeAction', #{
   \ sync: v:true,
   \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_codeAction' }],
+  \ sources: [#{ name: 'lsp_codeAction', params: #{ clientName: 'vim-lsp' } }],
   \ uiParams: #{
   \   ff: #{
   \     immediateAction: 'open',
-  \   },
-  \ },
-  \ sourceParams: #{
-  \   lsp: #{
-  \     clientName: 'vim-lsp',
   \   },
   \ }})
 nnoremap <leader>ca <Cmd>call ddu#start(#{ name: 'lsp-codeAction' })<CR>
@@ -294,3 +270,11 @@ repo = 'uga-rosa/ddu-source-lsp'
 [[plugins]]
 repo = 'shun/ddu-source-buffer'
 
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'voldikss/vim-floaterm'
+hook_add = '''
+nnoremap <leader>ft <Cmd>FloatermToggle<CR>
+'''
