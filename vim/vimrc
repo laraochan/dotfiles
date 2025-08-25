@@ -1,9 +1,26 @@
 syntax enable
 
+set nowritebackup
+set nobackup
+set virtualedit=block
+set ambiwidth=double
+set wildmenu
+
+set ignorecase
+set smartcase
+set wrapscan
+set incsearch
+set hlsearch
+
+set noerrorbells
+
+
 set nocompatible
 set clipboard+=unnamed
 set termguicolors
 set background=dark
+
+let mapleader = "\<Space>"
 
 const s:denops_src=expand('~/.cache/vim/dpp/repos/github.com/vim-denops/denops.vim')
 const s:denops_hello=expand('~/.cache/vim/dpp/repos/github.com/vim-denops/denops-helloworld.vim')
