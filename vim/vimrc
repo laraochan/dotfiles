@@ -7,6 +7,7 @@ set noswapfile
 set virtualedit=block
 set ambiwidth=double
 set wildmenu
+set signcolumn=yes
 
 set ignorecase
 set smartcase
@@ -19,7 +20,6 @@ set smartindent
 set nocompatible
 set clipboard+=unnamed
 set termguicolors
-set background=dark
 
 set mouse=a
 

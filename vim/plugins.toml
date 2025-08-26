@@ -1,7 +1,7 @@
 [[plugins]]
-repo = 'sainnhe/sonokai'
+repo = 'catppuccin/vim'
 hook_add = '''
-colorscheme sonokai
+colorscheme catppuccin_mocha
 '''
 
 [[plugins]]
@@ -85,196 +85,21 @@ repo = 'Shougo/ddc-source-lsp'
 repo = 'Shougo/ddc-converter_remove_overlap'
 
 [[plugins]]
-repo = 'matsui54/denops-popup-preview.vim'
-hook_add = '''
-call popup_preview#enable()
-'''
-
-[[plugins]]
-repo = 'Shougo/ddu.vim'
-hook_add = '''
-call ddu#custom#action('kind', 'file', 'open', #{ command: 'edit' })
-
-call ddu#custom#patch_global(#{
-  \ kindOptions: #{
-  \   file: #{
-  \     defaultAction: 'open',
-  \   },
-  \   lsp: #{
-  \     defaultAction: 'open',
-  \   },
-  \   lsp_codeAction: #{
-  \     defaultAction: 'apply,'
-  \   },
-  \ }})
-
-call ddu#custom#patch_local('filer', #{
-  \ sync: v:true,
-  \ ui: 'filer',
-  \ uiParams: #{
-  \   filer: #{
-  \     sort: 'filename',
-  \     sortTreesFirst: v:true,
-  \   },
-  \ },
-  \ sources: [#{ name: 'file' }],
-  \ sourceOptions: #{
-  \   _: #{
-  \     columns: ['icon_filename'],
-  \     matchers: ['matcher_fzf'],
-  \   },
-  \ }})
-autocmd FileType ddu-filer call s:ddu_filer_setting()
-function! s:ddu_filer_setting() abort
-	nnoremap <buffer><silent> <CR>
-		\ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'open' })<CR>
-	nnoremap <buffer><silent> <Space>
-		\ <Cmd>call ddu#ui#do_action('toggleSelectItem')<CR>
-	nnoremap <buffer><silent> o
-		\ <Cmd>call ddu#ui#do_action('expandItem', #{ mode: 'toggle' })<CR>
-  nnoremap <buffer><silent> c
-    \ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'newFile' })<CR>
-  nnoremap <buffer><silent> d
-    \ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'trash' })<CR>
-  nnoremap <buffer><silent> r
-    \ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'rename' })<CR>
-  nnoremap <buffer><silent> u
-    \ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'undo' })<CR>
-  nnoremap <buffer><silent> i
-    \ <Cmd>call ddu#ui#do_action('openFilterWindow')<CR>
-	nnoremap <buffer><silent> q
-		\ <Cmd>call ddu#ui#do_action('quit')<CR>
-endfunction
-nnoremap <leader>fe <Cmd>call ddu#start(#{ name: 'filer' })<CR>
-
-call ddu#custom#patch_local('fuzzyfinder', #{
-  \ ui: 'ff',
-  \ uiParams: #{
-  \   ff: #{
-  \     split: 'floating',
-  \   },
-  \ },
-  \ sources: [#{ name: 'file_rec' }],
-  \ sourceOptions: #{
-  \   _: #{
-  \     columns: ['icon_filename'],
-  \     matchers: ['matcher_fzf'],
-  \   }
-  \ }})
-autocmd FileType ddu-ff call s:ddu_fuzzyfinder_setting()
-function! s:ddu_fuzzyfinder_setting() abort
-	nnoremap <buffer><silent> <CR>
-		\ <Cmd>call ddu#ui#do_action('itemAction', #{ name: 'open' })<CR>
-	nnoremap <buffer><silent> i
-		\ <Cmd>call ddu#ui#do_action('openFilterWindow')<CR>
-	nnoremap <buffer><silent> q
-		\ <Cmd>call ddu#ui#do_action('quit')<CR>
-endfunction
-nnoremap <leader>ff <Cmd>call ddu#start(#{ name: 'fuzzyfinder' })<CR>
-
-call ddu#custom#patch_local('lsp-definition_definition', #{
-  \ sync: v:true,
-  \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/definition', clientName: 'vim-lsp' } }],
-  \ uiParams: #{
-  \   ff: #{
-  \     immediateAction: 'open',
-  \   }
-  \ }})
-nnoremap <leader>gd <Cmd>call ddu#start(#{ name: 'lsp-definition_definition' })<CR>
-
-call ddu#custom#patch_local('lsp-definition_typeDefinition', #{
-  \ sync: v:true,
-  \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/typeDefinition', clientName: 'vim-lsp' } }],
-  \ uiParams: #{
-  \   ff: #{
-  \     immediateAction: 'open',
-  \   }
-  \ }})
-nnoremap <leader>gD <Cmd>call ddu#start(#{ name: 'lsp-definition_typeDefinition' })<CR>
-
-call ddu#custom#patch_local('lsp-definition_implementation', #{
-  \ sync: v:true,
-  \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_definition', params: #{ method: 'textDocument/implementation', clientName: 'vim-lsp' } }],
-  \ uiParams: #{
-  \   ff: #{
-  \     immediateAction: 'open',
-  \   }
-  \ }})
-nnoremap <leader>gi <Cmd>call ddu#start(#{ name: 'lsp-definition_implementation' })<CR>
-
-call ddu#custom#patch_local('lsp-references', #{
-  \ sync: v:true,
-  \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_references', params: #{ clientName: 'vim-lsp' } }],
-  \ uiParams: #{
-  \   ff: #{
-  \     immediateAction: 'open',
-  \   },
-  \ }})
-nnoremap <leader>gR <Cmd>call ddu#start(#{ name: 'lsp-references' })<CR>
-
-call ddu#custom#patch_local('lsp-codeAction', #{
-  \ sync: v:true,
-  \ ui: 'ff',
-  \ sources: [#{ name: 'lsp_codeAction', params: #{ clientName: 'vim-lsp' } }],
-  \ uiParams: #{
-  \   ff: #{
-  \     immediateAction: 'open',
-  \   },
-  \ }})
-nnoremap <leader>ca <Cmd>call ddu#start(#{ name: 'lsp-codeAction' })<CR>
-
-call ddu#custom#patch_local('buffer', #{
-  \ sync: v:true,
-  \ ui: 'ff',
-  \ sources: [#{ name: 'buffer' }],
-  \ sourceParams: #{
-  \   file_rec: #{
-  \     ignoreDirectories: ['.git', 'node_modules'],
-  \   },
-  \ }})
-
-nnoremap <leader>fb <Cmd>call ddu#start(#{ name: 'buffer' })<CR>
-'''
-
-[[plugins]]
-repo = 'Shougo/ddu-ui-filer'
-
-[[plugins]]
-repo = 'Shougo/ddu-ui-ff'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
-
-[[plugins]]
-repo = 'Shougo/ddu-kind-file'
-
-[[plugins]]
-repo = 'ryota2357/ddu-column-icon_filename'
-
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-
-[[plugins]]
-repo = 'yuki-yano/ddu-filter-fzf'
-
-[[plugins]]
-repo = 'uga-rosa/ddu-source-lsp'
-
-[[plugins]]
-repo = 'shun/ddu-source-buffer'
-
-[[plugins]]
 repo = 'airblade/vim-gitgutter'
+hook_add = '''
+highlight GitGutterAdd    ctermfg=2 guifg=#00ff00
+highlight GitGutterChange ctermfg=3 guifg=#ffff00  
+highlight GitGutterDelete ctermfg=1 guifg=#ff0000
+'''
 
 [[plugins]]
 repo = 'voldikss/vim-floaterm'
 hook_add = '''
 nnoremap <leader>ft <Cmd>FloatermToggle<CR>
 '''
+
+[[plugins]]
+repo = 'charlespascoe/vim-go-syntax'
+
+[[plugins]]
+repo = 'arzg/vim-rust-syntax-ext'
