@@ -38,22 +38,6 @@ return {
       vim.keymap.set("n", "<leader>fe", function()
         extensions.file_browser.file_browser()
       end, { desc = "Telescppe file_browser" })
-
-      -- 起動時にフォルダなら Telescope file_browser を開く
-      vim.api.nvim_create_autocmd("VimEnter", {
-        callback = function(data)
-          local is_dir = vim.fn.isdirectory(data.file) == 1
-          if is_dir then
-            -- ディレクトリをカレントに設定
-            vim.cmd.cd(data.file)
-            -- Telescope file_browser を開く
-            require("telescope").extensions.file_browser.file_browser({
-              path = data.file,
-              cwd = data.file,
-            })
-          end
-        end,
-      })
     end,
   },
   {
