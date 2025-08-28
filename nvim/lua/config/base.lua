@@ -1,5 +1,3 @@
-vim.g.mapleader = " "
-
 vim.o.cursorline = true
 vim.o.clipboard = "unnamedplus"
 vim.o.smartindent = true
