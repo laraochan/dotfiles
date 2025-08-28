@@ -96,6 +96,7 @@ return {
         sources = {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.diagnostics.phpstan.with({
+            timeout = 10000,
             command = "dev-script/phpstan",
             args = {
               "analyze",
