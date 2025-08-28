@@ -96,6 +96,7 @@ return {
         sources = {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.diagnostics.phpstan.with({
+            -- timeoutはdefaultで5sで設定されていてremote環境ではtimeoutしてしまっていたため10sに伸ばした
             timeout = 10000,
             command = "dev-script/phpstan",
             args = {
