@@ -103,15 +103,37 @@ return {
     "nvimtools/none-ls.nvim",
     dependencies = {
       "nvimtools/none-ls-extras.nvim",
+      "gbprod/none-ls-ecs.nvim",
     },
     config = function()
       local null_ls = require("null-ls")
-      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
       null_ls.setup({
         sources = {
           null_ls.builtins.formatting.stylua,
-          -- require("none-ls.diagnostics.eslint_d"),
+          null_ls.builtins.diagnostics.phpstan.with({
+            command = "dev-script/phpstan",
+            args = {
+              "analyze",
+              "--error-format",
+              "json",
+              "--configuration",
+              "phpstan.neon.dist",
+              "--no-progress",
+              "$FILENAME",
+            },
+            condition = function()
+              local cwd = vim.loop.cwd()
+              return cwd:match("/pixiv$")
+            end,
+          }),
+          require("none-ls-ecs.formatting").with({
+            command = "dev-script/ecs",
+            condition = function()
+              local cwd = vim.loop.cwd()
+              return cwd:match("/pixiv$")
+            end,
+          }),
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
@@ -132,16 +154,17 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "nvimtools/none-ls.nvim",
     },
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
       vim.lsp.config("*", {
-        capabilities = capabilities,
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
       })
       vim.lsp.enable("ts_ls")
       vim.lsp.enable("gopls")
       vim.lsp.enable("rust_analyzer")
       vim.lsp.enable("lua_ls")
+      vim.lsp.enable("intelephense")
     end,
   },
   {
