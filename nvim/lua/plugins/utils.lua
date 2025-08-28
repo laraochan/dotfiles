@@ -157,20 +157,25 @@ return {
             edit = "o",
           },
         },
+        symbol_in_winbar = {
+          enable = false,
+        },
         lightbulb = {
           enable = false,
         },
       })
 
-      vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-      vim.keymap.set("n", "gr", "<cmd>Lspsaga finder ref<CR>")
-      vim.keymap.set("n", "gp", "<cmd>Lspsaga finder imp<CR>")
-      vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
-      vim.keymap.set("n", "ga", "<cmd>Lspsaga code_action<CR>")
-      vim.keymap.set("n", "gn", "<cmd>Lspsaga rename<CR>")
-      vim.keymap.set("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>")
-      vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-      vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+      vim.keymap.set("n", "K", "<CMD>Lspsaga hover_doc<CR>")
+      vim.keymap.set("n", "gr", "<CMD>Lspsaga finder ref<CR>")
+      vim.keymap.set("n", "gp", "<CMD>Lspsaga finder imp<CR>")
+      vim.keymap.set("n", "gd", "<CMD>Lspsaga peek_definition<CR>")
+      vim.keymap.set("n", "ga", "<CMD>Lspsaga code_action<CR>")
+      vim.keymap.set("n", "gn", "<CMD>Lspsaga rename<CR>")
+      vim.keymap.set("n", "ge", "<CMD>Lspsaga show_line_diagnostics<CR>")
+      vim.keymap.set("n", "[e", "<CMD>Lspsaga diagnostic_jump_next<CR>")
+      vim.keymap.set("n", "]e", "<CMD>Lspsaga diagnostic_jump_prev<CR>")
+
+      vim.keymap.set("n", "<leader>tt", "<CMD>Lspsaga term_toggle<CR>")
     end,
   },
   {
@@ -181,13 +186,6 @@ return {
     config = function()
       require("mason").setup()
       require("mason-null-ls").setup()
-    end,
-  },
-  {
-    "akinsho/toggleterm.nvim",
-    config = function()
-      require("toggleterm").setup()
-      vim.keymap.set("n", "<leader>tt", "<CMD>ToggleTerm<CR>")
     end,
   },
   {
