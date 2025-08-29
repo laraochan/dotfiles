@@ -212,4 +212,13 @@ return {
       require("nvim-ts-autotag").setup()
     end,
   },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    -- stylua: ignore
+    keys = {
+      { "<leader>ss", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
+      { "<leader>s[", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    },
+  },
 }
