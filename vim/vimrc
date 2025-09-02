@@ -1,41 +1,22 @@
-syntax enable
-
-set nowritebackup
-set nobackup
-set noswapfile
-
-set virtualedit=block
-set ambiwidth=double
-set wildmenu
+set nocompatible
+set smartindent
+set clipboard+=unnamed
 set signcolumn=yes
 
-set ignorecase
-set smartcase
-set wrapscan
-set incsearch
-set hlsearch
-set noerrorbells
-set smartindent
+const s:dpp_base = '~/.cache/vim/dpp/'
+const s:dpp_config = '~/.config/vim/dpp.ts'
 
-set nocompatible
-set clipboard+=unnamed
-set termguicolors
+const s:denops_src = s:dpp_base .. 'repos/github.com/vim-denops/denops.vim'
+const s:denops_hello = s:dpp_base .. 'repos/github.com/vim-denops/denops-helloworld.vim'
 
-set mouse=a
-
-let mapleader = "\<Space>"
-
-const s:denops_src=expand('~/.cache/vim/dpp/repos/github.com/vim-denops/denops.vim')
-const s:denops_hello=expand('~/.cache/vim/dpp/repos/github.com/vim-denops/denops-helloworld.vim')
+const s:dpp_src = s:dpp_base .. 'repos/github.com/Shougo/dpp.vim'
+const s:dpp_installer = s:dpp_base .. 'repos/github.com/Shougo/dpp-ext-installer'
+const s:dpp_lazy = s:dpp_base .. 'repos/github.com/Shougo/dpp-ext-lazy'
+const s:dpp_toml = s:dpp_base .. 'repos/github.com/Shougo/dpp-ext-toml'
+const s:dpp_git = s:dpp_base .. 'repos/github.com/Shougo/dpp-protocol-git'
 
 execute 'set runtimepath+=' .. s:denops_src
 execute 'set runtimepath+=' .. s:denops_hello
-
-const s:dpp_src=expand('~/.cache/vim/dpp/repos/github.com/Shougo/dpp.vim')
-const s:dpp_installer=expand('~/.cache/vim/dpp/repos/github.com/Shougo/dpp-ext-installer')
-const s:dpp_lazy=expand('~/.cache/vim/dpp/repos/github.com/Shougo/dpp-ext-lazy')
-const s:dpp_toml=expand('~/.cache/vim/dpp/repos/github.com/Shougo/dpp-ext-toml')
-const s:dpp_git=expand('~/.cache/vim/dpp/repos/github.com/Shougo/dpp-protocol-git')
 
 execute 'set runtimepath+=' .. s:dpp_src
 execute 'set runtimepath+=' .. s:dpp_installer
@@ -43,18 +24,27 @@ execute 'set runtimepath+=' .. s:dpp_lazy
 execute 'set runtimepath+=' .. s:dpp_toml
 execute 'set runtimepath+=' .. s:dpp_git
 
-const s:dpp_base=expand('~/.cache/vim/dpp')
-const s:dpp_config=expand('~/.config/vim/dpp.ts')
-
 if s:dpp_base->dpp#min#load_state()
-	autocmd User DenopsReady
-  	\ : echohl WarningMsg
- 	\ | echomsg 'dpp load_state() is failed'
-	\ | echohl NONE
-	\ | call dpp#make_state(s:dpp_base, s:dpp_config)
+  autocmd User DenopsReady
+  \ : echohl WarningMsg
+  \ | echomsg 'dpp load_state() is failed'
+  \ | echohl NONE
+  \ | call dpp#make_state(s:dpp_base, s:dpp_config)
 endif
 
 autocmd User Dpp:makeStatePost
-	\ : echohl WarningMsg
-	\ | echomsg 'dpp make_state() is done'
-	\ | echohl NONE
+  \ : echohl WarningMsg
+  \ | echomsg 'dpp make_state() is done'
+  \ | echohl NONE
+
+augroup FileTypeIndent
+  autocmd!
+  autocmd Filetype vim setlocal tabstop=2 shiftwidth=2 expandtab
+  autocmd Filetype toml setlocal tabstop=2 shiftwidth=2 expandtab
+  autocmd Filetype javascript,typescript,typescriptreact setlocal tabstop=2 shiftwidth=2 expandtab
+  autocmd Filetype go setlocal tabstop=4 shiftwidth=4 noexpandtab
+augroup END
+
+if has('syntax')
+  syntax on
+endif
