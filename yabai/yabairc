@@ -12,3 +12,6 @@ yabai -m config window_gap     10
 yabai -m config focus_follows_mouse autoraise
 yabai -m config mouse_follows_focus on
 
+yabai -m signal --add event=display_changed action="~/.config/yabai/display_fix.sh"
+
+~/.config/yabai/display_fix.sh
