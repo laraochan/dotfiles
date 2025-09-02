@@ -1,3 +1,5 @@
+let g:mapleader = ' '
+
 set nocompatible
 set smartindent
 set clipboard+=unnamed

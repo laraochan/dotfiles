@@ -27,7 +27,15 @@ repo = 'jiangmiao/auto-pairs'
 
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-depends = ['ddc-ui-native', 'ddc-source-lsp', 'ddc-source-around', 'ddc-filter-sorter_rank', 'ddc-filter-matcher_head', 'denops-popup-preview.vim', 'denops-signature_help']
+depends = [
+  'ddc-ui-native',
+  'ddc-source-lsp',
+  'ddc-source-around',
+  'ddc-filter-sorter_rank',
+  'ddc-filter-matcher_head',
+  'denops-popup-preview.vim',
+  'denops-signature_help',
+]
 hook_add = '''
 call ddc#custom#patch_global('ui', 'native')
 call ddc#custom#patch_global('sources', ['lsp', 'around'])
@@ -123,3 +131,96 @@ hook_add = '''
 autocmd BufWritePost * GitGutter
 '''
 
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+depends = [
+  'ddu-ui-filer',
+  'ddu-kind-file',
+  'ddu-source-file',
+  'ddu-column-filename',
+]
+hook_add = '''
+call ddu#custom#patch_local('ddu-filer', 'ui', 'filer')
+call ddu#custom#patch_local('ddu-filer', 'sources', [#{name: 'file', params: #{}}])
+call ddu#custom#patch_local('ddu-filer', 'sourceOptions', #{
+  \ _: #{
+  \   columns: ['filename'],
+  \ }})
+call ddu#custom#patch_local('ddu-filer', 'kindOptions', #{
+  \ file: #{
+  \   defaultAction: 'open',
+  \ }})
+autocmd Filetype ddu-filer call s:ddu_my_setting()
+function! s:ddu_my_setting() abort
+  nnoremap <buffer><silent> <CR>
+    \ <CMD>call ddu#ui#do_action('itemAction')<CR>
+  nnoremap <buffer><silent> <Space>
+    \ <CMD>call ddu#ui#do_action('toggleSelectItem')<CR>
+  nnoremap <buffer><silent> o
+    \ <CMD>call ddu#ui#do_action('expandItem',
+    \ #{mode: 'toggle'})<CR>
+  nnoremap <buffer><silent> q
+    \ <CMD>call ddu#ui#do_action('quit')<CR>
+  nnoremap <buffer> >
+    \ <CMD>call ddu#ui#do_action('updateOptions', #{
+    \   sourceOptions: #{
+    \     _: #{
+    \       matchers: ToggleHidden(),
+    \     },
+    \   },
+    \ })<CR>
+endfunction
+
+function! ToggleHidden()
+  let current = ddu#custom#get_current(b:ddu_ui_name)
+  let source_options = get(current, 'sourceOptions', #{})
+  let source_options_all = get(source_options, '_', #{})
+  let matchers = get(source_options_all, 'matchers', [])
+  return empty(matchers) ? ['matcher_hidden'] : []
+endfunction
+
+nnoremap <leader>fe <CMD>call ddu#start(#{name: 'ddu-filer'})<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-filer'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
+
+[[plugins]]
+repo = 'Shougo/ddu-column-filename'
+
+[[plugins]]
+repo = 'Shougo/ddt.vim'
+depends = [
+  'ddt-ui-terminal',
+]
+hook_add = '''
+call ddt#custom#patch_global(#{
+  \ ui: 'terminal',
+  \ uiParams: #{
+  \   terminal: #{
+  \     command: ['zsh'],
+  \     promptPattern: has('win32') ? '\f\+>' : '\w*% \?',
+  \   },
+  \ }})
+autocmd FileType ddt-shell call s:ddt_my_settings()
+function! s:ddt_my_settings() abort
+  nnoremap <buffer> <C-n>
+    \ <Cmd>call ddt#ui#do_action('nextPrompt')<CR>
+  nnoremap <buffer> <C-p>
+    \ <Cmd>call ddt#ui#do_action('previousPrompt')<CR>
+  nnoremap <buffer> <C-y>
+    \ <Cmd>call ddt#ui#do_action('pastePrompt')<CR>
+  nnoremap <buffer> <CR>
+    \ <Cmd>call ddt#ui#do_action('executeLine')<CR>
+endfunction
+nnoremap <leader>tt <CMD>call ddt#start()<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/ddt-ui-terminal'
