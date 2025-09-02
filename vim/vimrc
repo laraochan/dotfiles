@@ -4,6 +4,9 @@ set nocompatible
 set smartindent
 set clipboard+=unnamed
 set signcolumn=yes
+set termguicolors
+
+nnoremap <leader>bx <CMD>bd<CR>
 
 const s:dpp_base = '~/.cache/vim/dpp/'
 const s:dpp_config = '~/.config/vim/dpp.ts'

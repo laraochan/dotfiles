@@ -154,6 +154,12 @@ autocmd Filetype ddu-filer call s:ddu_my_setting()
 function! s:ddu_my_setting() abort
   nnoremap <buffer><silent> <CR>
     \ <CMD>call ddu#ui#do_action('itemAction')<CR>
+  nnoremap <buffer><silent> d
+    \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'delete'})<CR>
+  nnoremap <buffer><silent> c
+    \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'newFile'})<CR>
+  nnoremap <buffer><silent> r
+    \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'rename'})<CR>
   nnoremap <buffer><silent> <Space>
     \ <CMD>call ddu#ui#do_action('toggleSelectItem')<CR>
   nnoremap <buffer><silent> o
