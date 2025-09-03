@@ -1,10 +1,22 @@
 let g:mapleader = ' '
 
+set nowritebackup
+set nobackup
+set noswapfile
+set mouse=a
+set ambiwidth=double "全角文字用設定
 set nocompatible
 set smartindent
+set autoindent
 set clipboard+=unnamed
 set signcolumn=yes
 set termguicolors
+set ignorecase
+set smartcase
+set wrapscan
+set incsearch
+set hlsearch
+set virtualedit=block
 
 nnoremap <leader>bx <CMD>bd<CR>
 
@@ -44,10 +56,8 @@ autocmd User Dpp:makeStatePost
 
 augroup FileTypeIndent
   autocmd!
-  autocmd Filetype vim setlocal tabstop=2 shiftwidth=2 expandtab
-  autocmd Filetype toml setlocal tabstop=2 shiftwidth=2 expandtab
-  autocmd Filetype javascript,typescript,typescriptreact setlocal tabstop=2 shiftwidth=2 expandtab
-  autocmd Filetype go setlocal tabstop=4 shiftwidth=4 noexpandtab
+  autocmd Filetype vim,toml,javascript,typescript,typescriptreact setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+  autocmd Filetype go setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 augroup END
 
 if has('syntax')
