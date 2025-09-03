@@ -137,18 +137,22 @@ depends = [
   'ddu-ui-filer',
   'ddu-kind-file',
   'ddu-source-file',
-  'ddu-column-filename',
+  'ddu-column-icon_filename',
 ]
 hook_add = '''
 call ddu#custom#patch_local('ddu-filer', 'ui', 'filer')
 call ddu#custom#patch_local('ddu-filer', 'sources', [#{name: 'file', params: #{}}])
 call ddu#custom#patch_local('ddu-filer', 'sourceOptions', #{
   \ _: #{
-  \   columns: ['filename'],
+  \   columns: ['icon_filename'],
   \ }})
 call ddu#custom#patch_local('ddu-filer', 'kindOptions', #{
   \ file: #{
   \   defaultAction: 'open',
+  \ }})
+call ddu#custom#patch_local('ddu-filer', 'columnParams', #{
+  \ icon_filename: #{
+  \   defaultIcon: #{ icon: '' },
   \ }})
 autocmd Filetype ddu-filer call s:ddu_my_setting()
 function! s:ddu_my_setting() abort
@@ -198,7 +202,7 @@ repo = 'Shougo/ddu-kind-file'
 repo = 'Shougo/ddu-source-file'
 
 [[plugins]]
-repo = 'Shougo/ddu-column-filename'
+repo = 'ryota2357/ddu-column-icon_filename'
 
 [[plugins]]
 repo = 'Shougo/ddt.vim'
