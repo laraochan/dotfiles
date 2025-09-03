@@ -8,6 +8,8 @@ alt + shift - j : yabai -m window --swap south
 alt + shift - k : yabai -m window --swap north
 alt + shift - l : yabai -m window --swap east
 
+alt + shift - r : yabai -m space --balance
+
 alt - r : yabai -m space --rotate 90
 
 alt - e : yabai -m window --toggle split
@@ -25,6 +27,9 @@ alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 alt - left : yabai -m space --focus prev
 alt - right : yabai -m space --focus next
+
+alt + shift - left : yabai -m window --space prev
+alt + shift - right : yabai -m window --space next
 
 alt - s : yabai -m display --focus west
 alt - g : yabai -m display --focus east
