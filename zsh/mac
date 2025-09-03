@@ -113,6 +113,8 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
 
+alias v='vim'
+alias vi='vim'
 alias lg='lazygit'
 alias cdghq='cd "$(ghq list --full-path | peco)"'
 alias cdssh='host=$(grep -w Host ~/.ssh/config | grep -v "\*" | awk "{print \$2}" | peco) && [ -n "$host" ] && ssh "$host"'
