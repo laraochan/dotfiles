@@ -58,6 +58,7 @@ call ddc#custom#patch_global('sourceParams', #{
   \   enableAdditionalTextEdit: v:true,
   \   lspEngine: 'vim-lsp'
   \ }})
+call ddc#custom#patch_global('autoCompleteDelay', 100)
 call ddc#enable()
 call popup_preview#enable()
 let g:signature_help_config = #{
@@ -238,4 +239,10 @@ repo = 'vim-airline/vim-airline-themes'
 repo = 'mattn/emmet-vim'
 hook_add = '''
 let g:user_emmet_leader_key='<C-e>'
+'''
+
+[[plugins]]
+repo = 'ghifarit53/tokyonight-vim'
+hook_add = '''
+colorscheme tokyonight
 '''
