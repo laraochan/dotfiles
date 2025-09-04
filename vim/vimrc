@@ -5,9 +5,10 @@ filetype plugin indent on
 set nowritebackup
 set nobackup
 set noswapfile
+set nocompatible
 set mouse=a
 set ambiwidth=double "全角文字用設定
-set nocompatible
+set noerrorbells
 set smartindent
 set autoindent
 set clipboard+=unnamed
