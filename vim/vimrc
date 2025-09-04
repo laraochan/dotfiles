@@ -9,6 +9,7 @@ set nocompatible
 set mouse=a
 set ambiwidth=double "全角文字用設定
 set noerrorbells
+set re=2
 set smartindent
 set autoindent
 set clipboard+=unnamed
