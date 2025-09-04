@@ -9,7 +9,7 @@ vim.o.expandtab = true
 vim.o.smartcase = true
 vim.o.swapfile = false
 vim.o.signcolumn = "yes"
-vim.o.background = "light"
+vim.o.background = "dark"
 vim.o.termguicolors = true
 vim.diagnostic.config({
   underline = true,
