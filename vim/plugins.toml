@@ -234,3 +234,8 @@ let g:airline#extensions#tabline#enabled = 1
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+let g:user_emmet_leader_key='<C-e>'
+'''
