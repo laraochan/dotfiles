@@ -160,8 +160,12 @@ call ddu#custom#patch_local('ddu-filer', 'columnParams', #{
 autocmd Filetype ddu-filer call s:ddu_my_setting()
 function! s:ddu_my_setting() abort
   setlocal cursorline
-  nnoremap <buffer><silent> <CR>
-    \ <CMD>call ddu#ui#do_action('itemAction')<CR>
+  nnoremap <buffer><silent><expr> <CR>
+    \ ddu#ui#get_item()->get('isTree', v:false) ?
+    \ "<CMD>call ddu#ui#do_action('itemAction', #{name: 'narrow'})<CR>" :
+    \ "<CMD>call ddu#ui#do_action('itemAction', #{name: 'open'})<CR>"
+  nnoremap <buffer><silent> ..
+    \ <Cmd>call ddu#ui#do_action('itemAction', #{name: 'narrow', params: {'path': '..'}})<CR>
   nnoremap <buffer><silent> d
     \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'delete'})<CR>
   nnoremap <buffer><silent> c
