@@ -28,6 +28,7 @@ repo = 'jiangmiao/auto-pairs'
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 depends = [
+  'denops.vim',
   'ddc-ui-native',
   'ddc-source-lsp',
   'ddc-source-around',
@@ -36,38 +37,6 @@ depends = [
   'denops-popup-preview.vim',
   'denops-signature_help',
 ]
-hook_add = '''
-call ddc#custom#patch_global('ui', 'native')
-call ddc#custom#patch_global('sources', ['lsp', 'around'])
-call ddc#custom#patch_global('sourceOptions', #{
-  \ _: #{
-  \   matchers: ['matcher_head'],
-  \   sorters: ['sorter_rank'],
-  \ },
-  \ around: #{
-  \   mark: '[AROUND]'
-  \ },
-  \ lsp: #{
-  \   mark: '[LSP]',
-  \   isVolatile: v:true,
-  \   forceCompletionPattern: '\.\w*|:\w*|->\w*',
-  \ }})
-call ddc#custom#patch_global('sourceParams', #{
-  \ lsp: #{
-  \   enableResolveItem: v:true,
-  \   enableAdditionalTextEdit: v:true,
-  \   lspEngine: 'vim-lsp'
-  \ }})
-call ddc#custom#patch_global('autoCompleteDelay', 100)
-call ddc#enable()
-call popup_preview#enable()
-let g:signature_help_config = #{
-      \ contentsStyle: "full",
-      \ viewStyle: "floating"
-      \ }
-let g:lsp_signature_help_enabled = 0
-call signature_help#enable()
-'''
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
@@ -92,194 +61,33 @@ repo = 'matsui54/denops-signature_help'
 
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
-hook_add = '''
-function! s:on_lsp_buffer_enabled() abort
-  setlocal omnifunc=lsp#complete
-  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-  nmap <buffer> gd <plug>(lsp-definition)
-  nmap <buffer> gs <plug>(lsp-document-symbol-search)
-  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-  nmap <buffer> gr <plug>(lsp-references)
-  nmap <buffer> gi <plug>(lsp-implementation)
-  nmap <buffer> gt <plug>(lsp-type-definition)
-  nmap <buffer> <leader>rn <plug>(lsp-rename)
-  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-  nmap <buffer> K <plug>(lsp-hover)
-  nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-  nnoremap <buffer> <expr><c-b> lsp#scroll(-4)
-
-  let g:lsp_format_sync_timeout = 1000
-  autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
-endfunction
-
-augroup lsp_install
-  au!
-  " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-'''
 
 [[plugins]]
 repo = 'mattn/vim-lsp-settings'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-hook_add = '''
-autocmd BufWritePost * GitGutter
-'''
-
-[[plugins]]
-repo = 'Shougo/ddu.vim'
-depends = [
-  'ddu-ui-filer',
-  'ddu-ui-ff',
-  'ddu-kind-file',
-  'ddu-source-file',
-  'ddu-source-file_rec',
-  'ddu-filter-matcher_hidden',
-  'ddu-filter-matcher_substring',
-  'ddu-column-icon_filename',
-]
-hook_add = '''
-" ripgrepを使用した高速検索設定
-call ddu#custom#patch_local('ddu-rg', 'ui', 'ff')
-call ddu#custom#patch_local('ddu-rg', 'sources', [#{name: 'rg'}])
-call ddu#custom#patch_local('ddu-rg', 'sourceOptions', #{
-  \ rg: #{
-  \   matchers: [],
-  \   sorters: [],
-  \ }})
-call ddu#custom#patch_local('ddu-rg', 'sourceParams', #{
-  \ rg: #{
-  \   args: ['--json'],
-  \ }})
-call ddu#custom#patch_local('ddu-rg', 'kindOptions', #{
-  \ file: #{
-  \   defaultAction: 'open',
-  \ }})
-
-" file_recの最適化版（既存のmatcher_substringより高速な設定）
-call ddu#custom#patch_local('ddu-ff-optimized', 'ui', 'ff')
-call ddu#custom#patch_local('ddu-ff-optimized', 'sources', [#{name: 'file_rec'}])
-call ddu#custom#patch_local('ddu-ff-optimized', 'sourceOptions', #{
-  \ file_rec: #{
-  \   matchers: ['matcher_substring'],
-  \   converters: [],
-  \   sorters: [],
-  \ }})
-call ddu#custom#patch_local('ddu-ff-optimized', 'sourceParams', #{
-  \ file_rec: #{
-  \   ignoredDirectories: ['node_modules', '.git', '.vscode', 'dist', 'build', 'target'],
-  \   maxItems: 50000,
-  \ }})
-call ddu#custom#patch_local('ddu-ff-optimized', 'kindOptions', #{
-  \ file: #{
-  \   defaultAction: 'open',
-  \ }})
-
-" 共通のff設定
-autocmd Filetype ddu-ff call s:ddu_ff_setting()
-function! s:ddu_ff_setting() abort
-  setlocal cursorline
-  nnoremap <buffer><silent> <CR>
-    \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'open'})<CR>
-  nnoremap <buffer><silent> q
-    \ <CMD>call ddu#ui#do_action('quit')<CR>
-  nnoremap <buffer><silent> i
-    \ <CMD>call ddu#ui#do_action('openFilterWindow')<CR>
-endfunction
-
-" キーマッピング
-nnoremap <leader>fe <CMD>call ddu#start(#{name: 'ddu-filer'})<CR>
-nnoremap <leader>ff <CMD>call ddu#start(#{name: 'ddu-ff-optimized'})<CR>
-nnoremap <leader>fg <CMD>call ddu#start(#{name: 'ddu-rg'})<CR>
-'''
-
-[[plugins]]
-repo = 'shun/ddu-source-rg'
-
-[[plugins]]
-repo = 'yuki-yano/ddu-filter-fzf'
-
-[[plugins]]
-repo = 'Shougo/ddu-ui-filer'
-
-[[plugins]]
-repo = 'Shougo/ddu-ui-ff'
-
-[[plugins]]
-repo = 'Shougo/ddu-kind-file'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
-
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_hidden'
-
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-
-[[plugins]]
-repo = 'ryota2357/ddu-column-icon_filename'
-
-[[plugins]]
-repo = 'Shougo/ddt.vim'
-depends = [
-  'ddt-ui-terminal',
-]
-hook_add = '''
-call ddt#custom#patch_global(#{
-  \ ui: 'terminal',
-  \ uiParams: #{
-  \   terminal: #{
-  \     command: ['zsh'],
-  \     promptPattern: has('win32') ? '\f\+>' : '\w*% \?',
-  \   },
-  \ }})
-autocmd FileType ddt-shell call s:ddt_my_settings()
-function! s:ddt_my_settings() abort
-  nnoremap <buffer> <C-n>
-    \ <Cmd>call ddt#ui#do_action('nextPrompt')<CR>
-  nnoremap <buffer> <C-p>
-    \ <Cmd>call ddt#ui#do_action('previousPrompt')<CR>
-  nnoremap <buffer> <C-y>
-    \ <Cmd>call ddt#ui#do_action('pastePrompt')<CR>
-  nnoremap <buffer> <CR>
-    \ <Cmd>call ddt#ui#do_action('executeLine')<CR>
-endfunction
-nnoremap <leader>tt <CMD>call ddt#start()<CR>
-'''
-
-[[plugins]]
-repo = 'Shougo/ddt-ui-terminal'
 
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 depends = [
   'vim-airline-themes',
 ]
-hook_add = '''
-let g:airline#extensions#tabline#enabled = 1
-'''
 
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
-hook_add = '''
-let g:user_emmet_leader_key='<C-e>'
-'''
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'preservim/nerdtree'
 
 [[plugins]]
 repo = 'ghifarit53/tokyonight-vim'
-hook_add = '''
-colorscheme tokyonight
-'''
 
 [[plugins]]
 repo = 'junegunn/fzf'
