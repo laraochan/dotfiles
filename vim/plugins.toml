@@ -194,7 +194,7 @@ call ddu#custom#patch_local('ddu-ff', 'sourceOptions', #{
   \ file_rec: #{
   \   matchers: ['matcher_substring'],
   \ }})
-call ddu#customm#patch_local('ddu-ff', 'sourceParams', #{
+call ddu#custom#patch_local('ddu-ff', 'sourceParams', #{
   \ ignoredDirectories: #{
   \   'node_modules',
   \   '.git',
