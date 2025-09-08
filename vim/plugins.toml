@@ -195,11 +195,11 @@ call ddu#custom#patch_local('ddu-ff', 'sourceOptions', #{
   \   matchers: ['matcher_substring'],
   \ }})
 call ddu#custom#patch_local('ddu-ff', 'sourceParams', #{
-  \ ignoredDirectories: #{
+  \ ignoredDirectories: [
   \   'node_modules',
   \   '.git',
   \   '.vscode'
-  \ }})
+  \ ]})
 call ddu#custom#patch_local('ddu-ff', 'kindOptions', #{
   \ file: #{
   \   defaultAction: 'open',
