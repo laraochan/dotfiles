@@ -142,69 +142,43 @@ depends = [
   'ddu-column-icon_filename',
 ]
 hook_add = '''
-" ddu-filer の設定
-call ddu#custom#patch_local('ddu-filer', 'ui', 'filer')
-call ddu#custom#patch_local('ddu-filer', 'sources', [#{name: 'file'}])
-call ddu#custom#patch_local('ddu-filer', 'sourceOptions', #{
-  \ file: #{
-  \   matchers: ['matcher_hidden'],
-  \   columns: ['icon_filename'],
+" ripgrepを使用した高速検索設定
+call ddu#custom#patch_local('ddu-rg', 'ui', 'ff')
+call ddu#custom#patch_local('ddu-rg', 'sources', [#{name: 'rg'}])
+call ddu#custom#patch_local('ddu-rg', 'sourceOptions', #{
+  \ rg: #{
+  \   matchers: [],
+  \   sorters: [],
   \ }})
-call ddu#custom#patch_local('ddu-filer', 'uiParams', #{
-  \ filer: #{
-  \   sort: 'filename',
-  \   sortTreesFirst: v:true,
+call ddu#custom#patch_local('ddu-rg', 'sourceParams', #{
+  \ rg: #{
+  \   args: ['--json'],
   \ }})
-call ddu#custom#patch_local('ddu-filer', 'kindOptions', #{
+call ddu#custom#patch_local('ddu-rg', 'kindOptions', #{
   \ file: #{
   \   defaultAction: 'open',
   \ }})
-call ddu#custom#patch_local('ddu-filer', 'columnParams', #{
-  \ icon_filename: #{
-  \   defaultIcon: #{ icon: '' },
-  \ }})
 
-autocmd Filetype ddu-filer call s:ddu_filer_setting()
-function! s:ddu_filer_setting() abort
-  setlocal cursorline
-  nnoremap <buffer><silent><expr> <CR>
-    \ ddu#ui#get_item()->get('isTree', v:false) ?
-    \ "<CMD>call ddu#ui#do_action('itemAction', #{name: 'narrow'})<CR>" :
-    \ "<CMD>call ddu#ui#do_action('itemAction', #{name: 'open'})<CR>"
-  nnoremap <buffer><silent> ..
-    \ <Cmd>call ddu#ui#do_action('itemAction', #{name: 'narrow', params: #{path: '..'}})<CR>
-  nnoremap <buffer><silent> d
-    \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'delete'})<CR>
-  nnoremap <buffer><silent> c
-    \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'newFile'})<CR>
-  nnoremap <buffer><silent> r
-    \ <CMD>call ddu#ui#do_action('itemAction', #{name: 'rename'})<CR>
-  nnoremap <buffer><silent> <Space>
-    \ <CMD>call ddu#ui#do_action('toggleSelectItem')<CR>
-  nnoremap <buffer><silent> o
-    \ <CMD>call ddu#ui#do_action('expandItem', #{mode: 'toggle'})<CR>
-  nnoremap <buffer><silent> q
-    \ <CMD>call ddu#ui#do_action('quit')<CR>
-endfunction
-
-" ddu-ff の設定
-call ddu#custom#patch_local('ddu-ff', 'ui', 'ff')
-call ddu#custom#patch_local('ddu-ff', 'sources', [#{name: 'file_rec'}])
-call ddu#custom#patch_local('ddu-ff', 'sourceOptions', #{
+" file_recの最適化版（既存のmatcher_substringより高速な設定）
+call ddu#custom#patch_local('ddu-ff-optimized', 'ui', 'ff')
+call ddu#custom#patch_local('ddu-ff-optimized', 'sources', [#{name: 'file_rec'}])
+call ddu#custom#patch_local('ddu-ff-optimized', 'sourceOptions', #{
   \ file_rec: #{
   \   matchers: ['matcher_substring'],
+  \   converters: [],
+  \   sorters: [],
   \ }})
-call ddu#custom#patch_local('ddu-ff', 'sourceParams', #{
-  \ ignoredDirectories: [
-  \   'node_modules',
-  \   '.git',
-  \   '.vscode'
-  \ ]})
-call ddu#custom#patch_local('ddu-ff', 'kindOptions', #{
+call ddu#custom#patch_local('ddu-ff-optimized', 'sourceParams', #{
+  \ file_rec: #{
+  \   ignoredDirectories: ['node_modules', '.git', '.vscode', 'dist', 'build', 'target'],
+  \   maxItems: 50000,
+  \ }})
+call ddu#custom#patch_local('ddu-ff-optimized', 'kindOptions', #{
   \ file: #{
   \   defaultAction: 'open',
   \ }})
 
+" 共通のff設定
 autocmd Filetype ddu-ff call s:ddu_ff_setting()
 function! s:ddu_ff_setting() abort
   setlocal cursorline
@@ -218,8 +192,15 @@ endfunction
 
 " キーマッピング
 nnoremap <leader>fe <CMD>call ddu#start(#{name: 'ddu-filer'})<CR>
-nnoremap <leader>ff <CMD>call ddu#start(#{name: 'ddu-ff'})<CR>
+nnoremap <leader>ff <CMD>call ddu#start(#{name: 'ddu-ff-optimized'})<CR>
+nnoremap <leader>fg <CMD>call ddu#start(#{name: 'ddu-rg'})<CR>
 '''
+
+[[plugins]]
+repo = 'shun/ddu-source-rg'
+
+[[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
 
 [[plugins]]
 repo = 'Shougo/ddu-ui-filer'
