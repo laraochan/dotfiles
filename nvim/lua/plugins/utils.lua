@@ -219,4 +219,13 @@ return {
       require("nvim-ts-autotag").setup()
     end,
   },
+  {
+    "akinsho/toggleterm.nvim",
+    config = function()
+      require("toggleterm").setup({
+        size = 30,
+        open_mapping = [[<leader>tt]],
+      })
+    end,
+  },
 }
