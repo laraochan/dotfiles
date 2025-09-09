@@ -224,7 +224,6 @@ return {
     config = function()
       require("toggleterm").setup({
         size = 30,
-        open_mapping = [[<leader>tt]],
       })
     end,
   },
