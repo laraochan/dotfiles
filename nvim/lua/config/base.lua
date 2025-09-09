@@ -20,13 +20,9 @@ vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
 
--- vim.o.encoding = "utf-8"
--- vim.o.fileencoding = "utf-8"
-
 vim.o.signcolumn = "yes"
 vim.o.background = "dark"
 vim.o.termguicolors = true
-vim.o.winborder = "rounded"
 
 vim.o.errorbells = false
 vim.o.visualbell = false
@@ -44,3 +40,5 @@ vim.diagnostic.config({
     border = "rounded",
   },
 })
+
+vim.cmd("hi FloatBorder guibg=#2b3339 guifg=#d3c6aa")

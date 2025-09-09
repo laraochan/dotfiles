@@ -61,7 +61,9 @@ return {
         config.on_attach = function(client, bufnr)
           local opts = { noremap = true, silent = true, buffer = bufnr }
 
-          vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, opts)
+          vim.keymap.set("n", "<leader>k", function()
+            vim.lsp.buf.hover({ border = "rounded" })
+          end, opts)
           vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
           vim.keymap.set("n", "<leader>gD", vim.lsp.buf.type_definition, opts)
           vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, opts)
@@ -75,6 +77,9 @@ return {
           vim.keymap.set("n", "<leader>dh", vim.diagnostic.hide, opts)
           vim.keymap.set("n", "<leader>ds", vim.diagnostic.show, opts)
         end
+
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+
         vim.lsp.config(server, config)
         vim.lsp.enable(server)
       end
