@@ -1,9 +1,16 @@
 return {
+  -- {
+  --   "AlexvZyl/nordic.nvim",
+  --   lazy = false,
+  --   config = function()
+  --     require("nordic").load()
+  --   end,
+  -- },
   {
-    "AlexvZyl/nordic.nvim",
+    "miikanissi/modus-themes.nvim",
     lazy = false,
     config = function()
-      require("nordic").load()
+      vim.cmd.colorscheme("modus")
     end,
   },
   {
