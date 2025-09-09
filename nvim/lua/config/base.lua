@@ -20,8 +20,8 @@ vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
 
-vim.o.encoding = "utf-8"
-vim.o.fileencoding = "utf-8"
+-- vim.o.encoding = "utf-8"
+-- vim.o.fileencoding = "utf-8"
 
 vim.o.signcolumn = "yes"
 vim.o.background = "dark"
