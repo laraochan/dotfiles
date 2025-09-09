@@ -1,4 +1,6 @@
-local keymap = vim.keymap.set
+vim.keymap.set("n", "<leader>bx", "<CMD>bd<CR>")
 
-keymap("n", "<leader>bx", "<CMD>bd<CR>", { desc = "buffer delete" })
+vim.keymap.set("n", "<leader>fe", "<CMD>NvimTreeToggle<CR>")
+
+vim.keymap.set("n", "<leader>ff", "<CMD>FzfLua files<CR>")
 

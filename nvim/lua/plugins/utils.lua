@@ -1,8 +1,23 @@
 return {
   {
-    "numToStr/Comment.nvim",
+    "AlexvZyl/nordic.nvim",
+    lazy = false,
     config = function()
-      require("Comment").setup()
+      require("nordic").load()
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate",
+    config = function()
+      local treesitter = require("nvim-treesitter.configs")
+      treesitter.setup({
+        ensure_installed = { "vim", "vimdoc", "lua" },
+        highlight = {
+          enable = true,
+        },
+      })
     end,
   },
   {
@@ -11,81 +26,109 @@ return {
     config = true,
   },
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-  },
-  {
-    "nvim-lua/plenary.nvim",
-  },
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-telescope/telescope-file-browser.nvim",
-    },
+    "numToStr/Comment.nvim",
     config = function()
-      require("telescope").setup({
-        defaults = {
-          border = false,
-        },
-      })
-
-      local builtin = require("telescope.builtin")
-      local extensions = require("telescope").extensions
-      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-      vim.keymap.set("n", "<leader>fe", function()
-        extensions.file_browser.file_browser()
-      end, { desc = "Telescppe file_browser" })
+      require("Comment").setup()
     end,
   },
   {
-    "hrsh7th/nvim-cmp",
+    "saghen/blink.cmp",
+    opts = {
+      keymap = { preset = "enter" },
+      appearance = {
+        nerd_font_variant = "mono",
+      },
+      completion = { documentation = { auto_show = true } },
+      sources = {
+        default = { "lsp", "path", "buffer" },
+      },
+      fuzzy = { implementation = "lua" },
+    },
+    opts_extend = { "sources.default" },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "saghen/blink.cmp" },
+    config = function()
+      local servers = {
+        lua_ls = {},
+        ts_ls = {},
+        gopls = {},
+        intelephense = {},
+      }
+      for server, config in pairs(servers) do
+        config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+        config.on_attach = function(client, bufnr)
+          local opts = { noremap = true, silent = true, buffer = bufnr }
+          vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
+        end
+        vim.lsp.config(server, config)
+        vim.lsp.enable(server)
+      end
+    end,
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end,
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    config = function()
+      require("nvim-tree").setup()
+
+      -- autocmdでnvim-treeだけが残った時に自動終了
+      vim.api.nvim_create_autocmd("QuitPre", {
+        callback = function()
+          local tree_wins = {}
+          local floating_wins = {}
+          local wins = vim.api.nvim_list_wins()
+          for _, w in ipairs(wins) do
+            local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
+            if bufname:match("NvimTree_") ~= nil then
+              table.insert(tree_wins, w)
+            end
+            if vim.api.nvim_win_get_config(w).relative ~= "" then
+              table.insert(floating_wins, w)
+            end
+          end
+          if 1 == #wins - #floating_wins - #tree_wins then
+            -- nvim-treeだけが残っている場合は強制終了
+            vim.cmd("qall!")
+          end
+        end,
+      })
+    end,
+  },
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  {
+    "romgrk/barbar.nvim",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
+      "lewis6991/gitsigns.nvim",
+      "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      local cmp = require("cmp")
-
-      cmp.setup({
-        mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-        }, {
-          { name = "buffer" },
-        }),
+      require("barbar").setup({
+        animation = false,
+        auto_hide = true,
       })
-
-      cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-        },
-      })
-
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = "path" },
-        }, {
-          { name = "cmdline" },
-        }),
-      })
+    end,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lualine").setup()
     end,
   },
   {
     "nvimtools/none-ls.nvim",
     dependencies = {
+      "nvim-lua/plenary.nvim",
       "nvimtools/none-ls-extras.nvim",
       "gbprod/none-ls-ecs.nvim",
     },
@@ -146,79 +189,9 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "nvimtools/none-ls.nvim",
-    },
-    config = function()
-      vim.lsp.config("*", {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-      })
-      vim.lsp.enable("ts_ls")
-      vim.lsp.enable("gopls")
-      vim.lsp.enable("rust_analyzer")
-      vim.lsp.enable("lua_ls")
-      vim.lsp.enable("intelephense")
-    end,
-  },
-  {
-    "nvimdev/lspsaga.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("lspsaga").setup({
-        definition = {
-          keys = {
-            edit = "o",
-          },
-        },
-        symbol_in_winbar = {
-          enable = false,
-        },
-        lightbulb = {
-          enable = false,
-        },
-      })
-
-      vim.keymap.set("n", "K", "<CMD>Lspsaga hover_doc<CR>")
-      vim.keymap.set("n", "gr", "<CMD>Lspsaga finder ref<CR>")
-      vim.keymap.set("n", "gp", "<CMD>Lspsaga finder imp<CR>")
-      vim.keymap.set("n", "gd", "<CMD>Lspsaga peek_definition<CR>")
-      vim.keymap.set("n", "ga", "<CMD>Lspsaga code_action<CR>")
-      vim.keymap.set("n", "gn", "<CMD>Lspsaga rename<CR>")
-      vim.keymap.set("n", "ge", "<CMD>Lspsaga show_line_diagnostics<CR>")
-      vim.keymap.set("n", "[e", "<CMD>Lspsaga diagnostic_jump_next<CR>")
-      vim.keymap.set("n", "]e", "<CMD>Lspsaga diagnostic_jump_prev<CR>")
-
-      vim.keymap.set("n", "<leader>tt", "<CMD>Lspsaga term_toggle<CR>")
-    end,
-  },
-  {
-    "mason-org/mason.nvim",
-    dependencies = {
-      "jay-babu/mason-null-ls.nvim",
-    },
-    config = function()
-      require("mason").setup()
-      require("mason-null-ls").setup()
-    end,
-  },
-  {
     "windwp/nvim-ts-autotag",
     config = function()
       require("nvim-ts-autotag").setup()
     end,
-  },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    -- stylua: ignore
-    keys = {
-      { "<leader>ss", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
-      { "<leader>s[", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    },
   },
 }
