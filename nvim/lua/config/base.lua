@@ -14,17 +14,17 @@ vim.o.smartcase = true
 vim.o.hlsearch = true
 vim.o.incsearch = true
 
-vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = "unnamedplus"
 
 vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
 
--- vim.o.encoding = 'utf-8'
--- vim.o.fileencoding = 'utf-8'
+vim.o.encoding = "utf-8"
+vim.o.fileencoding = "utf-8"
 
-vim.o.signcolumn = 'yes'
-vim.o.background = 'dark'
+vim.o.signcolumn = "yes"
+vim.o.background = "dark"
 vim.o.termguicolors = true
 
 vim.o.errorbells = false
@@ -32,3 +32,15 @@ vim.o.visualbell = false
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = "●",
+  },
+  virtual_lines = false,
+  signs = true,
+  float = {
+    border = "rounded",
+  },
+})
+vim.api.nvim_set_hl(0, "DiagnosticBorder", { fg = "#BFC8D9", bg = nil, bold = true })
