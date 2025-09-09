@@ -26,6 +26,7 @@ vim.o.swapfile = false
 vim.o.signcolumn = "yes"
 vim.o.background = "dark"
 vim.o.termguicolors = true
+vim.o.winborder = "rounded"
 
 vim.o.errorbells = false
 vim.o.visualbell = false
@@ -43,4 +44,3 @@ vim.diagnostic.config({
     border = "rounded",
   },
 })
-vim.api.nvim_set_hl(0, "DiagnosticBorder", { fg = "#BFC8D9", bg = nil, bold = true })

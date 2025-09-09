@@ -60,16 +60,6 @@ return {
         config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
         config.on_attach = function(client, bufnr)
           local opts = { noremap = true, silent = true, buffer = bufnr }
-          local border = {
-            { "╭", "DiagnosticBorder" },
-            { "─", "DiagnosticBorder" },
-            { "╮", "DiagnosticBorder" },
-            { "│", "DiagnosticBorder" },
-            { "╯", "DiagnosticBorder" },
-            { "─", "DiagnosticBorder" },
-            { "╰", "DiagnosticBorder" },
-            { "│", "DiagnosticBorder" },
-          }
 
           vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, opts)
           vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
@@ -78,9 +68,7 @@ return {
           vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-          vim.keymap.set("n", "<leader>e", function()
-            vim.diagnostic.open_float(nil, { border = border })
-          end, opts)
+          vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
           vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
           vim.keymap.set("n", "d]", vim.diagnostic.goto_next, opts)
           vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
