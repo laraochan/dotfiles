@@ -1,22 +1,9 @@
 return {
-  -- {
-  --   "miikanissi/modus-themes.nvim",
-  --   lazy = false,
-  --   config = function()
-  --     vim.cmd.colorscheme("modus")
-  --   end,
-  -- },
   {
     "AlexvZyl/nordic.nvim",
     config = function()
       local nordic = require("nordic")
       nordic.setup({
-        -- This callback can be used to override the colors used in the base palette.
-        on_palette = function(palette) end,
-        -- This callback can be used to override the colors used in the extended palette.
-        after_palette = function(palette) end,
-        -- This callback can be used to override highlights before they are applied.
-        on_highlight = function(highlights, palette) end,
         -- Enable bold keywords.
         bold_keywords = false,
         -- Enable italic comments.
@@ -29,7 +16,7 @@ return {
           float = false,
         },
         -- Enable brighter float border.
-        bright_border = false,
+        bright_border = true,
         -- Reduce the overall amount of blue in the theme (diverges from base Nord).
         reduced_blue = true,
         -- Swap the dark background with the normal one.

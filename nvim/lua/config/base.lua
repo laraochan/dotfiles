@@ -40,5 +40,3 @@ vim.diagnostic.config({
     border = "rounded",
   },
 })
-
-vim.cmd("hi FloatBorder guibg=#2b3339 guifg=#d3c6aa")
