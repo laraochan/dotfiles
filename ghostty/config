@@ -25,3 +25,4 @@ palette = 14=#29b8db
 palette = 15=#e5e5e5
 font-family = Hack Nerd Font Mono
 font-size = 15
+window-decoration = false
