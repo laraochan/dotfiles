@@ -13,6 +13,8 @@ bspc config focus_follows_pointer true
 bspc config remove_unplugged_monitors true
 bspc config remove_disabled_monitors true
 
+bspc config focused_border_color "#0096FA"
+
 MONITOR_COUNT=$(bspc query -M | wc -l)
 if [ "$MONITOR_COUNT" -eq 1 ]; then
 	bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9 10
@@ -27,3 +29,8 @@ dunst &
 polybar &
 setxkbmap -option ctrl:nocaps
 autorandr --change
+
+xset s 600
+xset dpms 600 615 630
+xset +dpms
+xss-lock -- i3lock --blur 5 --clock --radius=150 --time-size=50 &
