@@ -120,6 +120,9 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
+super + shift + q
+  i3lock --blur 5 --clock --color 000000 --radius=150 --time-size=50
+
 # Raise volume
 XF86AudioRaiseVolume
   pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -134,24 +137,33 @@ XF86AudioMute
  
 # Play
 XF86AudioPlay
-    playerctl play-pause
+  playerctl play-pause
  
 #Next
 XF86AudioNext
-    playerctl next
+  playerctl next
  
 #previous
 XF86AudioPrev
-    playerctl previous
+  playerctl previous
  
 #Stop
 XF86AudioStop
-    playerctl stop
+  playerctl stop
 
 # Increase brightness
 XF86MonBrightnessUp
-    brightnessctl s 10%+
+  brightnessctl s 10%+
 
 # Decrease brightness
 XF86MonBrightnessDown
-    brightnessctl s 10%-
+  brightnessctl s 10%-
+
+Print
+  maim -usB ~/Pictures/screenshot/$(date +%s).png
+
+super + Print
+  maim -i $(xdotool getactivewindow) ~/Pictures/screenshot/$(date +%s).png
+
+super + shift + Print
+  maim ~/Pictures/screenshot/$(date +%s).png
