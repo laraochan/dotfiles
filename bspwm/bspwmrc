@@ -24,9 +24,17 @@ elif [ "$MONITOR_COUNT" -eq 2 ]; then
 fi
 bspc desktop -f 1
 
+# input method module setting
+export GTK_IM_MODULE="fcitx5"
+export QT_IM_MODULE="fcitx5"
+export XMODIFIERS='@im=fcitx5'
+
+export XCURSOR_SIZE=24
+
 fcitx5 &
 dunst &
-polybar &
+# polybar &
+sh ~/.config/polybar/launch_polybar.sh
 setxkbmap -option ctrl:nocaps
 autorandr --change
 
@@ -34,3 +42,4 @@ xset s 600
 xset dpms 600 615 630
 xset +dpms
 xss-lock -- i3lock --blur 5 --clock --radius=150 --time-size=50 &
+xsetroot -cursor_name left_ptr &
