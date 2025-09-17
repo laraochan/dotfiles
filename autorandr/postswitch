@@ -1,3 +1,2 @@
 #!/bin/sh
-sh ~/.fehbg
 bspc wm -r
