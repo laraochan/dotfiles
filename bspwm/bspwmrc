@@ -2,7 +2,7 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-bspc config border_width         2
+bspc config border_width         5
 bspc config window_gap          12
 
 bspc config split_ratio          0.52
@@ -15,20 +15,25 @@ bspc config remove_disabled_monitors true
 
 bspc config focused_border_color "#0096FA"
 
-MONITOR_COUNT=$(bspc query -M | wc -l)
-if [ "$MONITOR_COUNT" -eq 1 ]; then
-	bspc monitor -d 1 2 3 4 5 6 7 8 9 10
-elif [ "$MONITOR_COUNT" -eq 2 ]; then
-	bspc monitor DP-1 -d 1 2 3 4 5
-	bspc monitor eDP-1 -d 6 7 8 9 10
+MONITORS=($(bspc query -M --names))
+MONITOR_COUNT=${#MONITORS[@]}
 
-  bspc desktop 6 -n 1
-  bspc desktop 7 -n 2
-  bspc desktop 8 -n 3
-  bspc desktop 9 -n 4
-  bspc desktop 10 -n 5
+if [ "$MONITOR_COUNT" -eq 1 ]; then
+    bspc monitor "${MONITORS[0]}" -d 1 2 3 4 5 6 7 8 9 10
+elif [ "$MONITOR_COUNT" -ge 2 ]; then
+    INTERNAL=$(printf "%s\n" "${MONITORS[@]}" | grep -m1 "eDP")
+    EXTERNAL=$(printf "%s\n" "${MONITORS[@]}" | grep -v "eDP" | head -n1)
+
+    if [ -n "$EXTERNAL" ]; then
+        bspc monitor "$EXTERNAL" -d 1 2 3 4 5
+    fi
+    if [ -n "$INTERNAL" ]; then
+        bspc monitor "$INTERNAL" -d 6 7 8 9 10
+    fi
 fi
-bspc desktop -f 1
+if bspc query -D -d 1 >/dev/null 2>&1; then
+    bspc desktop -f 1
+fi
 
 # input method module setting
 export GTK_IM_MODULE="fcitx5"
@@ -39,13 +44,14 @@ export XCURSOR_SIZE=24
 
 fcitx5 &
 dunst &
-# polybar &
 sh ~/.config/polybar/launch_polybar.sh
 setxkbmap -option ctrl:nocaps
 autorandr --change
+sh ~/.fehbg
 
 xset s 600
 xset dpms 600 615 630
 xset +dpms
 xss-lock -- i3lock --blur 5 --clock --radius=150 --time-size=50 &
 xsetroot -cursor_name left_ptr &
+
