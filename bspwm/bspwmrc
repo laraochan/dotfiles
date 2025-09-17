@@ -19,20 +19,21 @@ MONITORS=($(bspc query -M --names))
 MONITOR_COUNT=${#MONITORS[@]}
 
 if [ "$MONITOR_COUNT" -eq 1 ]; then
-    bspc monitor "${MONITORS[0]}" -d 1 2 3 4 5 6 7 8 9 10
+  bspc monitor "${MONITORS[0]}" -d 1 2 3 4 5 6 7 8 9 10
 elif [ "$MONITOR_COUNT" -ge 2 ]; then
-    INTERNAL=$(printf "%s\n" "${MONITORS[@]}" | grep -m1 "eDP")
-    EXTERNAL=$(printf "%s\n" "${MONITORS[@]}" | grep -v "eDP" | head -n1)
+  INTERNAL=$(printf "%s\n" "${MONITORS[@]}" | grep -m1 "eDP")
+  EXTERNAL=$(printf "%s\n" "${MONITORS[@]}" | grep -v "eDP" | head -n1)
 
-    if [ -n "$EXTERNAL" ]; then
-        bspc monitor "$EXTERNAL" -d 1 2 3 4 5
-    fi
-    if [ -n "$INTERNAL" ]; then
-        bspc monitor "$INTERNAL" -d 6 7 8 9 10
-    fi
+  if [ -n "$EXTERNAL" ]; then
+    bspc monitor "$EXTERNAL" -d 1 2 3 4 5
+  fi
+  if [ -n "$INTERNAL" ]; then
+    bspc monitor "$INTERNAL" -d 6 7 8 9 10
+  fi
 fi
+
 if bspc query -D -d 1 >/dev/null 2>&1; then
-    bspc desktop -f 1
+  bspc desktop -f 1
 fi
 
 # input method module setting
