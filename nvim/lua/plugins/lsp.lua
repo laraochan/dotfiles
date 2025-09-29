@@ -1,0 +1,4 @@
+vim.lsp.config('*', {
+  capabilities = require("ddc_source_lsp").make_client_capabilities(),
+})
+vim.lsp.enable('ts_ls')

@@ -1,5 +1,0 @@
-[[plugins]]
-repo = 'shaunsingh/nord.nvim'
-lua_add = '''
-vim.cmd.colorscheme('nord')
-'''

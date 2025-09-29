@@ -1,42 +1,17 @@
-vim.o.expandtab = true
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
-
-vim.o.autoindent = true
-vim.o.smartindent = true
-
-vim.o.shiftround = true
-vim.o.smarttab = true
-
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.hlsearch = true
-vim.o.incsearch = true
-
-vim.o.clipboard = "unnamedplus"
-
-vim.o.backup = false
-vim.o.writebackup = false
-vim.o.swapfile = false
-
-vim.o.signcolumn = "yes"
-vim.o.background = "dark"
-vim.o.termguicolors = true
-
-vim.o.errorbells = false
-vim.o.visualbell = false
-
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
-
-vim.diagnostic.config({
-  virtual_text = {
-    prefix = "●",
-  },
-  virtual_lines = false,
-  signs = true,
-  float = {
-    border = "rounded",
-  },
-})
+vim.opt.termguicolors = true
+vim.opt.signcolumn = "yes"
+vim.opt.clipboard = "unnamedplus"
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.smartindent = true
+vim.opt.autoindent = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.scrolloff = 5
+vim.opt.wrap = false
+vim.opt.undofile = true
+vim.opt.mouse = "a"

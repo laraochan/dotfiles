@@ -1,0 +1,54 @@
+[[plugins]]
+repo = 'ellisonleao/gruvbox.nvim'
+lua_add = '''
+vim.cmd.colorscheme('gruvbox')
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+lua_add = '''
+require('plugins.treesitter')
+'''
+hook_post_update = '''
+:TSUpdate
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+lua_add = '''
+require('plugins.ddc')
+'''
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+lua_add = '''
+require('plugins.lsp')
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-source-lsp'
+
+[[plugins]]
+repo = 'numToStr/Comment.nvim'
+lua_add = '''
+require('Comment').setup()
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-filter-sorter_lsp_kind'
+
