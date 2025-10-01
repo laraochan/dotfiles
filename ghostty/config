@@ -1,4 +1,4 @@
-theme = "Dracula"
+theme = "Gruvbox Dark"
 cursor-style = "block"
 shell-integration-features = no-cursor
 keybind = shift+enter=text:\x1b\r
