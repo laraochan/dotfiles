@@ -52,3 +52,8 @@ require('Comment').setup()
 [[plugins]]
 repo = 'Shougo/ddc-filter-sorter_lsp_kind'
 
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-filter-sorter_rank'
