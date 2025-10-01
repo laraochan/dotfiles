@@ -15,6 +15,9 @@ repo = 'Shougo/dpp-protocol-git'
 
 [[plugins]]
 repo = 'Shougo/ddc.vim'
+hook_add = '''
+source ~/.config/vim/rc/plugins/ddc.vim
+'''
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-pum'
@@ -30,6 +33,15 @@ repo = 'Shougo/ddc-source-around'
 
 [[plugins]]
 repo = 'Shougo/ddc-source-lsp'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+source ~/.config/vim/rc/plugins/lsp.vim
+'''
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
 
 [[plugins]]
 repo = 'morhetz/gruvbox'
