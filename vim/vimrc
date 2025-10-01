@@ -1,0 +1,47 @@
+syntax on
+filetype indent plugin on
+set clipboard+=unnamed
+set nocompatible
+set regexpengine=2 " use NFA engine
+set termguicolors
+set background=dark
+
+
+const s:dpp_base = expand('~/.cache/dpp')
+const s:dpp_config = expand('~/.config/vim/dpp.ts')
+
+const s:denops_src = '~/.cache/dpp/repos/github.com/vim-denops/denops.vim'
+const s:denops_hello = '~/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim'
+
+execute 'set runtimepath+=' .. s:denops_src
+execute 'set runtimepath+=' .. s:denops_hello
+
+
+const s:dpp_src = '~/.cache/dpp/repos/github.com/Shougo/dpp.vim'
+const s:dpp_installer = '~/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer'
+const s:dpp_lazy = '~/.cache/dpp/repos/github.com/Shougo/dpp-ext-lazy'
+const s:dpp_toml = '~/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml'
+const s:dpp_git = '~/.cache/dpp/repos/github.com/Shougo/dpp-protocol-git'
+
+execute 'set runtimepath+=' .. s:dpp_src
+execute 'set runtimepath+=' .. s:dpp_installer
+execute 'set runtimepath+=' .. s:dpp_lazy
+execute 'set runtimepath+=' .. s:dpp_toml
+execute 'set runtimepath+=' .. s:dpp_git
+
+if s:dpp_base->dpp#min#load_state()
+	autocmd User DenopsReady
+		\ : echohl WarningMsg
+		\ | echomsg 'dpp load_state() is failed'
+		\ | echohl NONE
+		\ | call dpp#make_state(s:dpp_base, s:dpp_config)
+endif
+
+autocmd User Dpp:makeStatePost
+	\ : echohl WarningMsg
+	\ | echomsg 'dpp make_state() is done'
+	\ | echohl NONE
+
+command! DppInstall call dpp#async_ext_action('installer', 'install')
+command! -nargs=* DppUpdate call dpp#async_ext_action('installer', 'update', { 'names': <f-args> })
+
