@@ -7,28 +7,33 @@ inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
 
 call ddc#custom#patch_global(#{
 	\ ui: 'pum',
-	\ sources: ['around', 'lsp'],
+	\ sources: ['around', 'lsp', 'file'],
 	\ sourceOptions: #{
-        \       _: #{
-	\		ignoreCase: v:true,
-	\		matchers: ['matcher_fuzzy'],
-	\		sorters: ['sorter_fuzzy'],
+  \   _: #{
+	\		  ignoreCase: v:true,
+	\		  matchers: ['matcher_fuzzy'],
+	\		  sorters: ['sorter_fuzzy'],
 	\ 	},
-	\	around: #{
-	\		mark: '[ALD]',
-	\	},
-	\	lsp: #{
-	\		mark: '[LSP]',
-	\		isVolatile: v:true,
-	\		forceCompletionPattern: '\.\w*|:\w*|->\w*',
-	\	},
+	\	  around: #{
+	\		  mark: '[ALD]',
+	\	  },
+	\	  lsp: #{
+	\		  mark: '[LSP]',
+	\		  isVolatile: v:true,
+	\		  forceCompletionPattern: '\.\w*|:\w*|->\w*',
+	\	  },
+  \   file: #{
+  \     mark: '[FIL]',
+  \     isVolatile: v:true,
+  \     forceCompletionPattern: '\S/\S*',
+  \   },
 	\ },
 	\ sourceParams: #{
-	\	lsp: #{
-	\		lspEngine: 'vim-lsp',
-	\		enableResolveItem: v:true,
-	\		enableAdditionalTextEdit: v:true,
-	\	},
-	\ }})
+	\	  lsp: #{
+	\		  lspEngine: 'vim-lsp',
+	\		  enableResolveItem: v:true,
+	\		  enableAdditionalTextEdit: v:true,
+	\	  },
+  \ }})
 call ddc#enable()
 

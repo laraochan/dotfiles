@@ -1,6 +1,6 @@
 call ddu#custom#patch_local('filer', #{
 	\ ui: 'filer',
-	\ sources: [#{ name: 'file', params: {} }],
+  \ sources: [#{ name: 'file', params: {} }],
 	\ sourceOptions: #{
 	\ 	_: #{
 	\		  columns: ['filename'],

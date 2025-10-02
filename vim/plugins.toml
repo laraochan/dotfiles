@@ -41,6 +41,9 @@ source ~/.config/vim/rc/plugins/lsp.vim
 '''
 
 [[plugins]]
+repo = 'LumaKernel/ddc-source-file'
+
+[[plugins]]
 repo = 'mattn/vim-lsp-settings'
 
 [[plugins]]
@@ -66,4 +69,10 @@ repo = 'Shougo/ddu-kind-file'
 
 [[plugins]]
 repo = 'Shougo/ddu-column-filename'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+source ~/.config/vim/rc/plugins/gitgutter.vim
+'''
 
