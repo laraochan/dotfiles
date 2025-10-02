@@ -6,7 +6,6 @@ import {
 import { type Toml } from "jsr:@shougo/dpp-ext-toml@2.0.1";
 import { expand } from "jsr:@denops/std@8.0.0/function";
 
-
 export class Config extends BaseConfig {
 	override async config(args: ConfigArguments): Promise<ConfigReturn> {
 		args.contextBuilder.setGlobal({
