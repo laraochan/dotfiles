@@ -76,3 +76,11 @@ hook_add = '''
 source ~/.config/vim/rc/plugins/gitgutter.vim
 '''
 
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+source ~/.config/vim/rc/plugins/airline.vim
+'''
+
+[[plugnis]]
+repo = 'vim-airline/vim-airline-themes'
