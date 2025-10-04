@@ -28,6 +28,11 @@ call ddu#custom#patch_local('ff', #{
   \     converters: [ 'converter_devicon' ],
   \   },
   \ },
+  \ sourceParams: #{
+  \   _: #{
+  \     ignoredDirectories: [ '.git', 'node_modules' ]
+  \   },
+  \ },
   \ filterParams: #{
   \   matcher_substring: #{
   \     highlightMatched: 'PmenuMatch',

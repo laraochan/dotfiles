@@ -92,6 +92,9 @@ repo = 'uga-rosa/ddu-filter-converter_devicon'
 repo = 'Shougo/ddu-filter-matcher_substring'
 
 [[plugins]]
+repo = 'Shougo/ddu-filter-matcher_hidden'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
 source ~/.config/vim/rc/plugins/gitgutter.vim
