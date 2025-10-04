@@ -1,3 +1,5 @@
+let g:lsp_settings_enable_suggestions = 0
+
 if executable('typescript-language-server')
   au User lsp_setup call lsp#register_server(#{
     \ name: 'tsserver',
