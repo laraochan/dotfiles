@@ -74,6 +74,15 @@ repo = 'Shougo/ddu-ui-ff'
 repo = 'shun/ddu-source-buffer'
 
 [[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+
+[[plugins]]
+repo = 'uga-rosa/ddu-filter-converter_devicon'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
 source ~/.config/vim/rc/plugins/gitgutter.vim

@@ -3,7 +3,8 @@ call ddu#custom#patch_local('filer', #{
   \ sources: [#{ name: 'file', params: {} }],
 	\ sourceOptions: #{
 	\ 	_: #{
-	\		  columns: ['filename'],
+	\		  columns: [ 'filename' ],
+  \     converters: [ 'converter_devicon' ],
 	\	  },
 	\ },
 	\ kindOptions: #{
@@ -16,12 +17,28 @@ call ddu#custom#patch_local('filer', #{
   \   },
   \ }}})
 
+call ddu#custom#patch_local('ff', #{
+  \ ui: 'ff',
+  \ sources: [#{ name: 'file_rec', params: #{} }],
+  \ sourceOptions: #{
+  \   _: #{
+  \     matchers: [ 'matcher_substring' ],
+  \     converters: [ 'converter_devicon' ],
+  \   },
+  \ },
+  \ filterParams: #{
+  \   matcher_substring: #{
+  \     highlightMatched: 'PmenuMatch',
+  \   },
+  \ }})
+
 call ddu#custom#patch_local('buffer', #{
   \ ui: 'ff',
   \ sources: [#{ name: 'buffer', params: #{} }],
   \ })
 
 nnoremap <leader>e <Cmd>call ddu#start(#{ name: 'filer' })<CR>
+nnoremap <leader>f <Cmd>call ddu#start(#{ name: 'ff' })<CR>
 nnoremap <leader>b <Cmd>call ddu#start(#{ name: 'buffer' })<CR>
 
 autocmd FileType ddu* call s:ddu_keymap_config()
@@ -44,9 +61,16 @@ function! s:ddu_keymap_config() abort
     \   'nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''delete'' })<CR>',
     \   'nnoremap <buffer><silent> r <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''rename'' })<CR>',
     \   'nnoremap <buffer><silent> m <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''move'' })<CR>',
-    \   'nnoremap <buffer><silent> n <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''newFile'' })<CR>'
+    \   'nnoremap <buffer><silent> n <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''newFile'' })<CR>',
+    \ ],
+    \ ff: [
+    \   'nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''open'' })<CR>',
+    \   'nnoremap <buffer><silent> i <Cmd>call ddu#ui#do_action(''openFilterWindow'')<CR>',
+    \   'nnoremap <buffer><silent> <C-u> <Cmd>call ddu#ui#do_action(''previewExecute'', #{ command: ''execute "normal! \<C-y>"'' })<CR>',
+    \   'nnoremap <buffer><silent> <C-d> <Cmd>call ddu#ui#do_action(''previewExecute'', #{ command: ''execute "normal! \<C-e>"'' })<CR>',
     \ ],
     \ buffer: [
+    \   'nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''open'' })<CR>'
     \ ]}
 
   if has_key(s:mappings, 'global')

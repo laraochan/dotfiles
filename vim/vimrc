@@ -80,3 +80,5 @@ if has('syntax')
   syntax on
 endif
 
+command! DppInstall call dpp#async_ext_action('installer', 'install')
+command! -nargs=* DppUpdate call dpp#async_ext_action('installer', 'update', #{ names: [<f-args>] })
