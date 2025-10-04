@@ -1,6 +1,6 @@
 call ddu#custom#patch_local('filer', #{
 	\ ui: 'filer',
-  \ sources: [#{ name: 'file', params: {} }],
+  \ sources: [ #{ name: 'file', params: {} } ],
 	\ sourceOptions: #{
 	\ 	_: #{
 	\		  columns: [ 'filename' ],
@@ -19,7 +19,7 @@ call ddu#custom#patch_local('filer', #{
 
 call ddu#custom#patch_local('ff', #{
   \ ui: 'ff',
-  \ sources: [#{ name: 'file_rec', params: #{} }],
+  \ sources: [ #{ name: 'file_rec', params: #{} } ],
   \ sourceOptions: #{
   \   _: #{
   \     matchers: [ 'matcher_substring' ],
@@ -34,7 +34,7 @@ call ddu#custom#patch_local('ff', #{
 
 call ddu#custom#patch_local('buffer', #{
   \ ui: 'ff',
-  \ sources: [#{ name: 'buffer', params: #{} }],
+  \ sources: [ #{ name: 'buffer', params: #{} } ],
   \ })
 
 nnoremap <leader>e <Cmd>call ddu#start(#{ name: 'filer' })<CR>
@@ -70,7 +70,7 @@ function! s:ddu_keymap_config() abort
     \   'nnoremap <buffer><silent> <C-d> <Cmd>call ddu#ui#do_action(''previewExecute'', #{ command: ''execute "normal! \<C-e>"'' })<CR>',
     \ ],
     \ buffer: [
-    \   'nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''open'' })<CR>'
+    \   'nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''open'' })<CR>',
     \ ]}
 
   if has_key(s:mappings, 'global')
