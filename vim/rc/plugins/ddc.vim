@@ -12,7 +12,7 @@ call ddc#custom#patch_global(#{
   \   _: #{
 	\		  ignoreCase: v:true,
 	\		  matchers: [ 'matcher_fuzzy' ],
-	\		  sorters: ['sorter_fuzzy'],
+	\		  sorters: [ 'sorter_fuzzy', 'sorter_lsp_kind' ],
   \     converters: [ 'converter_fuzzy' ],
 	\ 	},
 	\	  around: #{
