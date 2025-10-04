@@ -9,13 +9,14 @@ call ddu#custom#patch_local('filer', #{
 	\ },
 	\ kindOptions: #{
 	\ 	file: #{
-	\		defaultAction: 'open',
-	\	},
+	\		  defaultAction: 'open',
+	\	  },
+  \ },
   \ uiParams: #{
   \   filer: #{
-  \     split: 'vertical',
+  \     split: 'no',
   \   },
-  \ }}})
+  \ }})
 
 call ddu#custom#patch_local('ff', #{
   \ ui: 'ff',
@@ -30,12 +31,21 @@ call ddu#custom#patch_local('ff', #{
   \   matcher_substring: #{
   \     highlightMatched: 'PmenuMatch',
   \   },
+  \ },
+  \ uiParams: #{
+  \   ff: #{
+  \     split: 'no',
+  \   },
   \ }})
 
 call ddu#custom#patch_local('buffer', #{
   \ ui: 'ff',
   \ sources: [ #{ name: 'buffer', params: #{} } ],
-  \ })
+  \ uiParams: #{
+  \   ff: #{
+  \     split: 'tab',
+  \   },
+  \ }})
 
 nnoremap <leader>e <Cmd>call ddu#start(#{ name: 'filer' })<CR>
 nnoremap <leader>f <Cmd>call ddu#start(#{ name: 'ff' })<CR>
@@ -51,7 +61,7 @@ let s:mappings = #{
   \     .. ': "<Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''open'' })<CR>"',
   \   'nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#do_action(''toggleSelectItem'')<CR>',
   \   'nnoremap <buffer><silent> o <Cmd>call ddu#ui#do_action(''expandItem'', #{ mode: ''toggle'' })<CR>',
-  \   'nnoremap <buffer><silent> .. <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''narrow'', params: #{ path: '..' } })<CR>',
+  \   'nnoremap <buffer><silent> .. <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''narrow'', params: #{ path: ''..'' } })<CR>',
   \   'nnoremap <buffer><silent> c <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''copy'' })<CR>',
   \   'nnoremap <buffer><silent> p <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''paste'' })<CR>',
   \   'nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''delete'' })<CR>',
