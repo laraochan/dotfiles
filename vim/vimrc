@@ -21,6 +21,8 @@ set smartindent
 set noswapfile
 set nobackup
 set nowritebackup
+set incsearch
+set hlsearch
 
 " 永続undoを有効にする
 set undofile
