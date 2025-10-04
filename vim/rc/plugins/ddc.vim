@@ -7,12 +7,13 @@ inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
 
 call ddc#custom#patch_global(#{
 	\ ui: 'pum',
-	\ sources: ['around', 'lsp'],
+	\ sources: [ 'around', 'lsp' ],
 	\ sourceOptions: #{
   \   _: #{
 	\		  ignoreCase: v:true,
-	\		  matchers: ['matcher_fuzzy'],
+	\		  matchers: [ 'matcher_fuzzy' ],
 	\		  sorters: ['sorter_fuzzy'],
+  \     converters: [ 'converter_fuzzy' ],
 	\ 	},
 	\	  around: #{
 	\		  mark: '[ALD]',
@@ -29,6 +30,11 @@ call ddc#custom#patch_global(#{
 	\		  enableResolveItem: v:true,
 	\		  enableAdditionalTextEdit: v:true,
 	\	  },
+  \ },
+  \ filterParams: #{
+  \   converter_fuzzy: #{
+  \     hlGroup: 'SpellBad',
+  \   },
   \ }})
 call ddc#enable()
 
