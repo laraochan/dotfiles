@@ -7,7 +7,7 @@ inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
 
 call ddc#custom#patch_global(#{
 	\ ui: 'pum',
-	\ sources: ['around', 'lsp', 'file'],
+	\ sources: ['around', 'lsp'],
 	\ sourceOptions: #{
   \   _: #{
 	\		  ignoreCase: v:true,
@@ -22,11 +22,6 @@ call ddc#custom#patch_global(#{
 	\		  isVolatile: v:true,
 	\		  forceCompletionPattern: '\.\w*|:\w*|->\w*',
 	\	  },
-  \   file: #{
-  \     mark: '[FIL]',
-  \     isVolatile: v:true,
-  \     forceCompletionPattern: '\S/\S*',
-  \   },
 	\ },
 	\ sourceParams: #{
 	\	  lsp: #{
