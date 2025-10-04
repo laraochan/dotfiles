@@ -97,6 +97,9 @@ hook_add = '''
 source ~/.config/vim/rc/plugins/airline.vim
 '''
 
-[[plugnis]]
+[[plugins]]
 repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
 

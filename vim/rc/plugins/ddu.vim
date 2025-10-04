@@ -4,6 +4,7 @@ call ddu#custom#patch_local('filer', #{
 	\ sourceOptions: #{
 	\ 	_: #{
 	\		  columns: [ 'filename' ],
+  \     matchers: [ 'matcher_substring' ],
   \     converters: [ 'converter_devicon' ],
 	\	  },
 	\ },
@@ -68,6 +69,7 @@ let s:mappings = #{
   \   'nnoremap <buffer><silent> r <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''rename'' })<CR>',
   \   'nnoremap <buffer><silent> m <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''move'' })<CR>',
   \   'nnoremap <buffer><silent> n <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''newFile'' })<CR>',
+  \   'nnoremap <buffer><silent> i <Cmd>call ddu#ui#do_action(''openFilterWindow'')<CR>',
   \ ],
   \ ff: [
   \   'nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''open'' })<CR>',
