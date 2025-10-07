@@ -95,6 +95,9 @@ repo = 'Shougo/ddu-filter-matcher_substring'
 repo = 'Shougo/ddu-filter-matcher_hidden'
 
 [[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
 source ~/.config/vim/rc/plugins/gitgutter.vim

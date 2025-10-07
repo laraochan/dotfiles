@@ -24,7 +24,8 @@ call ddu#custom#patch_local('ff', #{
   \ sources: [ #{ name: 'file_rec', params: #{} } ],
   \ sourceOptions: #{
   \   _: #{
-  \     matchers: [ 'matcher_substring' ],
+  \     matchers: [ 'matcher_fzf' ],
+  \     sorters: [ 'sorter_fzf' ],
   \     converters: [ 'converter_devicon' ],
   \   },
   \ },
@@ -34,8 +35,8 @@ call ddu#custom#patch_local('ff', #{
   \   },
   \ },
   \ filterParams: #{
-  \   matcher_substring: #{
-  \     highlightMatched: 'PmenuMatch',
+  \   matcher_fzf: #{
+  \     highlightMatched: 'Search',
   \   },
   \ },
   \ uiParams: #{
