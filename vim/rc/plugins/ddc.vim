@@ -26,6 +26,7 @@ call ddc#custom#patch_global(#{
 	\	  lsp: #{
 	\		  mark: '[LSP]',
 	\		  isVolatile: v:true,
+  \     dup: v:true,
 	\		  forceCompletionPattern: '\.\w*|:\w*|->\w*',
 	\	  },
 	\ },
