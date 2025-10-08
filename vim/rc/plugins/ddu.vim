@@ -3,6 +3,7 @@ call ddu#custom#patch_local('filer', #{
   \ sources: [ #{ name: 'file', params: {} } ],
 	\ sourceOptions: #{
 	\ 	_: #{
+  \     ignoreCase: v:true,
 	\		  columns: [ 'filename' ],
   \     matchers: [ 'matcher_substring' ],
   \     converters: [ 'converter_devicon' ],
@@ -24,6 +25,7 @@ call ddu#custom#patch_local('ff', #{
   \ sources: [ #{ name: 'file_rec', params: #{} } ],
   \ sourceOptions: #{
   \   _: #{
+  \     ignoreCase: v:true,
   \     matchers: [ 'matcher_fzf' ],
   \     sorters: [ 'sorter_fzf' ],
   \     converters: [ 'converter_devicon' ],
