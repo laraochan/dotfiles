@@ -27,7 +27,6 @@ call ddu#custom#patch_local('ff', #{
   \   _: #{
   \     ignoreCase: v:true,
   \     volatile: v:true,
-  \     limit: 2000,
   \     matchers: [ 'matcher_fzf' ],
   \     sorters: [ 'sorter_fzf' ],
   \     converters: [ 'converter_devicon' ],
@@ -35,6 +34,7 @@ call ddu#custom#patch_local('ff', #{
   \ },
   \ sourceParams: #{
   \   _: #{
+  \     limit: 2000,
   \     ignoredDirectories: [ '.git', 'node_modules' ]
   \   },
   \ },
