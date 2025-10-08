@@ -47,18 +47,6 @@ repo = 'mattn/vim-lsp-settings'
 repo = 'Shougo/ddc-filter-sorter_lsp_kind'
 
 [[plugins]]
-repo = 'Shougo/ddc-source-cmdline'
-
-[[plugins]]
-repo = 'Shougo/ddc-source-cmdline_history'
-
-[[plugins]]
-repo = 'morhetz/gruvbox'
-hook_add = '''
-source ~/.config/vim/rc/plugins/gruvbox.vim
-'''
-
-[[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
 source ~/.config/vim/rc/plugins/ddu.vim
@@ -105,13 +93,14 @@ source ~/.config/vim/rc/plugins/gitgutter.vim
 
 [[plugins]]
 repo = 'vim-airline/vim-airline'
-hook_add = '''
-source ~/.config/vim/rc/plugins/airline.vim
-'''
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'ayu-theme/ayu-vim'
+hook_add = '''
+let ayucolor = 'light'
+colorscheme ayu
+'''
 
