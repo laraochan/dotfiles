@@ -22,7 +22,22 @@ call ddu#custom#patch_local('filer', #{
 
 call ddu#custom#patch_local('ff', #{
   \ ui: 'ff',
-  \ sources: [ #{ name: 'file_rec', params: #{} } ],
+  \ sources: [
+  \   #{
+  \     name: 'file_external',
+  \     params: #{
+  \       cmd: [
+  \         'rg',
+  \         '--files',
+  \         '--hidden',
+  \         '--glob',
+  \         '!.git',
+  \         '--glob',
+  \         '!node_modules',
+  \       ],
+  \     },
+  \   },
+  \ ],
   \ sourceOptions: #{
   \   _: #{
   \     ignoreCase: v:true,

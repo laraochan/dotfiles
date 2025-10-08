@@ -86,6 +86,9 @@ repo = 'Shougo/ddu-filter-matcher_hidden'
 repo = 'yuki-yano/ddu-filter-fzf'
 
 [[plugins]]
+repo = 'matsui54/ddu-source-file_external'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
 source ~/.config/vim/rc/plugins/gitgutter.vim
