@@ -26,6 +26,7 @@ call ddu#custom#patch_local('ff', #{
   \ sourceOptions: #{
   \   _: #{
   \     ignoreCase: v:true,
+  \     volatile: v:true,
   \     matchers: [ 'matcher_fzf' ],
   \     sorters: [ 'sorter_fzf' ],
   \     converters: [ 'converter_devicon' ],
