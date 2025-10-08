@@ -20,7 +20,7 @@ call ddu#custom#patch_local('filer', #{
   \   },
   \ }})
 
-call ddu#custom#patch_local('ff', #{
+call ddu#custom#patch_local('file_search', #{
   \ ui: 'ff',
   \ sources: [
   \   #{
@@ -63,6 +63,7 @@ call ddu#custom#patch_local('ff', #{
   \     split: 'no',
   \   },
   \ }})
+autocmd User Ddu:uiDone ++nested call ddu#ui#async_action('openFilterWindow')
 
 call ddu#custom#patch_local('buffer', #{
   \ ui: 'ff',
@@ -74,7 +75,7 @@ call ddu#custom#patch_local('buffer', #{
   \ }})
 
 nnoremap <leader>e <Cmd>call ddu#start(#{ name: 'filer' })<CR>
-nnoremap <leader>f <Cmd>call ddu#start(#{ name: 'ff' })<CR>
+nnoremap <leader>f <Cmd>call ddu#start(#{ name: 'file_search' })<CR>
 nnoremap <leader>b <Cmd>call ddu#start(#{ name: 'buffer' })<CR>
 
 let s:mappings = #{
@@ -96,7 +97,7 @@ let s:mappings = #{
   \   'nnoremap <buffer><silent> n <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''newFile'' })<CR>',
   \   'nnoremap <buffer><silent> i <Cmd>call ddu#ui#do_action(''openFilterWindow'')<CR>',
   \ ],
-  \ ff: [
+  \ file_search: [
   \   'nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action(''itemAction'', #{ name: ''open'' })<CR>',
   \   'nnoremap <buffer><silent> i <Cmd>call ddu#ui#do_action(''openFilterWindow'')<CR>',
   \   'nnoremap <buffer><silent> <C-u> <Cmd>call ddu#ui#do_action(''previewExecute'', #{ command: ''execute "normal! \<C-y>"'' })<CR>',
