@@ -107,3 +107,5 @@ let ayucolor = 'light'
 colorscheme ayu
 '''
 
+[[plugins]]
+repo = 'matsui54/denops-popup-preview.vim'

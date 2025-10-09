@@ -43,3 +43,5 @@ call ddc#custom#patch_global(#{
   \   },
   \ }})
 call ddc#enable()
+
+call popup_preview#enable()
