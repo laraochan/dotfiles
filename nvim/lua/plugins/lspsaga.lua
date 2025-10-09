@@ -21,6 +21,8 @@ return {
       vim.keymap.set("n", "ge", "<Cmd>Lspsaga show_cursor_diagnostic<CR>")
       vim.keymap.set("n", "ca", "<Cmd>Lspsaga code_action<CR>")
       vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>")
+      vim.keymap.set("n", "<C-t>", "<Cmd>Lspsaga term_toggle<CR>", { silent = true })
+      vim.keymap.set("t", "<C-t>", "<C-\\><C-n><Cmd>Lspsaga term_toggle<CR>", { silent = true })
     end,
   },
 }
