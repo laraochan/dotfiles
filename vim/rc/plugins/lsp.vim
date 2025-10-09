@@ -1,18 +1,8 @@
-let g:lsp_settings_enable_suggestions = 0
+let g:lsp_settings_filetype_typescript        = ['typescript-language-server']
+let g:lsp_settings_filetype_typescriptreact   = ['typescript-language-server']
+let g:lsp_settings_filetype_javascript        = ['typescript-language-server']
+let g:lsp_settings_filetype_javascriptreact   = ['typescript-language-server']
 
-if executable('typescript-language-server')
-  au User lsp_setup call lsp#register_server(#{
-    \ name: 'tsserver',
-    \ cmd: { server->['typescript-language-server', '--stdio'] },
-    \ allowlist: [ 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' ],
-    \ })
-endif
-if executable('gopls')
-  au User lsp_setup call lsp#register_server(#{
-    \ name: 'gopls',
-    \ cmd: { server->['gopls'] },
-    \ allowlist: [ 'go', 'gomod', 'gowork', 'gotmpl' ]})
-endif
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
