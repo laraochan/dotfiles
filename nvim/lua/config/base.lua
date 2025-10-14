@@ -16,3 +16,8 @@ vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 vim.opt.mouse = "a"
 
+vim.opt.ignorecase = true
+vim.opt.smartcase  = true
+vim.opt.incsearch  = true
+vim.opt.hlsearch   = true
+vim.opt.wrapscan   = true
