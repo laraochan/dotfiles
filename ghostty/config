@@ -1,4 +1,4 @@
-theme = "Gruvbox light"
+theme = "Sonokai"
 cursor-style = "block"
 shell-integration-features = no-cursor
 keybind = shift+enter=text:\x1b\r

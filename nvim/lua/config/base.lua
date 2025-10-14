@@ -11,7 +11,7 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
 
-vim.opt.background = "light"
+vim.opt.background = "dark"
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 vim.opt.mouse = "a"
