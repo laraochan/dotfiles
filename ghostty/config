@@ -1,4 +1,4 @@
-theme = "Sonokai"
+theme = Iceberg Dark
 cursor-style = "block"
 shell-integration-features = no-cursor
 keybind = shift+enter=text:\x1b\r
