@@ -1,4 +1,4 @@
-# :jellyfish:laraoのdotfile(macosバージョン):jellyfish:
+# laraoのdotfiles:jellyfish:
 
 ## setup
 
