@@ -1,4 +1,4 @@
-# laraoのdotfiles:jellyfish:
+# laraoのdotfiles🪼
 
 ## setup
 
