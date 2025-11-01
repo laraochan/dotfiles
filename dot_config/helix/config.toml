@@ -1,7 +1,11 @@
-theme = "tokyonight"
+theme = "default"
 
 [editor]
+true-color = true
 end-of-line-diagnostics = "hint"
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
+
+[editor.file-picker]
+hidden = false
