@@ -29,7 +29,6 @@ call dein#add('Shougo/pum.vim')
 call dein#add('Shougo/ddc-ui-pum')
 call dein#add('Shougo/ddc-source-around')
 call dein#add('prabirshrestha/vim-lsp')
-call dein#add('mattn/vim-lsp-settings')
 call dein#add('Shougo/ddc-source-lsp')
 call dein#add('Shougo/ddc-filter-matcher_head')
 call dein#add('Shougo/ddc-filter-sorter_rank')
@@ -37,6 +36,9 @@ call dein#add('vim-fall/fall.vim')
 call dein#add('lambdalisue/vim-fern')
 call dein#add('lambdalisue/vim-gin')
 call dein#add('airblade/vim-gitgutter')
+call dein#add('vim-airline/vim-airline')
+call dein#add('jiangmiao/auto-pairs')
+call dein#add('tpope/vim-commentary')
 call dein#end()
 
 filetype indent plugin on
@@ -47,6 +49,10 @@ endif
 
 if dein#check_install()
 	call dein#install()
+endif
+
+if len(dein#check_clean()) != 0
+  call map(dein#check_clean(), "delete(v:val, 'rf')")
 endif
 
 set nocompatible
@@ -100,6 +106,7 @@ call ddc#custom#patch_global('sourceParams', {
       \ }})
 call ddc#enable()
 
+let g:lsp_auto_enable = 0
 if executable('vtsls')
   au User lsp_setup call lsp#register_server({
         \ 'name': 'vtsls',
@@ -147,3 +154,5 @@ let g:gitgutter_sign_removed_first_line = '█▔'
 let g:gitgutter_sign_modified_removed = "█▟"
 
 autocmd BufWritePost * GitGutter
+
+let g:airline#extensions#tabline#enabled = 1

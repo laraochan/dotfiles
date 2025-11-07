@@ -18,6 +18,7 @@ zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled 
 zinit light sindresorhus/pure
 
 eval "$(~/.local/bin/mise activate zsh)"
+. "$HOME/.cargo/env"
 
 export EDITOR="vim"
 
