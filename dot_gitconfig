@@ -1,0 +1,9 @@
+[user]
+  name = laraochan
+  email = me@larao.dev
+[init]
+  defaultBranch = main
+[core]
+	editor = vim
+[ghq]
+  root = ~/Documents/ghq
