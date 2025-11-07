@@ -1,4 +1,4 @@
-# laraochan dotfiles:panda_face:
+# laraochan dotfiles 🐼
 
 ```sh
 sudo pacman -S gvim wezterm
