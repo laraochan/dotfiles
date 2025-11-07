@@ -33,6 +33,10 @@ call dein#add('mattn/vim-lsp-settings')
 call dein#add('Shougo/ddc-source-lsp')
 call dein#add('Shougo/ddc-filter-matcher_head')
 call dein#add('Shougo/ddc-filter-sorter_rank')
+call dein#add('vim-fall/fall.vim')
+call dein#add('lambdalisue/vim-fern')
+call dein#add('lambdalisue/vim-gin')
+call dein#add('airblade/vim-gitgutter')
 call dein#end()
 
 filetype indent plugin on
@@ -123,3 +127,14 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+nnoremap <Leader>ff <Cmd>Fall file<Cr>
+nnoremap <Leader>e <Cmd>Fern .<Cr>
+
+let g:gitgutter_sign_added = '█|'
+let g:gitgutter_sign_modified = '█⫶'
+let g:gitgutter_sign_removed = '█▁'
+let g:gitgutter_sign_removed_first_line = '█▔'
+let g:gitgutter_sign_modified_removed = "█▟"
+
+autocmd BufWritePost * GitGutter
