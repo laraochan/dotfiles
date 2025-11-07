@@ -61,6 +61,7 @@ set expandtab
 set smarttab
 set autoindent
 set smartindent
+set mouse=a
 
 autocmd FileType vim,lua,javascript,javascriptreact,typescript,typescriptreact setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 
@@ -98,6 +99,14 @@ call ddc#custom#patch_global('sourceParams', {
       \   'enableAdditionalTextEdit': v:true,
       \ }})
 call ddc#enable()
+
+if executable('vtsls')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'vtsls',
+        \ 'cmd': {server_info->['vtsls', '--stdio']},
+        \ 'whitelist': ['typescript', 'typescriptreact'],
+        \ })
+endif
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
