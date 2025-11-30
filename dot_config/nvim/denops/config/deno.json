@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "@core/unknownutil": "jsr:@core/unknownutil@^4.3.0",
+    "@denops/std": "jsr:@denops/std@^8.2.0",
+    "@yukimemi/dvpm": "jsr:@yukimemi/dvpm@^8.4.1"
+  }
+}
