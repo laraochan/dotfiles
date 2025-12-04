@@ -1,3 +1,7 @@
 {{- if eq .chezmoi.hostname "endeavour" -}}
+source /usr/share/zinit/zinit.zsh
 eval "$(mise activate zsh)"
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
+zinit light sindresorhus/pure
 {{- end -}}
