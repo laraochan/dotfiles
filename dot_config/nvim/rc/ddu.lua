@@ -1,0 +1,47 @@
+-- vim.fn["ddu#custom#patch_local"]("filer", {
+--   ui = "filer",
+--   sources = {{ name = "file" }},
+--   sourceOptions = {
+--     _ = {
+--       columns = { "filename" }
+--     },
+--   },
+--   kindOptions = {
+--     file = {
+--       defaultAction = "open"
+--     }
+--   }
+-- })
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "ddu-filer",
+--   callback = function()
+--     vim.keymap.set(
+--       "n",
+--       "l",
+--       function()
+--         local item = vim.fn["ddu#ui#get_item"]()
+--         local is_tree = item.isTree or false
+--
+--         if is_tree then
+--           return "<cmd>call ddu#ui#do_action('itemAction', { 'name': 'narrow' })<cr>"
+--         else
+--           return "<cmd>call ddu#ui#do_action('itemAction', { 'name': 'open' })<cr>"
+--         end
+--       end,
+--       {
+--         buffer = true,
+--         silent = true,
+--         expr = true,
+--         desc = ""
+--       }
+--     )
+--     vim.keymap.set("n", "h", "<cmd>call ddu#ui#do_action('itemAction', { 'name': 'narrow', 'params': { 'path': '..' } })<cr>", { buffer = true, silent = true, desc = "" })
+--     vim.keymap.set("n", "c", "<cmd>call ddu#ui#do_action('itemAction', { 'name': 'newDirectory' })<cr>", { buffer = true, silent = true, desc = "" })
+--     vim.keymap.set("n", "d", "<cmd>call ddu#ui#do_action('itemAction', { 'name': 'delete' })<cr>", { buffer = true, silent = true, desc = "" })
+--     vim.keymap.set("n", "r", "<cmd>call ddu#ui#do_action('itemAction', { 'name': 'rename' })<cr>", { buffer = true, silent = true, desc = "" })
+--     vim.keymap.set("n", "u", "<cmd>call ddu#ui#do_action('itemAction', { 'name': 'undo' })<cr>", { buffer = true, silent = true, desc = "" })
+--     vim.keymap.set("n", "q", "<cmd>call ddu#ui#do_action('quit')<cr>", { buffer = true, silent = true, desc = "" })
+--   end,
+-- })
+--
+-- vim.keymap.set("n", "<leader>e", "<cmd>call ddu#start({ 'name': 'filer' })<cr>")

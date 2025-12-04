@@ -1,7 +1,11 @@
 {
+  "tasks": {
+    "dev": "deno run --watch main.ts"
+  },
   "imports": {
     "@core/unknownutil": "jsr:@core/unknownutil@^4.3.0",
     "@denops/std": "jsr:@denops/std@^8.2.0",
+    "@std/assert": "jsr:@std/assert@1",
     "@yukimemi/dvpm": "jsr:@yukimemi/dvpm@^8.4.1"
   }
 }
