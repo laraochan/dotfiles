@@ -309,14 +309,25 @@ nnoremap <leader>s <cmd>call ddt#start()<cr>
 [[plugins]]
 repo = 'Shougo/ddt-ui-shell'
 
-[[plugins]]
-repo = 'rhysd/vim-color-spring-night'
-hook_add = '''
-colorscheme spring-night
-'''
+# [[plugins]]
+# repo = 'rhysd/vim-color-spring-night'
+# hook_add = '''
+# colorscheme spring-night
+# '''
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'yukimemi/dps-autocursor'
+
+[[plugins]]
+repo = 'sainnhe/everforest'
+hook_add = '''
+let g:everforest_background = 'medium'
+let g:everforest_better_performance = 1
+colorscheme everforest
+'''
+
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
