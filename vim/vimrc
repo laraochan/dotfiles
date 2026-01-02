@@ -1,5 +1,7 @@
 set nocompatible
 
+const g:mapleader = "\<Space>"
+
 const s:denops_src = '~/.cache/dpp/repos/github.com/vim-denops/denops.vim'
 const s:denops_hello = '~/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim'
 
@@ -41,3 +43,23 @@ if has('syntax')
 endif
 
 set termguicolors
+set signcolumn=yes
+set updatetime=100
+set encoding=UTF-8
+set nowritebackup
+set nobackup
+set virtualedit=block
+set ambiwidth=double
+set ignorecase
+set smartcase
+set wrapscan
+set incsearch
+set hlsearch
+set noerrorbells
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set smartindent
+set noswapfile
+set mouse=a

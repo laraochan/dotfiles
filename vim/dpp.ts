@@ -19,7 +19,7 @@ import {
 	type Params as PackspecParams,
 } from 'jsr:@shougo/dpp-ext-packspec@^2.0.2'
 
-import * as fn from "jsr:@denops/std/function"
+import * as fn from 'jsr:@denops/std/function'
 
 export class Config extends BaseConfig {
 	override async config(args: ConfigArguments): ConfigReturn {
