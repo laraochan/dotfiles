@@ -20,13 +20,6 @@ repo = 'Shougo/dpp-ext-toml'
 repo = 'Shougo/dpp-protocol-git'
 
 [[plugins]]
-repo = 'ayu-theme/ayu-vim'
-hook_add = '''
-let ayucolor = 'dark'
-colorscheme ayu
-'''
-
-[[plugins]]
 repo = 'Shougo/ddc.vim'
 hook_add = '''
 call ddc#custom#patch_global('ui', 'pum')
@@ -316,3 +309,14 @@ nnoremap <leader>s <cmd>call ddt#start()<cr>
 [[plugins]]
 repo = 'Shougo/ddt-ui-shell'
 
+[[plugins]]
+repo = 'rhysd/vim-color-spring-night'
+hook_add = '''
+colorscheme spring-night
+'''
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'yukimemi/dps-autocursor'
