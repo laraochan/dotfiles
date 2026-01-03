@@ -250,7 +250,7 @@ endif
 let g:loaded_ddu_filer_hijack = 1
 
 
-" netrw を完全に黙らせる
+" netrwを無効化
 function! s:suppress_netrw() abort
   if exists('#FileExplorer')
     autocmd! FileExplorer *
@@ -258,7 +258,7 @@ function! s:suppress_netrw() abort
 endfunction
 
 
-" :e dir / vim . 用
+" ディレクトリを編集対象として開く or ディレクトリを編集対象として開く
 function! s:hijack_bufenter() abort
   let l:path = expand('%:p')
   if empty(l:path) || !isdirectory(l:path)
@@ -271,7 +271,7 @@ function! s:hijack_bufenter() abort
 endfunction
 
 
-" vim dir/ 用
+" 起動ディレクトリとして扱う
 function! s:hijack_argv() abort
   if argc() != 1
     return
