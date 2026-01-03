@@ -5,6 +5,9 @@ repo = 'vim-denops/denops.vim'
 repo = 'vim-denops/denops-helloworld.vim'
 
 [[plugins]]
+repo = 'vim-denops/denops-shared-server.vim'
+
+[[plugins]]
 repo = 'Shougo/dpp.vim'
 
 [[plugins]]
@@ -375,3 +378,4 @@ colorscheme everforest
 
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
+

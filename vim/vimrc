@@ -2,6 +2,8 @@ set nocompatible
 
 const g:mapleader = "\<Space>"
 
+const g:denops_server_addr = '127.0.0.1:32123'
+
 const s:denops_src = '~/.cache/dpp/repos/github.com/vim-denops/denops.vim'
 const s:denops_hello = '~/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim'
 
