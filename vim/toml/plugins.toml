@@ -5,9 +5,6 @@ repo = 'vim-denops/denops.vim'
 repo = 'vim-denops/denops-helloworld.vim'
 
 [[plugins]]
-repo = 'vim-denops/denops-shared-server.vim'
-
-[[plugins]]
 repo = 'Shougo/dpp.vim'
 
 [[plugins]]
@@ -219,7 +216,6 @@ call ddu#custom#patch_local('fzf', {
 \ 'sourceOptions': {
 \   '_': {
 \     'ignoreCase': v:true,
-\     'columns': ['icon_filename'],
 \     'matchers': ['matcher_substring'],
 \   },
 \ },
@@ -245,7 +241,7 @@ call ddu#custom#patch_local('fzf', {
 \   },
 \ }})
 
-nnoremap <leader>ff <cmd>call ddu#start({ 'name': 'fzf' })<cr>
+"nnoremap <leader>ff <cmd>call ddu#start({ 'name': 'fzf' })<cr>
 
 if exists('g:loaded_ddu_filer_hijack')
   finish
@@ -366,16 +362,16 @@ repo = 'Shougo/ddt-ui-shell'
 repo = 'tpope/vim-commentary'
 
 [[plugins]]
-repo = 'yukimemi/dps-autocursor'
+repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
-repo = 'sainnhe/everforest'
+repo = 'ghifarit53/tokyonight-vim'
 hook_add = '''
-let g:everforest_background = 'medium'
-let g:everforest_better_performance = 1
-colorscheme everforest
+colorscheme tokyonight
 '''
 
 [[plugins]]
-repo = 'sheerun/vim-polyglot'
-
+repo = 'vim-fall/fall.vim'
+hook_add = '''
+nnoremap <leader>ff <cmd>Fall file<cr>
+'''

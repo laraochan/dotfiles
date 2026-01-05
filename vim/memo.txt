@@ -1,1 +1,5 @@
 - toml/plugins_lazy.tomlを作成して起動時間を短くする
+- dpp setupを自動されるようにvimrcを編集
+- ddu fzfを改造して使いやすくする
+- ddu.vimをハイライトどうにかする
+- ddt.vimをちゃんと仕事でも使えるように整備する
