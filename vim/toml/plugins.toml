@@ -375,6 +375,3 @@ repo = 'vim-fall/fall.vim'
 hook_add = '''
 nnoremap <leader>ff <cmd>Fall file<cr>
 '''
-
-[[plugins]]
-repo = 'vim-denops/denops-shared-server.vim'
