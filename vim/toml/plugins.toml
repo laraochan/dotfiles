@@ -67,10 +67,10 @@ repo = 'Shougo/ddc-source-lsp'
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
 hook_source = '''
-if executable('typescript-language-server')
+if executable('vtsls')
   autocmd User lsp_setup call lsp#register_server({
-  \ 'name': 'ts_ls',
-  \ 'cmd': {server_info->['typescript-language-server', '--stdio']},
+  \ 'name': 'vtsls',
+  \ 'cmd': {server_info->['vtsls', '--stdio']},
   \ 'allowlist': ['typescript', 'typescriptreact'],
   \ })
 endif
