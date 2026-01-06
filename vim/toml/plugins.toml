@@ -27,6 +27,7 @@ call ddc#custom#patch_global('autoCompleteDelay', 200)
 call ddc#custom#patch_global('sources', ['lsp'])
 call ddc#custom#patch_global('sourceOptions', {
 \ '_': {
+\   'minAutoCompleteLength': 1,
 \   'matchers': ['matcher_fuzzy'],
 \   'sorters': ['sorter_fuzzy'],
 \ },
