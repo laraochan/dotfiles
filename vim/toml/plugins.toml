@@ -364,12 +364,12 @@ repo = 'tpope/vim-commentary'
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
 
-[[plugins]]
-repo = 'ghifarit53/tokyonight-vim'
-hook_add = '''
-let g:tokyonight_style = 'storm' " available: night, storm
-colorscheme tokyonight
-'''
+# [[plugins]]
+# repo = 'ghifarit53/tokyonight-vim'
+# hook_add = '''
+# let g:tokyonight_style = 'storm' " available: night, storm
+# colorscheme tokyonight
+# '''
 
 [[plugins]]
 repo = 'ojroques/vim-oscyank'
