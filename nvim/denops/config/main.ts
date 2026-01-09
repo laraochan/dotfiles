@@ -58,6 +58,7 @@ export const main: Entrypoint = async (denops: Denops) => {
 
 	await dvpm.add({
 		url: "nvim-treesitter/nvim-treesitter",
+    enabled: async ({ denops }) => Deno.env.get("HOSTNAME") !== "z022" || Deno.env.get("HOSTNAME") !== "z021",
 		build: async ({ denops, info }) => {
 			if (!(info.isInstalled || info.isUpdated) || !info.isLoaded) {
 				return;
