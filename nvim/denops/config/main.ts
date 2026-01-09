@@ -82,6 +82,86 @@ export const main: Entrypoint = async (denops: Denops) => {
 		},
 	});
 
+  await dvpm.add({
+    url: "neovim/nvim-lspconfig",
+    cache: {
+      after: `
+        lua << EOB
+          vim.lsp.enable("vtsls")
+        EOB
+      `,
+    },
+  });
+
+  await dvpm.add({
+    url: "Shougo/ddc.vim",
+    dependencies: [
+      "Shougo/pum.vim",
+      "Shougo/ddc-ui-pum",
+      "tani/ddc-fuzzy",
+      "Shougo/ddc-source-around",
+      "Shougo/ddc-source-lsp",
+      "matsui54/denops-popup-preview.vim",
+      "matsui54/denops-signature_help",
+    ],
+    cache: {
+      after: `
+        lua << EOB
+          vim.keymap.set("i", "<c-n>", "<cmd>call pum#map#insert_relative(+1)<cr>")
+          vim.keymap.set("i", "<c-p>", "<cmd>call pum#map#insert_relative(-1)<cr>")
+          vim.keymap.set("i", "<c-y>", "<cmd>call pum#map#confirm()<cr>")
+          vim.keymap.set("i", "<c-e>", "<cmd>call pum#map#cancel()<cr>")
+
+          vim.fn["ddc#custom#patch_global"]({
+            ui = "pum",
+            autoCompleteDelay = 100,
+            sources = { "lsp", "around" },
+            sourceOptions = {
+              _ = {
+                matchers = { "matcher_fuzzy" },
+                sorters = { "sorter_fuzzy" },
+                converters = { "converter_fuzzy" },
+              },
+              around = {
+                mark = "[AROUND]",
+              },
+              lsp = {
+                minAutoCompleteLength = 1,
+                mark = "[LSP]",
+                ignoreCase = true,
+                dup = "keep",
+                isVolatile = true,
+                forceCompletionPattern = [[\.\w*|:\w*|->\w*]],
+              },
+            },
+            sourceParams = {
+              lsp = {
+                lspEngine = "nvim-lsp",
+                enableResolveItem = true,
+                enableAdditionalTextEdit = true,
+              },
+            },
+            filterParams = {
+              converter_fuzzy = {
+                hlGroup = "SpellBad",
+              },
+            },
+          })
+          vim.fn["ddc#enable"]()
+          vim.fn["popup_preview#enable"]()
+          vim.fn["signature_help#enable"]()
+        EOB
+      `,
+    },
+  });
+  await dvpm.add({ url: "Shougo/pum.vim" })
+  await dvpm.add({ url: "Shougo/ddc-ui-pum" })
+  await dvpm.add({ url: "tani/ddc-fuzzy" })
+  await dvpm.add({ url: "Shougo/ddc-source-around" })
+  await dvpm.add({ url: "Shougo/ddc-source-lsp" })
+  await dvpm.add({ url: "matsui54/denops-popup-preview.vim" })
+  await dvpm.add({ url: "matsui54/denops-signature_help" })
+
 	await dvpm.end();
 
 	console.log("Load completed!");

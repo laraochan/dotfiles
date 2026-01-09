@@ -14,3 +14,61 @@ pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact", "j
 callback = function() vim.treesitter.start() end,
 })
 EOB
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/neovim/nvim-lspconfig
+luafile /Users/larao/.cache/nvim/dvpm/github.com/neovim/nvim-lspconfig/plugin/lspconfig.lua
+lua << EOB
+vim.lsp.enable("vtsls")
+EOB
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/pum.vim
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-ui-pum
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/tani/ddc-fuzzy
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-source-around
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-source-lsp
+source /Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-source-lsp/plugin/ddc_source_lsp.vim
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/matsui54/denops-popup-preview.vim
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/matsui54/denops-signature_help
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc.vim
+lua << EOB
+vim.keymap.set("i", "<c-n>", "<cmd>call pum#map#insert_relative(+1)<cr>")
+vim.keymap.set("i", "<c-p>", "<cmd>call pum#map#insert_relative(-1)<cr>")
+vim.keymap.set("i", "<c-y>", "<cmd>call pum#map#confirm()<cr>")
+vim.keymap.set("i", "<c-e>", "<cmd>call pum#map#cancel()<cr>")
+vim.fn["ddc#custom#patch_global"]({
+ui = "pum",
+autoCompleteDelay = 100,
+sources = { "lsp", "around" },
+sourceOptions = {
+_ = {
+matchers = { "matcher_fuzzy" },
+sorters = { "sorter_fuzzy" },
+converters = { "converter_fuzzy" },
+},
+around = {
+mark = "[AROUND]",
+},
+lsp = {
+minAutoCompleteLength = 1,
+mark = "[LSP]",
+ignoreCase = true,
+dup = "keep",
+isVolatile = true,
+forceCompletionPattern = [[.w*|:w*|->w*]],
+},
+},
+sourceParams = {
+lsp = {
+lspEngine = "nvim-lsp",
+enableResolveItem = true,
+enableAdditionalTextEdit = true,
+},
+},
+filterParams = {
+converter_fuzzy = {
+hlGroup = "SpellBad",
+},
+},
+})
+vim.fn["ddc#enable"]()
+vim.fn["popup_preview#enable"]()
+vim.fn["signature_help#enable"]()
+EOB
