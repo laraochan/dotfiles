@@ -61,7 +61,7 @@ export const main: Entrypoint = async (denops: Denops) => {
     enabled: async ({ denops }) => {
       const out = await new Deno.Command("hostname", { stdout: "piped" }).output();
       const hostname = new TextDecoder().decode(out.stdout).trim();
-      return hostname !== "z020" && hostname !== "z021" && hostname !== "z022"
+      return !/^z02[0-2]$/.test(hostname);
     },
 		build: async ({ denops, info }) => {
 			if (!(info.isInstalled || info.isUpdated) || !info.isLoaded) {
