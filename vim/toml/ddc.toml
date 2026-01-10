@@ -3,7 +3,7 @@ repo = 'Shougo/ddc.vim'
 hook_add = '''
 call ddc#custom#patch_global('ui', 'pum')
 call ddc#custom#patch_global('autoCompleteDelay', 100)
-call ddc#custom#patch_global('sources', ['lsp'])
+call ddc#custom#patch_global('sources', ['lsp', 'around'])
 call ddc#custom#patch_global('sourceOptions', {
 \ '_': {
 \   'matchers': ['matcher_fuzzy'],
