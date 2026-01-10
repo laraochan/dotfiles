@@ -27,11 +27,14 @@ call ddc#custom#patch_global('autoCompleteDelay', 200)
 call ddc#custom#patch_global('sources', ['lsp'])
 call ddc#custom#patch_global('sourceOptions', {
 \ '_': {
-\   'minAutoCompleteLength': 1,
 \   'matchers': ['matcher_fuzzy'],
 \   'sorters': ['sorter_fuzzy'],
 \ },
+\ 'around': {
+\   'mark': '[AROUND]'
+\ },
 \ 'lsp': {
+\   'minAutoCompleteLength': 1,
 \   'mark': '[LSP]',
 \   'ignoreCase': v:true,
 \   'dup': 'keep',
@@ -61,6 +64,9 @@ inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
 inoremap <PageDown> <Cmd>call pum#map#insert_relative_page(+1)<CR>
 inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
 '''
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
 
 [[plugins]]
 repo = 'Shougo/ddc-source-lsp'
@@ -105,9 +111,6 @@ repo = 'tani/ddc-fuzzy'
 repo = 'matsui54/denops-popup-preview.vim'
 
 [[plugins]]
-repo = 'mhinz/vim-signify'
-
-[[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_source = '''
 call ddu#custom#patch_local('filer', {
@@ -136,6 +139,11 @@ call ddu#custom#patch_local('filer', {
 \   'icon_filename': {
 \     'defaultIcon': { 'icon': '' },
 \   },
+\ },
+\ 'actionOptions': {
+\   'narrow': {
+\     'quit': v:false,
+\   },
 \ }})
 autocmd FileType ddu-filer call s:ddu_filer_settings()
 function! s:ddu_filer_settings() abort
@@ -158,6 +166,8 @@ function! s:ddu_filer_settings() abort
   \ <cmd>call ddu#ui#do_action('itemAction', { 'name': 'rename' })<cr>
   nnoremap <buffer><silent> m
   \ <cmd>call ddu#ui#do_action('itemAction', { 'name': 'move' })<cr>
+  nnoremap <buffer><silent> o
+  \ <cmd>call ddu#ui#do_action('expandItem', { 'mode': 'toggle' })<cr>
   nnoremap <buffer><silent> ..
   \ <cmd>call ddu#ui#do_action('itemAction', { 'name': 'narrow', 'params': { 'path': '..' } })<cr>
   nnoremap <buffer><silent> f
@@ -316,60 +326,19 @@ repo = 'Shougo/ddu-ui-ff'
 repo = 'shun/ddu-source-buffer'
 
 [[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-
-[[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
 
 [[plugins]]
-repo = 'lambdalisue/vim-gin'
-
-[[plugins]]
-repo = 'Shougo/ddt.vim'
-hook_add = '''
-let g:denops#server#deno_args = [
-\ '-q',
-\ '-A'
-\ ]
-let g:denops#server#deno_args += ['--unstable-ffi']
-
-call ddt#custom#patch_global('ui', 'shell')
-call ddt#custom#patch_global('uiParams', {
-\ 'shell': {
-\   'prompt': '%',
-\   'userPrompt': '"| " .. fnamemodify(getcwd(), ":~")',
-\ }})
-
-autocmd FileType ddt-shell call s:ddt_my_settings()
-function! s:ddt_my_settings() abort
-nnoremap <buffer> <C-n>
-\ <cmd>call ddt#ui#do_action('nextPrompt')<cr>
-nnoremap <buffer> <C-p>
-\ <cmd>call ddt#ui#do_action('previousPrompt')<cr>
-nnoremap <buffer> <C-y>
-\ <cmd>call ddt#ui#do_action('pastePrompt')<cr>
-nnoremap <buffer> <CR>
-\ <cmd>call ddt#ui#do_action('executeLine')<cr>
-endfunction
-
-nnoremap <leader>s <cmd>call ddt#start()<cr>
-'''
-
-[[plugins]]
-repo = 'Shougo/ddt-ui-shell'
+repo = 'Shougo/ddu-filter-matcher_substring'
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
-
-# [[plugins]]
-# repo = 'ghifarit53/tokyonight-vim'
-# hook_add = '''
-# let g:tokyonight_style = 'storm' " available: night, storm
-# colorscheme tokyonight
-# '''
+hook_add = '''
+const g:polyglot_disabled = ['sensible', 'ddu-filer', 'ddu-ff']
+'''
 
 [[plugins]]
 repo = 'ojroques/vim-oscyank'
@@ -377,4 +346,15 @@ hook_add = '''
 nnoremap <leader>c <Plug>OSCYankOperator
 nnoremap <leader>cc <leader>c_
 vnoremap <leader>c <Plug>OSCYankVisual
+'''
+
+[[plugins]]
+repo = 'mhinz/vim-signify'
+
+[[plugins]]
+repo = 'ghifarit53/tokyonight-vim'
+hook_add = '''
+const g:tokyonight_style = 'storm'
+const g:tokyonight_transparent_background = 1
+colorscheme tokyonight
 '''

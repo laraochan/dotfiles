@@ -19,29 +19,20 @@ luafile /Users/larao/.cache/nvim/dvpm/github.com/neovim/nvim-lspconfig/plugin/ls
 lua << EOB
 vim.lsp.enable("vtsls")
 EOB
-set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/pum.vim
-set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-ui-pum
 set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/tani/ddc-fuzzy
 set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-source-around
 set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-source-lsp
 source /Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc-source-lsp/plugin/ddc_source_lsp.vim
-set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/matsui54/denops-popup-preview.vim
-set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/matsui54/denops-signature_help
 set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddc.vim
 lua << EOB
-vim.keymap.set("i", "<c-n>", "<cmd>call pum#map#insert_relative(+1)<cr>")
-vim.keymap.set("i", "<c-p>", "<cmd>call pum#map#insert_relative(-1)<cr>")
-vim.keymap.set("i", "<c-y>", "<cmd>call pum#map#confirm()<cr>")
-vim.keymap.set("i", "<c-e>", "<cmd>call pum#map#cancel()<cr>")
 vim.fn["ddc#custom#patch_global"]({
-ui = "pum",
+ui = "native",
 autoCompleteDelay = 100,
 sources = { "lsp", "around" },
 sourceOptions = {
 _ = {
 matchers = { "matcher_fuzzy" },
 sorters = { "sorter_fuzzy" },
-converters = { "converter_fuzzy" },
 },
 around = {
 mark = "[AROUND]",
@@ -62,13 +53,59 @@ enableResolveItem = true,
 enableAdditionalTextEdit = true,
 },
 },
-filterParams = {
-converter_fuzzy = {
-hlGroup = "SpellBad",
+})
+vim.fn["ddc#enable"]()
+EOB
+set runtimepath+=/Users/larao/.cache/nvim/dvpm/github.com/Shougo/ddu.vim
+lua << EOB
+vim.fn["ddu#custom#patch_local"]("filer", {
+ui = "filer",
+sources = {{ name = "file" }},
+sourceOptions = {
+file = {
+ignoreCase = true,
+columns = { "icon_filename" },
+matchers = { "matcher_substring" },
+},
+},
+uiParams = {
+filer = {
+split = "no",
+sort = "filename",
+sortTreesFirst = true,
+},
+},
+columnParams = {
+icon_filename = {
+defaultIcon = { icon = "" },
 },
 },
 })
-vim.fn["ddc#enable"]()
-vim.fn["popup_preview#enable"]()
-vim.fn["signature_help#enable"]()
+vim.api.nvim_create_autocmd("FileType", {
+pattern = "ddu-filer",
+callback = function()
+vim.keymap.set("n", "<CR>", function()
+local item = vim.fn["ddu#ui#get_item"]()
+if item and item.isTree then
+vim.fn["ddu#ui#do_action"]("itemAction", { name = "narrow" })
+else
+vim.fn["ddu#ui#do_action"]("itemAction", { name = "open" })
+end
+end, {
+buffer = true,
+silent = true,
+})
+vim.keymap.set("n", "q", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "quit" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "n", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "newFile" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "d", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "delete" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "c", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "copy" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "p", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "paste" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "r", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "rename" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "m", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "move" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "f", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "openFilterWindow" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "v", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "togglePreview" }) end, { buffer = true, silent = true })
+vim.keymap.set("n", "..", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "narrow", params = { path = ".." } }) end, { buffer = true, silent = true })
+end,
+})
+vim.keymap.set("n", "<leader>e", function() vim.fn["ddu#start"]({ name = "filer" }) end, { silent = true })
 EOB

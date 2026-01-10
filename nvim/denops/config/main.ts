@@ -107,20 +107,14 @@ export const main: Entrypoint = async (denops: Denops) => {
     cache: {
       after: `
         lua << EOB
-          vim.keymap.set("i", "<c-n>", "<cmd>call pum#map#insert_relative(+1)<cr>")
-          vim.keymap.set("i", "<c-p>", "<cmd>call pum#map#insert_relative(-1)<cr>")
-          vim.keymap.set("i", "<c-y>", "<cmd>call pum#map#confirm()<cr>")
-          vim.keymap.set("i", "<c-e>", "<cmd>call pum#map#cancel()<cr>")
-
           vim.fn["ddc#custom#patch_global"]({
-            ui = "pum",
+            ui = "native",
             autoCompleteDelay = 100,
             sources = { "lsp", "around" },
             sourceOptions = {
               _ = {
                 matchers = { "matcher_fuzzy" },
                 sorters = { "sorter_fuzzy" },
-                converters = { "converter_fuzzy" },
               },
               around = {
                 mark = "[AROUND]",
@@ -141,26 +135,81 @@ export const main: Entrypoint = async (denops: Denops) => {
                 enableAdditionalTextEdit = true,
               },
             },
-            filterParams = {
-              converter_fuzzy = {
-                hlGroup = "SpellBad",
-              },
-            },
           })
           vim.fn["ddc#enable"]()
-          vim.fn["popup_preview#enable"]()
-          vim.fn["signature_help#enable"]()
         EOB
       `,
     },
   });
-  await dvpm.add({ url: "Shougo/pum.vim" })
-  await dvpm.add({ url: "Shougo/ddc-ui-pum" })
-  await dvpm.add({ url: "tani/ddc-fuzzy" })
+  await dvpm.add({ url: "Shougo/ddc-ui-native" });
+  await dvpm.add({ url: "tani/ddc-fuzzy" });
+  await dvpm.add({ url: "Shougo/ddc-source-lsp" });
   await dvpm.add({ url: "Shougo/ddc-source-around" })
-  await dvpm.add({ url: "Shougo/ddc-source-lsp" })
-  await dvpm.add({ url: "matsui54/denops-popup-preview.vim" })
-  await dvpm.add({ url: "matsui54/denops-signature_help" })
+
+  await dvpm.add({
+    url: "Shougo/ddu.vim",
+    cache: {
+      after: `
+        lua << EOB
+          vim.fn["ddu#custom#patch_local"]("filer", {
+            ui = "filer",
+            sources = {{ name = "file" }},
+            sourceOptions = {
+              file = {
+                ignoreCase = true,
+                columns = { "icon_filename" },
+                matchers = { "matcher_substring" },
+              },
+            },
+            uiParams = {
+              filer = {
+                split = "no",
+                sort = "filename",
+                sortTreesFirst = true,
+              },
+            },
+            columnParams = {
+              icon_filename = {
+                defaultIcon = { icon = "" },
+              },
+            },
+          })
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = "ddu-filer",
+            callback = function()
+              vim.keymap.set("n", "<CR>", function()
+                local item = vim.fn["ddu#ui#get_item"]()
+                if item and item.isTree then
+                  vim.fn["ddu#ui#do_action"]("itemAction", { name = "narrow" })
+                else
+                  vim.fn["ddu#ui#do_action"]("itemAction", { name = "open" })
+                end
+              end, {
+                buffer = true,
+                silent = true,
+              })
+              vim.keymap.set("n", "q", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "quit" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "n", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "newFile" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "d", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "delete" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "c", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "copy" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "p", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "paste" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "r", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "rename" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "m", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "move" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "f", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "openFilterWindow" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "v", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "togglePreview" }) end, { buffer = true, silent = true })
+              vim.keymap.set("n", "..", function() vim.fn["ddu#ui#do_action"]("itemAction", { name = "narrow", params = { path = ".." } }) end, { buffer = true, silent = true })
+            end,
+          })
+          vim.keymap.set("n", "<leader>e", function() vim.fn["ddu#start"]({ name = "filer" }) end, { silent = true })
+        EOB
+      `,
+    },
+  });
+  await dvpm.add({ url: "Shougo/ddu-ui-filer" })
+  await dvpm.add({ url: "Shougo/ddu-source-file" });
+  await dvpm.add({ url: "Shougo/ddu-kind-file" });
+  await dvpm.add({ url: "ryota2357/ddu-column-icon_filename" });
+  await dvpm.add({ url: "Shougo/ddu-filter-matcher_substring" })
 
 	await dvpm.end();
 
