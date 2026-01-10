@@ -1,0 +1,91 @@
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+hook_add = '''
+call ddc#custom#patch_global('ui', 'pum')
+call ddc#custom#patch_global('autoCompleteDelay', 100)
+call ddc#custom#patch_global('sources', ['lsp'])
+call ddc#custom#patch_global('sourceOptions', {
+\ '_': {
+\   'matchers': ['matcher_fuzzy'],
+\   'sorters': ['sorter_fuzzy'],
+\ },
+\ 'around': {
+\   'mark': '[AROUND]'
+\ },
+\ 'lsp': {
+\   'minAutoCompleteLength': 1,
+\   'mark': '[LSP]',
+\   'ignoreCase': v:true,
+\   'dup': 'keep',
+\   'isVolatile': v:true,
+\   'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+\ }})
+call ddc#custom#patch_global('sourceParams', {
+\ 'lsp': {
+\   'lspEngine': 'vim-lsp',
+\   'enableResolveItem': v:true,
+\   'enableAdditionalTextEdit': v:true,
+\ }})
+call ddc#enable()
+call popup_preview#enable()
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+hook_source = '''
+inoremap <C-n>   <Cmd>call pum#map#insert_relative(+1)<CR>
+inoremap <C-p>   <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+inoremap <PageDown> <Cmd>call pum#map#insert_relative_page(+1)<CR>
+inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-lsp'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_source = '''
+if executable('vtsls')
+  autocmd User lsp_setup call lsp#register_server({
+  \ 'name': 'vtsls',
+  \ 'cmd': {server_info->['vtsls', '--stdio']},
+  \ 'allowlist': ['typescript', 'typescriptreact'],
+  \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-b> lsp#scroll(-4)
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+'''
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
+
+[[plugins]]
+repo = 'matsui54/denops-popup-preview.vim'
+

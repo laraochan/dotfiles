@@ -43,7 +43,7 @@ execute 'set runtimepath+=' .. s:dpp_ext_toml
 execute 'set runtimepath+=' .. s:dpp_prot_git
 
 const s:dpp_base = '~/.cache/dpp/'
-const s:dpp_config = '~/.config/vim/dpp.ts'
+const s:dpp_config = '~/.config/vim/typescript/dpp.ts'
 
 if s:dpp_base->dpp#min#load_state()
 	autocmd User DenopsReady

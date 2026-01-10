@@ -1,0 +1,7 @@
+[[plugins]]
+repo = 'ghifarit53/tokyonight-vim'
+hook_add = '''
+const g:tokyonight_style = 'storm'
+const g:tokyonight_transparent_background = 1
+colorscheme tokyonight
+'''

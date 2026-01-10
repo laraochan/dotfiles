@@ -40,6 +40,11 @@ export class Config extends BaseConfig {
 			const action = tomlExt.actions.load
 
 			const tomlPromises = [
+				{ path: '~/.config/vim/toml/denops.toml', lazy: false },
+				{ path: '~/.config/vim/toml/colorscheme.toml', lazy: false },
+				{ path: '~/.config/vim/toml/dpp.toml', lazy: false },
+				{ path: '~/.config/vim/toml/ddc.toml', lazy: true },
+				{ path: '~/.config/vim/toml/ddu.toml', lazy: true },
 				{ path: '~/.config/vim/toml/plugins.toml', lazy: false },
 			].map(async (tomlFile) => {
 				const path = await fn.expand(args.denops, tomlFile.path)
