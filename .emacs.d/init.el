@@ -152,6 +152,11 @@
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
+(leaf nerd-icons-ibuffer
+  :ensure t
+  :after ibuffer
+  :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode))
+
 (leaf eglot
   :doc "The Emacs Client for LSP servers"
   :hook ((tsx-ts-mode . eglot-ensure)
