@@ -247,6 +247,7 @@ if one already exists."
   :global-minor-mode t)
 
 (leaf dashboard
+  :ensure t
   :custom
   ((dashboard-startup-banner . "~/.emacs.d/assets/yellow_big_bang.png")
    (dashboard-image-banner-max-width . 300)
