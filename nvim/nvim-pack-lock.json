@@ -15,6 +15,11 @@
       "src": "https://github.com/nvim-mini/mini.icons",
       "version": "'main'"
     },
+    "nvim-lspconfig": {
+      "rev": "92ee7d42320edfbb81f3cad851314ab197fa324a",
+      "src": "https://github.com/neovim/nvim-lspconfig",
+      "version": "'master'"
+    },
     "nvim-treesitter": {
       "rev": "5a7e5638e7d220575b1c22c8a2e099b52231886e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
