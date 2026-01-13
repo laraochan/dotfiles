@@ -89,6 +89,12 @@
   :custom `((savehist-file . ,(locate-user-emacs-file "savehist")))
   :global-minor-mode t)
 
+(leaf frame
+  :config
+  ;; defaultで自動で最大サイズ起動
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+
 (leaf which-key
   :doc "Display available keybindings in popup"
   :global-minor-mode t)
@@ -215,3 +221,17 @@ if one already exists."
             (vterm shell-buffer))
         (vterm (generate-new-buffer-name default-project-shell-name)))))
   (advice-add 'project-shell :override #'project-vterm))
+
+(leaf doom-modeline
+  :ensure t
+  :global-minor-mode t)
+
+(leaf dashboard
+  :custom
+  ((dashboard-startup-banner . "~/.emacs.d/assets/yellow_big_bang.png")
+   (dashboard-image-banner-max-width . 300)
+   (dashboard-center-content . t)
+   (dashboard-vertically-center-content . t)
+   (dashboard-banner-logo-title . nil))
+  :config
+  (dashboard-setup-startup-hook))
