@@ -232,6 +232,6 @@ if one already exists."
    (dashboard-image-banner-max-width . 300)
    (dashboard-center-content . t)
    (dashboard-vertically-center-content . t)
-   (dashboard-banner-logo-title . nil))
+   (dashboard-banner-logo-title . "🌼 yellow big bang"))
   :config
   (dashboard-setup-startup-hook))
