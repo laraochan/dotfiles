@@ -1,1 +1,0 @@
-# laraochanのdotfiles - 2026
