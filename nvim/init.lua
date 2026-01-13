@@ -64,9 +64,11 @@ local dev_server = {
 
 if not vim.tbl_contains(dev_server, hostname) then
   vim.pack.add({
-		src = "https://github.com/nvim-treesitter/nvim-treesitter",
-		version = "main",
-	})
+    {
+      src = "https://github.com/nvim-treesitter/nvim-treesitter",
+      version = "main",
+    }
+  })
   vim.api.nvim_create_autocmd("PackChanged", {
     callback = function(ev)
       local name, kind = ev.data.spec.name, ev.data.kind
