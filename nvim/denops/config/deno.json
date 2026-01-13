@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "@denops/std": "jsr:@denops/std@^8.2.0",
-    "@yukimemi/dvpm": "jsr:@yukimemi/dvpm@^10.2.5"
-  }
-}
