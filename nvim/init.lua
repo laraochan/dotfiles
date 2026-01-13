@@ -26,10 +26,6 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.pack.add({
 	{
-		src = "https://github.com/nvim-treesitter/nvim-treesitter",
-		version = "main",
-	},
-	{
 		src = "https://github.com/folke/tokyonight.nvim",
 		version = "main",
 	},
@@ -59,22 +55,35 @@ vim.pack.add({
   }
 })
 
-vim.api.nvim_create_autocmd("PackChanged", {
-	callback = function(ev)
-		local name, kind = ev.data.spec.name, ev.data.kind
-		
-		if name == "nvim-treesitter" and (kind == "install" or kind == "update") then
-			vim.cmd.TSUpdate()
-		end
-	end,
-})
-require("nvim-treesitter").install({ "lua", "vim", "vimdoc", "typescript", "tsx", "jsdoc", "json", "toml", "yaml", "php", "phpdoc", "html", "css", "scss" })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "lua", "vim", "typescript", "typescriptreact", "json", "toml", "yaml", "php", "html", "css", "scss" },
-	callback = function()
-		vim.treesitter.start()
-	end,
-})
+local hostname = vim.loop.os_gethostname()
+local dev_server = {
+  "z020",
+  "z021",
+  "z022",
+}
+
+if not vim.tbl_contains(dev_server, hostname) then
+  vim.pack.add({
+		src = "https://github.com/nvim-treesitter/nvim-treesitter",
+		version = "main",
+	})
+  vim.api.nvim_create_autocmd("PackChanged", {
+    callback = function(ev)
+      local name, kind = ev.data.spec.name, ev.data.kind
+      
+      if name == "nvim-treesitter" and (kind == "install" or kind == "update") then
+        vim.cmd.TSUpdate()
+      end
+    end,
+  })
+  require("nvim-treesitter").install({ "lua", "vim", "vimdoc", "typescript", "tsx", "jsdoc", "json", "toml", "yaml", "php", "phpdoc", "html", "css", "scss" })
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "lua", "vim", "typescript", "typescriptreact", "json", "toml", "yaml", "php", "html", "css", "scss" },
+    callback = function()
+      vim.treesitter.start()
+    end,
+  })
+end
 
 require("tokyonight").setup({
 	style = "storm",
