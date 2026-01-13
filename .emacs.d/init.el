@@ -131,11 +131,26 @@
   (corfu-quit-no-match . t)
   (corfu-cycle . t))
 
-(leaf kind-icon
+(leaf nerd-icons
+  :ensure t)
+
+(leaf nerd-icons-dired
+  :ensure t
+  :after dired
+  :hook (dired-mode-hook . nerd-icons-dired-mode))
+
+(leaf nerd-icons-corfu
   :ensure t
   :after corfu
   :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(leaf nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 (leaf eglot
   :doc "The Emacs Client for LSP servers"
