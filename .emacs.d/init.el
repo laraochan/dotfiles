@@ -256,3 +256,6 @@ if one already exists."
    (dashboard-banner-logo-title . "🌼 yellow big bang"))
   :config
   (dashboard-setup-startup-hook))
+
+(leaf org
+  :doc "Outline-based notes management and organizer")

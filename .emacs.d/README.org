@@ -1,2 +1,5 @@
 * 最高のEmacs環境を作る
-** TODO どんな機能が欲しいかまとめる
+** TODO org-modeの整備
+*** TODO タスク管理
+*** TODO 日報管理
+*** TODO 
