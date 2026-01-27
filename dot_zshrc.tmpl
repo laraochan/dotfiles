@@ -1,0 +1,22 @@
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=1000
+SAVEHIST=10000
+setopt extended_history
+setopt share_history
+setopt hist_ignore_dups
+
+alias zj="zellij"
+alias yz="yazi"
+
+{{ if eq .chezmoi.os "linux" -}}
+export EDITOR="helix"
+
+alias hx="helix"
+
+eval "$(starship init zsh)"
+eval "$(mise activate zsh)"
+{{ end -}}
+
+{{ if eq .chezmoi.os "darwin" -}}
+export EDITOR="hx"
+{{ end -}}
