@@ -1,3 +1,5 @@
+theme = "kanagawa"
+
 [editor]
 true-color = true
 end-of-line-diagnostics = "hint"

@@ -1,3 +1,4 @@
+theme = Kanagawa Wave
 shell-integration-features = no-cursor
 cursor-style = block
 cursor-style-blink = true
