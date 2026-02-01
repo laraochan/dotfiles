@@ -9,19 +9,18 @@ alias zj="zellij"
 alias yz="yazi"
 alias cdghq='cd $(ghq root)/$(ghq list | peco --select-1)'
 
+eval "$(starship init zsh)"
+eval "$(mise activate zsh)"
+eval "$(zoxide init zsh)"
+
 {{ if eq .chezmoi.os "linux" -}}
 export EDITOR="helix"
 
 alias hx="helix"
-
-eval "$(starship init zsh)"
-eval "$(mise activate zsh)"
 {{ end -}}
 
 {{ if eq .chezmoi.os "darwin" -}}
 export EDITOR="hx"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(mise activate zsh)"
-eval "$(zoxide init zsh)"
 {{ end -}}
