@@ -21,7 +21,6 @@ cask "bitwarden"
 cask "discord"
 cask "ghostty"
 cask "google-chrome"
-cask "obsidian"
 cask "raycast"
 cask "spotify"
 mas "Kindle", id: 302584613
