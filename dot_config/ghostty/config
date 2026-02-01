@@ -1,7 +1,7 @@
-theme = Kanagawa Wave
+theme = Builtin Solarized Dark
 shell-integration-features = no-cursor
 cursor-style = block
 cursor-style-blink = true
 font-size = 14
-background-opacity = 0.95
+# background-opacity = 0.95
 background-blur = 10
