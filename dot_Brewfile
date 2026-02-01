@@ -23,4 +23,3 @@ cask "obsidian"
 cask "raycast"
 cask "spotify"
 mas "Kindle", id: 302584613
-mas "Trello", id: 1278508951
