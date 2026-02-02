@@ -1,9 +1,6 @@
-theme = "kanagawa"
-
 [editor]
 true-color = true
-line-number = "relative"
 end-of-line-diagnostics = "hint"
 
 [editor.inline-diagnostics]
-cursor-line = "warning" # show warnings and errors on the cursorline inline
+cursor-line = "warning"

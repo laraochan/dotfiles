@@ -5,33 +5,15 @@ setopt extended_history
 setopt share_history
 setopt hist_ignore_dups
 
-export PAGER="glow"
-
 alias zj="zellij"
 alias yz="yazi"
 alias gu="gitui"
 alias cdghq='cd $(ghq root)/$(ghq list | peco --select-1)'
 
-eval "$(starship init zsh)"
-eval "$(mise activate zsh)"
-eval "$(zoxide init zsh)"
-
-{{ if eq .chezmoi.os "linux" -}}
-export EDITOR="helix"
-
-alias hx="helix"
-{{ end -}}
+export EDITOR="{{ .editor }}"
 
 {{ if eq .chezmoi.os "darwin" -}}
-export EDITOR="hx"
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 {{ end -}}
-
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
-
-zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma-continuum/fast-syntax-highlighting
+{{ if eq .chezmoi.os "linux" -}}
+{{ end -}}
