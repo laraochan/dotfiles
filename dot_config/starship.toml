@@ -1,0 +1,14 @@
+# [character]
+# success_symbol = "[（￣＾￣）](bold green)[❯ ](bold green)"
+# error_symbol   = "[（；＿；）](bold red)[❯ ](bold green)"
+# [character]
+# success_symbol = "[（｀・ω・´）](bold green)[❯ ](bold green)"
+# error_symbol   = "[（；｀ω´；）](bold red)[❯ ](bold green)"
+
+# [character]
+# success_symbol = "[（｀・ω・´）ノ](bold green)[❯ ](bold green)"
+# error_symbol   = "[（；｀ω´；）ノ](bold red)[❯ ](bold green)"
+
+[character]
+success_symbol = "[（｀・ω・´）ノ](bold green)"
+error_symbol   = "[（；｀ω´；）ノ](bold red)"
