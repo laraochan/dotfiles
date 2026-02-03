@@ -13,6 +13,7 @@ alias cdghq='cd $(ghq root)/$(ghq list | peco --select-1)'
 export EDITOR="{{ .editor }}"
 
 eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
 
 {{ if eq .chezmoi.os "darwin" -}}
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
