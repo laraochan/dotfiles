@@ -10,6 +10,12 @@ alias yz="yazi"
 alias gu="gitui"
 alias cdghq='cd $(ghq root)/$(ghq list | peco --select-1)'
 
+alias ls="eza --icons --git"
+alias la="eza --icons --git -a"
+alias ll="eza -aahl --icons --git"
+alias lt="eza -T -L 3 -a --icons"
+alias lta="eza -T -a --color=always --icons"
+
 export EDITOR="{{ .editor }}"
 
 eval "$(zoxide init zsh)"
