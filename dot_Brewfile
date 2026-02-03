@@ -13,6 +13,11 @@ brew "peco"
 brew "ripgrep"
 brew "yazi"
 brew "zellij"
+brew "starship"
+brew "zoxide"
+brew "mise"
+brew "rust"
+brew "rust-analyzer"
 
 cask "discord"
 cask "ghostty"
@@ -20,5 +25,6 @@ cask "google-chrome"
 cask "obsidian"
 cask "raycast"
 cask "spotify"
+cask "bitwarden"
 
 mas "Kindle", id: 302584613

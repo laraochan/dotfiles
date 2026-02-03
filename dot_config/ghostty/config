@@ -1,4 +1,4 @@
-theme = Builtin Solarized Dark
+theme = Carbonfox
 shell-integration-features = no-cursor
 cursor-style = block
 cursor-style-blink = true
