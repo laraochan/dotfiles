@@ -1,3 +1,5 @@
+theme = "solarized_dark"
+
 [editor]
 true-color = true
 end-of-line-diagnostics = "hint"
