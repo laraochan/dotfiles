@@ -18,6 +18,7 @@ brew "zoxide"
 brew "mise"
 brew "rust"
 brew "rust-analyzer"
+brew "fastfetch"
 
 cask "discord"
 cask "ghostty"
