@@ -1,4 +1,4 @@
-theme = "ayu_dark"
+theme = "solarized"
 
 [editor]
 true-color = true
