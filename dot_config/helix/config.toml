@@ -1,4 +1,4 @@
-theme = "solarized"
+theme = "nvchad_solarized_dark"
 
 [editor]
 true-color = true
