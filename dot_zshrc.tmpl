@@ -26,6 +26,8 @@ eval "$(starship init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 {{ end -}}
 {{ if eq .chezmoi.os "linux" -}}
+alias hx="helix"
+alias zed="zeditor"
 {{ end -}}
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
