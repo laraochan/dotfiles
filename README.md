@@ -1,6 +1,5 @@
 # laraochan's dotfiles 2026
 
-## example chezmoi.toml
 ```toml
 [data]
   name = "Some Name"
