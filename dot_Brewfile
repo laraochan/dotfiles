@@ -29,5 +29,6 @@ cask "raycast"
 cask "spotify"
 cask "bitwarden"
 cask "zed"
+cask "nani"
 
 mas "Kindle", id: 302584613
