@@ -1,2 +1,128 @@
 [[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'vim-denops/denops-helloworld.vim'
+
+[[plugins]]
+repo = 'Shougo/dpp.vim'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-installer'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-lazy'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-toml'
+
+[[plugins]]
+repo = 'Shougo/dpp-protocol-git'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+hook_source = '''
+call ddc#custom#patch_global({
+	\ 'ui': 'pum',
+	\	'autoCompleteDelay': 100,
+	\ 'sources': ['around', 'lsp'],
+	\ 'sourceOptions': {
+	\		'_': {
+	\			'matchers': ['matcher_head'],
+	\			'sorters': ['sorter_rank']
+	\		},
+	\		'around': {
+	\			'mark': '[AROUND]',
+	\		},
+	\		'lsp': {
+	\			'mark': '[LSP]',
+	\			'dup': 'keep',
+	\			'isVolatile': v:true,
+	\			'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+	\		},
+	\	},
+	\	'sourceParams': {
+	\		'lsp': {
+	\			'lspEngine': 'vim-lsp',
+	\			'enableResolveItem': v:true,
+	\			'enableAdditionalTextEdit': v:true,
+	\		},
+	\	}})
+call ddc#enable()
+'''
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+hook_add = '''
+inoremap <C-n>   <Cmd>call pum#map#insert_relative(+1)<CR>
+inoremap <C-p>   <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+inoremap <PageDown> <Cmd>call pum#map#insert_relative_page(+1)<CR>
+inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-filter-sorter_rank'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-lsp'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_source = '''
+if executable('vtsls')
+	au User lsp_setup call lsp#register_server({
+		\ 'name': 'vtsls',
+		\	'cmd': {server_info->['vtsls', '--stdio']},
+		\ 'allowlist': ['typescript', 'typescriptreact'],
+		\ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+	setlocal omnifunc=lsp#complete
+	" setlocal signcolumn=yes
+	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+	nmap <buffer> gd <plug>(lsp-definition)
+	nmap <buffer> gs <plug>(lsp-document-symbol-search)
+	nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+	nmap <buffer> gr <plug>(lsp-references)
+	nmap <buffer> gi <plug>(lsp-implementation)
+	nmap <buffer> gt <plug>(lsp-type-definition)
+	nmap <buffer> <leader>rn <plug>(lsp-rename)
+	nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+	nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+	nmap <buffer> K <plug>(lsp-hover)
+	nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+	nnoremap <buffer> <expr><c-b> lsp#scroll(-4)
+
+	let g:lsp_format_sync_timeout = 1000
+	autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+	
+	" refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+	au!
+	" call s:on_lsp_buffer_enabled only for languages that has the server registered.
+	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+'''
+
+[[plugins]]
 repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'mhinz/vim-signify'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
