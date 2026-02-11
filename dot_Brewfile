@@ -19,6 +19,7 @@ brew "mise"
 brew "rust"
 brew "rust-analyzer"
 brew "fastfetch"
+brew "font-hackgen-nerd"
 
 cask "codex"
 cask "discord"
