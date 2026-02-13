@@ -1,4 +1,1 @@
-theme = Atom One Light
-shell-integration-features = no-cursor
-cursor-style = block
-cursor-style-blink = true
+theme = Catppuccin Mocha

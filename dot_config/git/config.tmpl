@@ -1,14 +1,5 @@
 [user]
 	name = {{ .name }}
 	email = {{ .email }}
-
-[core]
-	editor = {{ .editor }}
-
 [ghq]
-	root = ~/Documents/ghq/
-
-{{ if eq .chezmoi.hostname "laraochans-MacBook-Pro.local" -}}
-[init]
-	defaultBranch = main
-{{ end -}}
+	root = ~/Programs/ghq

@@ -1,8 +1,8 @@
-theme = "default"
+theme = "catppuccin_mocha"
 
 [editor]
 true-color = true
 end-of-line-diagnostics = "hint"
 
 [editor.inline-diagnostics]
-cursor-line = "warning"
+cursor-line = "warning" # show warnings and errors on the cursorline inline
