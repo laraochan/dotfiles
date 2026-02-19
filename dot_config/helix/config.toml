@@ -1,4 +1,4 @@
-theme = "carbonfox"
+theme = "nord"
 
 [editor]
 true-color = true
