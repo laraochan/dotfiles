@@ -7,11 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "theme": {
-    "mode": "dark",
-    "light": "Nord Light",
-    "dark": "Nord Dark",
-  },
+  "theme": "Nightfox - opaque",
   "session": {
     "trust_all_worktrees": true,
   },
