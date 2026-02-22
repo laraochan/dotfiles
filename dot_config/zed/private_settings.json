@@ -7,7 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "theme": "Nightfox - opaque",
+  "theme": "Catppuccin Frappé - No Italics",
   "session": {
     "trust_all_worktrees": true,
   },
