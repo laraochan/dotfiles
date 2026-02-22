@@ -158,12 +158,56 @@
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+(leaf treesit
+  :custom
+  (treesit-font-lock-level . 4)
+  (treesit-language-source-alist . '((json "https://github.com/tree-sitter/tree-sitter-json")
+                                     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+                                     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+  :config  
+  ;; Treesitがインストールされてない場合は自動でインストールする
+  (dolist (element treesit-language-source-alist)
+    (let* ((lang (car element)))
+      (if (treesit-language-available-p lang)
+          (message "treesit: %s is already installed" lang)
+        (message "treesit: %s is not installed" lang)
+        (treesit-install-language-grammar lang)))))
+
+(leaf tsx-ts-mode
+  :mode "\\.ts[x]?\\'" "\\.[m]ts\\'" "\\.js[x]?\\'" "\\.[mc]js\\'")
+
+(leaf eglot
+  :doc "The Emacs Client for LSP servers"
+  :hook ((tsx-ts-mode-hook . eglot-ensure))
+  :config
+  (add-to-list 'eglot-server-programs
+               '(tsx-ts-mode . ("tailwindcss-language-server" "--stdio"))))
+
+(leaf eglot-booster
+  :when (executable-find "emacs-lsp-booster")
+  :vc (:url "https://github.com/jdtsmith/eglot-booster")
+  :global-minor-mode t)
+
+(leaf markdown-mode
+  :ensure t)
+
+(leaf flymake-biome
+  :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages nil)
+ '(safe-local-variable-values
+   '((eval setq-local flymake-biome-program
+           (expand-file-name "node_modules/@biomejs/biome/bin/biome"
+                             (or
+                              (locate-dominating-file
+                               default-directory "package.json")
+                              default-directory)))
+     (eval flymake-biome-load) (eval require 'flymake-biome))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

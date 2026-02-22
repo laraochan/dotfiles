@@ -1,0 +1,99 @@
+let mapleader = "\<Space>"
+
+let s:base_git = expand('~/.cache/dpp/repos/github.com')
+
+let s:repos = [
+      \ 'vim-denops/denops.vim',
+      \ 'vim-denops/denops-helloworld.vim',
+      \ 'Shougo/dpp.vim',
+      \ 'Shougo/dpp-ext-installer',
+      \ 'Shougo/dpp-ext-lazy',
+      \ 'Shougo/dpp-ext-toml',
+      \ 'Shougo/dpp-protocol-git',
+      \ ]
+
+function! s:ensure_repo(repo) abort
+  let dst = s:base_git . '/' . a:repo
+
+  if isdirectory(dst)
+    return
+  endif
+
+  call mkdir(fnamemodify(dst, ':h'), 'p')
+
+  if !executable('git')
+    echohl ErrorMsg
+    echom '[bootstrap] git not found in $PATH'
+    echohl None
+    return
+  endif
+
+  let url = 'https://github.com/' . a:repo
+  let cmd = printf('git clone --depth=1 %s %s',
+        \ shellescape(url),
+        \ shellescape(dst))
+
+  let out = system(cmd)
+  if v:shell_error != 0
+    echohl ErrorMsg
+    echom printf('[bootstrap] clone failed: %s -> %s', url, dst)
+    echom out
+    echohl None
+  else
+    echom printf('[bootstrap] installed: %s', dst)
+  endif
+endfunction
+
+for repo in s:repos
+  call s:ensure_repo(repo)
+endfor
+
+set nocompatible
+const s:denops_src = '~/.cache/dpp/repos/github.com/vim-denops/denops.vim'
+const s:denops_hello = '~/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim'
+
+execute 'set runtimepath+=' .. s:denops_src
+execute 'set runtimepath+=' .. s:denops_hello
+
+const s:dpp_base = '~/.cache/dpp/'
+const s:dpp_config = '~/.config/vim/dpp.ts'
+
+const s:dpp_src = '~/.cache/dpp/repos/github.com/Shougo/dpp.vim'
+const s:dpp_installer = '~/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer'
+const s:dpp_lazy = '~/.cache/dpp/repos/github.com/Shougo/dpp-ext-lazy'
+const s:dpp_toml = '~/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml'
+const s:dpp_git = '~/.cache/dpp/repos/github.com/Shougo/dpp-protocol-git'
+
+execute 'set runtimepath+=' .. s:dpp_src
+execute 'set runtimepath+=' .. s:dpp_installer
+execute 'set runtimepath+=' .. s:dpp_lazy
+execute 'set runtimepath+=' .. s:dpp_toml
+execute 'set runtimepath+=' .. s:dpp_git
+
+if s:dpp_base->dpp#min#load_state()
+	autocmd User DenopsReady
+	\ : echohl WarningMsg
+	\ | echomsg 'dpp load_state() is failed'
+	\ | echohl None
+	\ | call dpp#make_state(s:dpp_base, s:dpp_config)
+endif
+
+autocmd User Dpp:makeStatePost
+\ : echohl WarningMsg
+\ | echomsg 'dpp make_state() is done'
+\ | echohl None
+
+" Attempt to determine the type of a file based on its name and
+" possibly its " contents. Use this to allow intelligent
+" auto-indenting " for each filetype, and for plugins that are
+" filetype specific.
+filetype indent plugin on
+
+" Enable syntax highlighting
+if has('syntax')
+  syntax on
+endif
+
+set updatetime=100
+set signcolumn=yes
+set termguicolors
