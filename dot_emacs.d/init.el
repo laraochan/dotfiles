@@ -11,7 +11,6 @@
   (leaf leaf-keywords
     :ensure t
     :config
-    ;; initialize leaf-keywords.el
     (leaf-keywords-init)))
 
 (leaf leaf-tree
@@ -111,16 +110,33 @@ if one already exists."
   (add-to-list 'completion-at-point-functions #'cape-file))
 
 (leaf nerd-icons
+  :doc "icon library used across Emacs UI integrations"
   :ensure t
   :config
   (leaf nerd-icons-corfu
+    :doc "add nerd-icons to Corfu completion margins"
 	:ensure t
 	:after "corfu"
 	:config
 	(add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
   (leaf nerd-icons-dired
+    :doc "display nerd-icons in Dired buffers"
     :ensure t
-    :hook (dired-mode-hook . nerd-icons-dired-mode)))
+    :hook (dired-mode-hook . nerd-icons-dired-mode))
+  (leaf treemacs-nerd-icons
+    :doc "use nerd-icons theme for Treemacs"
+    :ensure t
+    :after treemacs
+    :config
+    (treemacs-nerd-icons-config))
+  (leaf nerd-icons-completion
+    :doc "add nerd-icons to completion annotations"
+    :ensure t
+    :hook ((marginalia-mode-hook . nerd-icons-completion-marginalia-setup)))
+  (leaf nerd-icons-ibuffer
+    :doc "display nerd-icons in Ibuffer"
+    :ensure t
+    :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode)))
 
 (leaf eglot
   :doc "Parentheses Universalistic"
@@ -182,3 +198,24 @@ if one already exists."
   :global-minor-mode global-diff-hl-mode
   :hook ((magit-post-refresh-hook . diff-hl-magit-post-refresh))
   :custom ((diff-hl-disable-on-remote . t)))
+
+(leaf dashboard
+  :doc "startup dashboard screen with recent items and shortcuts"
+  :ensure t
+  ;; TODO: Set banner (dashboard-startup-banner . [hoge.jpg])
+  :custom ((dashboard-banner-logo-title . "Welcome to Emacs Dashboard")
+           (dashboard-center-content . t)
+           (dashboard-vertically-center-content . t)
+           (dashboard-navigation-cycle . t)
+           (dashboard-display-icons-p . t)
+           (dashboard-icon-type . 'nerd-icons)
+           (dashboard-set-heading-icons . t)
+           (dashboard-set-file-icons . t))
+  :config
+  (dashboard-setup-startup-hook))
+
+;; TODO: Set custom variable
+(leaf doom-modeline
+  :doc "modern and information-rich mode-line"
+  :ensure t
+  :global-minor-mode t)
