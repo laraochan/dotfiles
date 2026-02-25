@@ -1,4 +1,3 @@
-;; <leaf-install-code>
 (eval-and-compile
   (customize-set-variable
    'package-archives '(("org" . "https://orgmode.org/elpa/")
@@ -11,72 +10,48 @@
 
   (leaf leaf-keywords
     :ensure t
-    :init
-    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
-    (leaf hydra :ensure t)
-    (leaf el-get :ensure t)
-    (leaf blackout :ensure t)
-
     :config
     ;; initialize leaf-keywords.el
     (leaf-keywords-init)))
-;; </leaf-install-code>
+
+(leaf leaf-tree
+  :doc "visualize leaf.el configurations as a tree"
+  :ensure t)
+
+(leaf leaf-convert
+  :doc "convert Emacs configurations into leaf.el format"
+  :ensure t)
+
+(leaf cus-edit
+  :doc "tools for customizing Emacs and Lisp packages"
+  :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
 
 (leaf cus-start
   :doc "define customization properties of builtins"
+  :hook ((window-setup-hook . toggle-frame-maximized))
   :custom '((user-full-name . "Sora Terao")
-            (user-mail-address . "me@larao.dev")
-            (user-login-name . "laraochan")
-            (create-lockfiles . nil)
-            (tab-width . 4)
-            (debug-on-error . t)
-            (init-file-debug . t)
-            (frame-resize-pixelwise . t)
-            (enable-recursive-minibuffers . t)
-            (history-length . 1000)
-            (history-delete-duplicates . t)
-            (scroll-preserve-screen-position . t)
-            (scroll-conservatively . 100)
-            (mouse-wheel-scroll-amount . '(1 ((control) . 5)))
-            (ring-bell-function . 'ignore)
-            (text-quoting-style . 'straight)
-            (truncate-lines . t)
-            (use-dialog-box . nil)
-            (use-file-dialog . nil)
-            (menu-bar-mode . t)
-            (tool-bar-mode . nil)
-            (scroll-bar-mode . nil)
-            (indent-tabs-mode . nil)))
-
-(leaf autorevert
-  :doc "revert buffers when files on disk change"
-  :global-minor-mode global-auto-revert-mode)
-
-(leaf delsel
-  :doc "delete selection if you insert"
-  :global-minor-mode delete-selection-mode)
-
-(leaf simple
-  :doc "basic editing commands for Emacs"
-  :custom (eval-expression-print-length . nil))
-
-(leaf files
-  :doc "file input and output commands for Emacs"
-  :global-minor-mode auto-save-visited-mode
-  :custom `((auto-save-file-name-transforms . '((".*" ,(locate-user-emacs-file "backup/") t)))
-            (backup-directory-alist . '((".*" . ,(locate-user-emacs-file "backup"))
-                                        (,tramp-file-name-regexp . nil)))
-            (version-control . t)
-            (delete-old-versions . t)))
-
-(leaf startup
-  :doc "process Emacs shell arguments"
-  :custom `((auto-save-list-file-prefix . ,(locate-user-emacs-file "backup/.saves-"))))
-
-(leaf savehist
-  :doc "Save minibuffer history"
-  :custom `((savehist-file . ,(locate-user-emacs-file "savehist")))
-  :global-minor-mode t)
+	    (user-mail-address . "me@larao.dev")
+	    (user-login-name . "laraochan")
+	    (create-lockfiles . nil)
+	    (tab-width . 4)
+	    (debug-on-error . nil)
+	    (init-file-debug . t)
+	    (frame-resize-pixelwise . t)
+	    (enable-recursive-minibuffers . t)
+	    (history-length . 1000)
+	    (history-delete-duplicates . t)
+	    (scroll-preserve-screen-position . t)
+	    (scroll-conservatively . 100)
+	    (mouse-wheel-scroll-amount . '(1 ((control) . 5)))
+	    (ring-bell-function .  'ignore)
+	    (text-quoting-style . 'straight)
+	    (truncate-lines . t)
+	    (use-dialog-box . nil)
+	    (use-file-dialog . nil)
+		(menu-bar-mode . t)
+		(tool-bar-mode . t)
+		(scroll-bar-mode . t)
+		(indent-tabs-mode . nil)))
 
 (leaf flymake
   :doc "A universal on-the-fly syntax checker"
@@ -88,41 +63,111 @@
   :doc "Display available keybindings in popup"
   :global-minor-mode t)
 
-(leaf leaf-convert
+(leaf exec-path-from-shell
+  :doc "Get environment variables such as $PATH from the shell"
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
+(leaf magit
+  :doc "a complete Git porcelain inside Emacs"
   :ensure t)
 
-(leaf leaf-tree
+(leaf vterm
+  :doc "a fast terminal emulator inside Emacs"
   :ensure t
-  :custom ((imenu-list-size . 30)
-	   (imenu-list-position . 'left)))
-
-(leaf kind-icon
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-
-(leaf catppuccin-theme
-  :ensure t
-  :custom
-  (catppuccin-flavor . 'frappe)
-  :config
-  (load-theme 'catppuccin :no-confirm))
-
-(leaf dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  :custom
-  (dashboard-center-content . t))
+  :preface
+  (defun my-project-shell ()
+  "Start an inferior shell in the current project's root directory.
+If a buffer already exists for running a shell in the project's root,
+switch to it.  Otherwise, create a new shell buffer.
+With \\[universal-argument] prefix arg, create a new inferior shell buffer even
+if one already exists."
+  (interactive)
+  (require 'comint)
+  (let* ((default-directory (project-root (project-current t)))
+         (default-project-shell-name (project-prefixed-buffer-name "shell"))
+         (shell-buffer (get-buffer default-project-shell-name)))
+    (if (and shell-buffer (not current-prefix-arg))
+        (if (comint-check-proc shell-buffer)
+            (pop-to-buffer shell-buffer (bound-and-true-p display-comint-buffer-action))
+          (vterm shell-buffer))
+      (vterm (generate-new-buffer-name default-project-shell-name)))))
+  (advice-add 'project-shell :override #'my-project-shell))
 
 (leaf corfu
+  :doc "COmpletion in Region FUnction"
   :ensure t
-  :init
-  (global-corfu-mode)
-  (corfu-popupinfo-mode)
-  :bind ((corfu-map
-	  ("C-s" . corfu-insert-separator))))
+  :global-minor-mode global-corfu-mode corfu-popupinfo-mode
+  :custom ((corfu-cycle . t)
+		   (corfu-quit-at-boundary . nil)
+		   (corfu-quit-no-match . t)
+		   (corfu-preview-current . t)))
+
+(leaf cape
+  :doc "Completion At Point Extensions"
+  :ensure t
+  :config
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
+(leaf nerd-icons
+  :ensure t
+  :config
+  (leaf nerd-icons-corfu
+	:ensure t
+	:after "corfu"
+	:config
+	(add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+  (leaf nerd-icons-dired
+    :ensure t
+    :hook (dired-mode-hook . nerd-icons-dired-mode)))
+
+(leaf eglot
+  :doc "Parentheses Universalistic"
+  :ensure t
+  :hook ((tsx-ts-mode-hook . eglot-ensure)))
+
+(leaf eglot-booster
+  :when (executable-find "emacs-lsp-booster")
+  :vc (:url "https://github.com/jdtsmith/eglot-booster")
+  :global-minor-mode t)
+
+(leaf treesit
+  :doc "built-in Tree-sitter integration for Emacs"
+  :custom ((treesit-font-lock-level . 4)
+		   (treesit-language-source-alist . '((json "https://github.com/tree-sitter/tree-sitter-json")
+											  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+											  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))))
+  :config
+  (dolist (element treesit-language-source-alist)
+	(let* ((lang (car element)))
+	  (if (treesit-language-available-p lang)
+		  (message "treesit: %s is already installed" lang)
+		(message "treesit: %s is not installed" lang)
+		(treesit-install-language-grammar lang)))))
+
+(leaf tsx-ts-mode
+  :doc "major mode configuration for TypeScript/TSX/JavaScript using tree-sitter"
+  :mode "\\.ts[x]?\\'" "\\.[m]ts\\'" "\\.js[x]?\\'" "\\.[mc]js\\'"
+  :custom ((typescript-ts-mode-indent-offset . 2)))
+
+(leaf json-ts-mode
+  :doc "major mode configuration for JSON using tree-sitter"
+  :mode "\\.json\\'")
+
+(leaf treemacs
+  :doc "a tree-style project and file explorer sidebar"
+  :ensure t)
+
+(leaf vertico
+  :doc "VERTical Interactive COmpletion"
+  :ensure t
+  :global-minor-mode t)
+
+(leaf marginalia
+  :doc "Enrich existing commands with completion annotations"
+  :ensure t
+  :global-minor-mode t)
 
 (leaf orderless
   :doc "Completion style for matching regexps in any order"
@@ -131,86 +176,9 @@
            (completion-category-defaults . nil)
            (completion-category-overrides . '((file (styles partial-completion))))))
 
-(leaf vertico
+(leaf diff-hl
+  :doc "highlight uncommitted changes in the fringe/margin"
   :ensure t
-  :init
-  (vertico-mode))
-
-(leaf marginalia
-  :ensure t
-  :init
-  (marginalia-mode))
-
-(leaf nyan-mode
-  :ensure t
-  :global-minor-mode t
-  :custom (nyan-animate-nyancat . t))
-
-(leaf magit
-  :ensure t)
-
-(leaf vterm
-  :ensure t)
-
-(leaf projectile
-  :ensure t
-  :global-minor-mode t
-  :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-
-(leaf treesit
-  :custom
-  (treesit-font-lock-level . 4)
-  (treesit-language-source-alist . '((json "https://github.com/tree-sitter/tree-sitter-json")
-                                     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-                                     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
-  :config  
-  ;; Treesitがインストールされてない場合は自動でインストールする
-  (dolist (element treesit-language-source-alist)
-    (let* ((lang (car element)))
-      (if (treesit-language-available-p lang)
-          (message "treesit: %s is already installed" lang)
-        (message "treesit: %s is not installed" lang)
-        (treesit-install-language-grammar lang)))))
-
-(leaf tsx-ts-mode
-  :mode "\\.ts[x]?\\'" "\\.[m]ts\\'" "\\.js[x]?\\'" "\\.[mc]js\\'")
-
-(leaf eglot
-  :doc "The Emacs Client for LSP servers"
-  :hook ((tsx-ts-mode-hook . eglot-ensure))
-  :config
-  (add-to-list 'eglot-server-programs
-               '(tsx-ts-mode . ("tailwindcss-language-server" "--stdio"))))
-
-(leaf eglot-booster
-  :when (executable-find "emacs-lsp-booster")
-  :vc (:url "https://github.com/jdtsmith/eglot-booster")
-  :global-minor-mode t)
-
-(leaf markdown-mode
-  :ensure t)
-
-(leaf flymake-biome
-  :ensure t)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
- '(safe-local-variable-values
-   '((eval setq-local flymake-biome-program
-           (expand-file-name "node_modules/@biomejs/biome/bin/biome"
-                             (or
-                              (locate-dominating-file
-                               default-directory "package.json")
-                              default-directory)))
-     (eval flymake-biome-load) (eval require 'flymake-biome))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  :global-minor-mode global-diff-hl-mode
+  :hook ((magit-post-refresh-hook . diff-hl-magit-post-refresh))
+  :custom ((diff-hl-disable-on-remote . t)))
