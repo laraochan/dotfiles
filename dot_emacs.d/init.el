@@ -10,8 +10,13 @@
 
   (leaf leaf-keywords
     :ensure t
+    :init
     :config
+    ;; initialize leaf-keywords.el
     (leaf-keywords-init)))
+
+;; TODO: leaf.elで管理
+(load-theme 'modus-vivendi-tritanopia t)
 
 (leaf leaf-tree
   :doc "visualize leaf.el configurations as a tree"
@@ -27,50 +32,111 @@
 
 (leaf cus-start
   :doc "define customization properties of builtins"
-  :hook ((window-setup-hook . toggle-frame-maximized))
+  :hook (window-setup-hook . toggle-frame-maximized)
   :custom '((user-full-name . "Sora Terao")
-	    (user-mail-address . "me@larao.dev")
-	    (user-login-name . "laraochan")
-	    (create-lockfiles . nil)
-	    (tab-width . 4)
-	    (debug-on-error . nil)
-	    (init-file-debug . t)
-	    (frame-resize-pixelwise . t)
-	    (enable-recursive-minibuffers . t)
-	    (history-length . 1000)
-	    (history-delete-duplicates . t)
-	    (scroll-preserve-screen-position . t)
-	    (scroll-conservatively . 100)
-	    (mouse-wheel-scroll-amount . '(1 ((control) . 5)))
-	    (ring-bell-function .  'ignore)
-	    (text-quoting-style . 'straight)
-	    (truncate-lines . t)
-	    (use-dialog-box . nil)
-	    (use-file-dialog . nil)
-		(menu-bar-mode . t)
-		(tool-bar-mode . t)
-		(scroll-bar-mode . t)
-		(indent-tabs-mode . nil)))
+	        (user-mail-address . "me@larao.dev")
+	        (user-login-name . "laraochan")
+	        (create-lockfiles . nil)
+	        (tab-width . 4)
+	        (debug-on-error . nil)
+	        (init-file-debug . t)
+	        (frame-resize-pixelwise . t)
+	        (enable-recursive-minibuffers . t)
+	        (history-length . 1000)
+	        (history-delete-duplicates . t)
+	        (scroll-preserve-screen-position . t)
+	        (scroll-conservatively . 100)
+	        (mouse-wheel-scroll-amount . '(1 ((control) . 5)))
+	        (ring-bell-function .  'ignore)
+	        (text-quoting-style . 'straight)
+	        (truncate-lines . t)
+	        (use-dialog-box . nil)
+	        (use-file-dialog . nil)
+	        (menu-bar-mode . t)
+	        (tool-bar-mode . t)
+	        (scroll-bar-mode . t)
+	        (indent-tabs-mode . nil)))
 
-(leaf flymake
-  :doc "A universal on-the-fly syntax checker"
-  :bind ((prog-mode-map
-          ("M-n" . flymake-goto-next-error)
-          ("M-p" . flymake-goto-prev-error))))
+(leaf exec-path-from-shell
+  :doc "Make Emacs use the $PATH set up by the user's shell"
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 (leaf which-key
   :doc "Display available keybindings in popup"
   :global-minor-mode t)
 
-(leaf exec-path-from-shell
-  :doc "Get environment variables such as $PATH from the shell"
+(leaf simple
+  :doc "basic editing commands for Emacs"
+  :custom ((kill-read-only-ok . t)
+           (kill-whole-line . t)
+           (eval-expression-print-length . nil)
+           (eval-expression-print-level . nil)))
+
+(leaf files
+  :doc "file input and output commands for Emacs"
+  :global-minor-mode auto-save-visited-mode
+  :custom `((auto-save-file-name-transforms . '((".*" ,(locate-user-emacs-file "backup/") t)))
+            (backup-directory-alist . '((".*" . ,(locate-user-emacs-file "backup"))
+                                        (,tramp-file-name-regexp . nil)))
+            (version-control . t)
+            (delete-old-versions . t)
+            (auto-save-visited-interval . 1)))
+
+(leaf paren
+  :doc "highlight matching paren"
+  :global-minor-mode show-paren-mode)
+
+(leaf startup
+  :doc "process Emacs shell arguments"
+  :custom `((auto-save-list-file-prefix . ,(locate-user-emacs-file "backup/.saves-"))))
+
+(leaf delsel
+  :doc "delete selection if you insert"
+  :global-minor-mode delete-selection-mode)
+
+(leaf savehist
+  :doc "Save minibuffer history"
+  :custom `((savehist-file . ,(locate-user-emacs-file "savehist")))
+  :global-minor-mode t)
+
+(leaf autorevert
+  :doc "revert buffers when files on disk change"
+  :global-minor-mode global-auto-revert-mode)
+
+(leaf vertico
+  :doc "VERTical Interactive COmpletion"
+  :ensure t
+  :global-minor-mode t)
+
+(leaf marginalia
+  :doc "Enrich existing commands with completion annotations"
+  :ensure t
+  :global-minor-mode t)
+
+(leaf nerd-icons
+  :doc "icon library used across Emacs UI integrations"
   :ensure t
   :config
-  (exec-path-from-shell-initialize))
-
-(leaf magit
-  :doc "a complete Git porcelain inside Emacs"
-  :ensure t)
+  (leaf nerd-icons-corfu
+    :doc "add nerd-icons to Corfu completion margins"
+    :ensure t
+    :after "corfu"
+    :config
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+  (leaf nerd-icons-dired
+    :doc "display nerd-icons in Dired buffers"
+    :ensure t
+    :hook (dired-mode-hook . nerd-icons-dired-mode))
+  (leaf nerd-icons-completion
+    :doc "add nerd-icons to completion annotations"
+    :ensure t
+    :hook ((marginalia-mode-hook . nerd-icons-completion-marginalia-setup)))
+  (leaf nerd-icons-ibuffer
+    :doc "display nerd-icons in Ibuffer"
+    :ensure t
+    :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode)))
 
 (leaf vterm
   :doc "a fast terminal emulator inside Emacs"
@@ -99,9 +165,18 @@ if one already exists."
   :ensure t
   :global-minor-mode global-corfu-mode corfu-popupinfo-mode
   :custom ((corfu-cycle . t)
-		   (corfu-quit-at-boundary . nil)
-		   (corfu-quit-no-match . t)
-		   (corfu-preview-current . t)))
+	       (corfu-quit-at-boundary . t)
+	       (corfu-quit-no-match . t)
+	       (corfu-preview-current . t)
+	       (corfu-auto . t)
+	       (corfu-auto-delay . 0.2)))
+
+(leaf orderless
+  :doc "Completion style for matching regexps in any order"
+  :ensure t
+  :custom ((completion-styles . '(orderless))
+           (completion-category-defaults . nil)
+           (completion-category-overrides . '((file (styles partial-completion))))))
 
 (leaf cape
   :doc "Completion At Point Extensions"
@@ -109,44 +184,21 @@ if one already exists."
   :config
   (add-to-list 'completion-at-point-functions #'cape-file))
 
-(leaf nerd-icons
-  :doc "icon library used across Emacs UI integrations"
-  :ensure t
-  :config
-  (leaf nerd-icons-corfu
-    :doc "add nerd-icons to Corfu completion margins"
-	:ensure t
-	:after "corfu"
-	:config
-	(add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-  (leaf nerd-icons-dired
-    :doc "display nerd-icons in Dired buffers"
-    :ensure t
-    :hook (dired-mode-hook . nerd-icons-dired-mode))
-  (leaf treemacs-nerd-icons
-    :doc "use nerd-icons theme for Treemacs"
-    :ensure t
-    :after treemacs
-    :config
-    (treemacs-nerd-icons-config))
-  (leaf nerd-icons-completion
-    :doc "add nerd-icons to completion annotations"
-    :ensure t
-    :hook ((marginalia-mode-hook . nerd-icons-completion-marginalia-setup)))
-  (leaf nerd-icons-ibuffer
-    :doc "display nerd-icons in Ibuffer"
-    :ensure t
-    :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode)))
-
 (leaf eglot
   :doc "Parentheses Universalistic"
   :ensure t
-  :hook ((tsx-ts-mode-hook . eglot-ensure)))
+  :hook (tsx-ts-mode-hook . eglot-ensure))
 
 (leaf eglot-booster
   :when (executable-find "emacs-lsp-booster")
   :vc (:url "https://github.com/jdtsmith/eglot-booster")
   :global-minor-mode t)
+
+(leaf flymake
+  :doc "A universal on-the-fly syntax checker"
+  :bind ((prog-mode-map
+          ("M-n" . flymake-goto-next-error)
+          ("M-p" . flymake-goto-prev-error))))
 
 (leaf treesit
   :doc "built-in Tree-sitter integration for Emacs"
@@ -171,26 +223,9 @@ if one already exists."
   :doc "major mode configuration for JSON using tree-sitter"
   :mode "\\.json\\'")
 
-(leaf treemacs
-  :doc "a tree-style project and file explorer sidebar"
+(leaf magit
+  :doc "A Git Porcelain inside Emacs"
   :ensure t)
-
-(leaf vertico
-  :doc "VERTical Interactive COmpletion"
-  :ensure t
-  :global-minor-mode t)
-
-(leaf marginalia
-  :doc "Enrich existing commands with completion annotations"
-  :ensure t
-  :global-minor-mode t)
-
-(leaf orderless
-  :doc "Completion style for matching regexps in any order"
-  :ensure t
-  :custom ((completion-styles . '(orderless))
-           (completion-category-defaults . nil)
-           (completion-category-overrides . '((file (styles partial-completion))))))
 
 (leaf diff-hl
   :doc "highlight uncommitted changes in the fringe/margin"
@@ -219,3 +254,7 @@ if one already exists."
   :doc "modern and information-rich mode-line"
   :ensure t
   :global-minor-mode t)
+
+(leaf agent-shell
+  :doc "A native Emacs buffer to interact with LLM agents powered by ACP"
+  :ensure t)
