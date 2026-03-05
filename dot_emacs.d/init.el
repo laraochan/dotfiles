@@ -11,12 +11,9 @@
   (leaf leaf-keywords
     :ensure t
     :init
+    (leaf el-get :ensure t)
     :config
-    ;; initialize leaf-keywords.el
     (leaf-keywords-init)))
-
-;; TODO: leaf.elで管理
-(load-theme 'modus-vivendi-tritanopia t)
 
 (leaf leaf-tree
   :doc "visualize leaf.el configurations as a tree"
@@ -233,6 +230,12 @@ if one already exists."
   :global-minor-mode global-diff-hl-mode
   :hook ((magit-post-refresh-hook . diff-hl-magit-post-refresh))
   :custom ((diff-hl-disable-on-remote . t)))
+
+(leaf doom-themes
+  :doc "A megapack of themes for GNU Emacs"
+  :ensure t
+  :config
+  (load-theme 'doom-solarized-dark t))
 
 (leaf dashboard
   :doc "startup dashboard screen with recent items and shortcuts"
