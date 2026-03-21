@@ -1,0 +1,21 @@
+{
+  "agent_servers": {
+    "codex-acp": {
+      "type": "registry"
+    }
+  },
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": "Catppuccin Mocha",
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "auto_install_extensions": {
+    "catppuccin": true,
+    "codex-acp": true,
+    "toml": true
+  }
+}
