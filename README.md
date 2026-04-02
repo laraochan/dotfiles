@@ -1,1 +1,1 @@
-# laraochan's macOS dotfiles
+# laraochan's dotfiles

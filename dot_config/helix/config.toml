@@ -1,0 +1,15 @@
+theme = "material_oceanic"
+[editor]
+true-color = true
+end-of-line-diagnostics = "hint"
+[editor.inline-diagnostics]
+cursor-line = "warning"
+[editor.whitespace]
+render = "all"
+[editor.whitespace.characters]
+space = "·"
+nbsp = "⍽"
+nnbsp = "␣"
+tab = "→"
+newline = "⏎"
+tabpad = "·" # Tabs will look like "→···" (depending on tab width)

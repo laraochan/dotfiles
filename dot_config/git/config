@@ -1,5 +1,5 @@
 [user]
-	name = laraochan
-	email = me@larao.dev
+    name = laraochan
+    email = me@larao.dev
 [init]
-	defaultBranch = main
+    defaultBranch = main
