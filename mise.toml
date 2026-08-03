@@ -20,12 +20,14 @@ codex = "latest"
 yazi = "latest"
 
 [dotfiles]
-"~/.zshrc" = "home/.zshrc"
 "~/.config/btop" = "home/.config/btop"
 "~/.config/ghostty" = "home/.config/ghostty"
 "~/.config/git" = "home/.config/git"
 "~/.config/helix" = "home/.config/helix"
 "~/.config/herdr/config.toml" = "home/.config/herdr/config.toml"
 "~/.config/mise/config.toml" = "mise.toml"
-"~/.config/mise/mise.macos.toml" = "mise.macos.toml"
 "~/.config/mise/mise.linux.toml" = "mise.linux.toml"
+"~/.config/mise/mise.macos.toml" = "mise.macos.toml"
+"~/.config/starship.toml" = { source = "home/.config/starship.toml" }
+"~/.config/yazi" = { source = "home/.config/yazi" }
+"~/.zshrc" = "home/.zshrc"
