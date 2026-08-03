@@ -18,6 +18,7 @@ fd = "latest"
 bat = "latest"
 codex = "latest"
 yazi = "latest"
+lazygit = "latest"
 
 [dotfiles]
 "~/.config/btop" = "home/.config/btop"
