@@ -1,1 +1,18 @@
 theme = "nord"
+
+[editor]
+true-color = true
+cursorline = true
+bufferline = "multiple"
+end-of-line-diagnostics = "hint"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "block"
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
+
+[editor.whitespace]
+render = "all"
