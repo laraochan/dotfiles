@@ -1,7 +1,0 @@
-export MISE_AUTO_ENV=true
-eval "$(~/.local/bin/mise activate zsh)"
-eval "$(starship init zsh)"
-
-export EDITOR="hx"
-
-alias cdghq='cd $(ghq root)/$(ghq list | fzf --select-1)'

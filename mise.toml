@@ -1,0 +1,34 @@
+min_version = "2026.8.0"
+
+[settings]
+auto_env = true
+dotfiles.default_mode = "symlink"
+
+[tools]
+ghq = "latest"
+helix = "latest"
+herdr = "latest"
+node = "latest"
+pnpm = "latest"
+starship = "latest"
+github-cli = "latest"
+fzf = "latest"
+hunk = "latest"
+eza = "latest"
+zoxide = "latest"
+ripgrep = "latest"
+fd = "latest"
+bat = "latest"
+codex = "latest"
+yazi = "latest"
+
+[dotfiles]
+"~/.zshrc" = "home/.zshrc"
+"~/.config/btop" = "home/.config/btop"
+"~/.config/ghostty" = "home/.config/ghostty"
+"~/.config/git" = "home/.config/git"
+"~/.config/helix" = "home/.config/helix"
+"~/.config/herdr/config.toml" = "home/.config/herdr/config.toml"
+"~/.config/mise/config.toml" = "mise.toml"
+"~/.config/mise/mise.macos.toml" = "mise.macos.toml"
+"~/.config/mise/mise.linux.toml" = "mise.linux.toml"
