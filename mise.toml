@@ -1,5 +1,4 @@
 [settings]
-auto_env = true
 dotfiles.default_mode = "symlink"
 
 [tools]
