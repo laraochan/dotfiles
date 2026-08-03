@@ -1,0 +1,6 @@
+[user]
+	name = larao
+	email = me@larao.dev
+
+[init]
+	defaultBranch = main
