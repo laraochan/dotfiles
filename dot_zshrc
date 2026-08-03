@@ -5,4 +5,4 @@ eval "$(starship init zsh)"
 
 export EDITOR="hx"
 
-alias cdghq="cd $(ghq root)/$(ghq list | fzf --select-1)"
+alias cdghq='cd $(ghq root)/$(ghq list | fzf --select-1)'
