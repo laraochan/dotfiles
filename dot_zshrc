@@ -1,4 +1,3 @@
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 export MISE_AUTO_ENV=true
 eval "$(~/.local/bin/mise activate zsh)"
 eval "$(starship init zsh)"
