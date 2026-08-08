@@ -33,6 +33,8 @@ alias yz="yazi"
 alias lg="lazygit"
 alias bp="btop"
 alias hr="herdr"
+alias ll="eza --long --git --icons=auto"
+alias la="eza --long --all --git --icons=auto"
 
 cdghq() {
   local repo
