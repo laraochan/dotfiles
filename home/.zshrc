@@ -4,7 +4,14 @@ eval "$(starship init zsh)"
 
 export EDITOR="hx"
 
-alias cdghq='cd $(ghq root)/$(ghq list | fzf --select-1)'
+alias lg="lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/themes/rose-pine.yml""
+alias yz="yazi"
+
+cdghq() {
+  local repo
+  repo=$(ghq list | fzf --select-1) || return
+  cd "$(ghq root)/$repo"
+}
 
 dotadd() {
   local target="${1:A}"

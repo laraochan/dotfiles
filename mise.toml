@@ -26,6 +26,7 @@ lazygit = "latest"
 "~/.config/git" = "home/.config/git"
 "~/.config/helix" = "home/.config/helix"
 "~/.config/herdr/config.toml" = "home/.config/herdr/config.toml"
+"~/.config/lazygit" = { source = "home/.config/lazygit" }
 "~/.config/mise/config.toml" = "mise.toml"
 "~/.config/mise/mise.linux.toml" = "mise.linux.toml"
 "~/.config/mise/mise.macos.toml" = "mise.macos.toml"
