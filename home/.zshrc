@@ -1,7 +1,5 @@
 export MISE_AUTO_ENV=true
 eval "$(~/.local/bin/mise activate zsh)"
-eval "$(starship init zsh)"
-
 export EDITOR="hx"
 
 HISTFILE="$HOME/.zsh_history"
@@ -14,6 +12,7 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
+
 setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
@@ -24,10 +23,12 @@ autoload -Uz compinit
 compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
 bindkey -e
 source <(fzf --zsh)
+
 eval "$(zoxide init zsh)"
+
+eval "$(starship init zsh)"
 
 alias yz="yazi"
 alias lg="lazygit"
