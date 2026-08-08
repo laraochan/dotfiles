@@ -52,3 +52,5 @@ dotadd() {
     --source "$source" \
     "$target"
 }
+
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
