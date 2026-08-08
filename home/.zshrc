@@ -21,6 +21,7 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 bindkey -e
+source <(fzf --zsh)
 
 alias yz="yazi"
 alias lg="lazygit"
