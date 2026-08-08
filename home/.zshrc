@@ -4,8 +4,10 @@ eval "$(starship init zsh)"
 
 export EDITOR="hx"
 
-alias lg="lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/themes/rose-pine.yml""
 alias yz="yazi"
+alias lg="lazygit"
+alias bp="btop"
+alias hr="herdr"
 
 cdghq() {
   local repo
