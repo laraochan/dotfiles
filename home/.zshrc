@@ -22,6 +22,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 bindkey -e
 source <(fzf --zsh)
+eval "$(zoxide init zsh)"
 
 alias yz="yazi"
 alias lg="lazygit"
