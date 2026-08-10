@@ -21,6 +21,7 @@ yazi = "latest"
 lazygit = "latest"
 
 [dotfiles]
+"~/.agents" = { source = "home/.agents" }
 "~/.config/btop" = "home/.config/btop"
 "~/.config/ghostty" = "home/.config/ghostty"
 "~/.config/git" = "home/.config/git"
