@@ -19,6 +19,7 @@ bat = "latest"
 codex = "latest"
 yazi = "latest"
 lazygit = "latest"
+neovim = "latest"
 
 [dotfiles]
 "~/.agents" = { source = "home/.agents" }
