@@ -36,6 +36,7 @@ cmake = "latest"
 "~/.config/mise/config.toml" = "mise.toml"
 "~/.config/mise/mise.linux.toml" = "mise.linux.toml"
 "~/.config/mise/mise.macos.toml" = "mise.macos.toml"
+"~/.config/nvim" = { source = "home/.config/nvim" }
 "~/.config/starship.toml" = { source = "home/.config/starship.toml" }
 "~/.config/yazi" = { source = "home/.config/yazi" }
 "~/.zshrc" = "home/.zshrc"
