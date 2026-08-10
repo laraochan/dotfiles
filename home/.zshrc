@@ -44,7 +44,7 @@ cdghq() {
 }
 
 dotadd() {
-  local target="${1:A}"
+  local target="${1:a}"
   local config="${HOME}/.config/mise/config.toml"
   local dotfiles_dir="${config:A:h}"
   local source="home/${target#$HOME/}"
@@ -52,6 +52,8 @@ dotadd() {
   mise -C "$dotfiles_dir" dotfiles add \
     --source "$source" \
     "$target"
+
+  mise -C "$dotfiles_dir" dotfiles apply "$target"
 }
 
 [[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
