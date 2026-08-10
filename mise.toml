@@ -40,6 +40,3 @@ cmake = "latest"
 "~/.config/starship.toml" = { source = "home/.config/starship.toml" }
 "~/.config/yazi" = { source = "home/.config/yazi" }
 "~/.zshrc" = "home/.zshrc"
-
-[bootstrap.packages]
-"brew:openssl@3" = "latest"
