@@ -20,6 +20,10 @@ codex = "latest"
 yazi = "latest"
 lazygit = "latest"
 neovim = "latest"
+"github:mickael-menu/zk" = "latest"
+rust = "latest"
+cmake = "latest"
+"conda:btop" = "latest"
 
 [dotfiles]
 "~/.agents" = { source = "home/.agents" }
@@ -35,3 +39,6 @@ neovim = "latest"
 "~/.config/starship.toml" = { source = "home/.config/starship.toml" }
 "~/.config/yazi" = { source = "home/.config/yazi" }
 "~/.zshrc" = "home/.zshrc"
+
+[bootstrap.packages]
+"brew:openssl@3" = "latest"

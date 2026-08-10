@@ -1,4 +1,3 @@
 [bootstrap.packages]
-"brew:btop" = "latest"
 "brew-cask:ghostty" = "latest"
 "brew-cask:google-chrome" = "latest"
