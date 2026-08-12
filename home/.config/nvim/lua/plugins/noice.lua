@@ -1,4 +1,4 @@
-{
+return {
   "folke/noice.nvim",
   opts = function(_, opts)
     table.insert(opts.routes, {
