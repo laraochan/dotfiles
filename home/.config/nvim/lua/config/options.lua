@@ -4,6 +4,8 @@
 
 vim.g.lazyvim_prettier_needs_config = true
 
+vim.g.lazyvim_php_lsp = "intelephense"
+
 if vim.env.SSH_CONNECTION then
   vim.opt.clipboard = "unnamedplus"
   vim.g.clipboard = "osc52"
