@@ -3,3 +3,8 @@
 -- Add any additional options here
 
 vim.g.lazyvim_prettier_needs_config = true
+
+if vim.env.SSH_CONNECTION then
+  vim.opt.clipboard = "unnamedplus"
+  vim.g.clipboard = "osc52"
+end
