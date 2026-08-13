@@ -30,8 +30,6 @@ eval "$(zoxide init zsh)"
 
 eval "$(starship init zsh)"
 
-alias vi="nvim"
-alias vim="nvim"
 alias yz="yazi"
 alias lg="lazygit"
 alias gu="gitui"
