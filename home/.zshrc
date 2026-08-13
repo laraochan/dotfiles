@@ -1,6 +1,6 @@
 export MISE_AUTO_ENV=true
 eval "$(~/.local/bin/mise activate zsh)"
-export EDITOR="nvim"
+export EDITOR="hx"
 
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
@@ -34,6 +34,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias yz="yazi"
 alias lg="lazygit"
+alias gu="gitui"
 alias bp="btop"
 alias hr="herdr"
 alias ll="eza --long --git --icons=auto"

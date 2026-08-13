@@ -24,6 +24,7 @@ neovim = "latest"
 rust = "latest"
 cmake = "latest"
 "conda:btop" = "latest"
+gitui = "latest"
 
 [dotfiles]
 "~/.agents" = { source = "home/.agents" }
