@@ -1,4 +1,5 @@
 [bootstrap.packages]
 "brew:openssl@3" = "latest"
+"brew-cask:font-hackgen-nerd" = "latest"
 "brew-cask:ghostty" = "latest"
 "brew-cask:google-chrome" = "latest"

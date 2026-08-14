@@ -3,3 +3,4 @@ theme = Rose Pine
 macos-option-as-alt = true
 shell-integration-features = no-cursor
 cursor-style = bar
+font-family = HackGen35 Console NF
