@@ -29,6 +29,32 @@ glow = "latest"
 "npm:@tailwindcss/language-server" = "latest"
 "npm:@astrojs/language-server" = "latest"
 "npm:intelephense" = "latest"
+tombi = "latest"
+
+[tasks.format]
+description = "Format TOML files"
+run = '''
+cd "$MISE_TASK_DIR"
+fd -H -e toml -E .git -X tombi format
+'''
+
+[tasks."format:check"]
+description = "Check TOML formatting"
+run = '''
+cd "$MISE_TASK_DIR"
+fd -H -e toml -E .git -X tombi format --check
+'''
+
+[tasks.lint]
+description = "Lint TOML files"
+run = '''
+cd "$MISE_TASK_DIR"
+fd -H -e toml -E .git -X tombi lint
+'''
+
+[tasks.check]
+description = "Run all checks"
+depends = ["format:check", "lint"]
 
 [dotfiles]
 "~/.agents" = { source = "home/.agents" }
