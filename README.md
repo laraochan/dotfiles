@@ -1,3 +1,8 @@
+# larao's dotfiles
+
+## How to setup
+
+```sh
 # Install mise
 curl https://mise.run | sh
 eval "$(~/.local/bin/mise activate zsh)"
@@ -18,3 +23,4 @@ mise bootstrap dotfiles apply --yes
 
 # Load the installed shell configuration
 source ~/.zshrc
+```
