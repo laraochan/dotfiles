@@ -24,6 +24,11 @@ rust = "latest"
 cmake = "latest"
 gitui = "latest"
 glow = "latest"
+"npm:typescript" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:@tailwindcss/language-server" = "latest"
+"npm:@astrojs/language-server" = "latest"
+"npm:intelephense" = "latest"
 
 [dotfiles]
 "~/.agents" = { source = "home/.agents" }
