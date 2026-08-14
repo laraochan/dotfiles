@@ -22,13 +22,11 @@ lazygit = "latest"
 "github:mickael-menu/zk" = "latest"
 rust = "latest"
 cmake = "latest"
-"conda:btop" = "latest"
 gitui = "latest"
 glow = "latest"
 
 [dotfiles]
 "~/.agents" = { source = "home/.agents" }
-"~/.config/btop" = "home/.config/btop"
 "~/.config/ghostty" = "home/.config/ghostty"
 "~/.config/git" = "home/.config/git"
 "~/.config/helix" = "home/.config/helix"
