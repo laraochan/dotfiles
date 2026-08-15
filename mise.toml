@@ -30,6 +30,7 @@ glow = "latest"
 "npm:@astrojs/language-server" = "latest"
 "npm:intelephense" = "latest"
 tombi = "latest"
+neovim = "latest"
 
 [dotfiles]
 "~/.agents" = { source = "home/.agents" }
