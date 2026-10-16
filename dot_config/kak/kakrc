@@ -1,0 +1,28 @@
+evaluate-commands %sh{
+    # 1. macOS (pbcopy が存在する場合)
+    if command -v pbcopy >/dev/null 2>&1; then
+        echo "map global user y '<a-|> pbcopy<ret>' -docstring 'Copy to macOS clipboard'"
+        echo "map global user p '<a-!> pbpaste<ret>' -docstring 'Paste from macOS clipboard'"
+
+    # 2. SSH接続時 (OSC 52 を使用)
+    elif [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ]; then
+        # awkのエスケープを避けるため、shのヒアドキュメント形式で安全に出力
+        cat << 'EOF'
+        map global user y '<a-|> base64 | tr -d "\n" | awk "{print \"\033]52;c;\" \$0 \"\007\"}" > /dev/tty<ret>' -docstring 'Copy via OSC 52'
+EOF
+
+    # 3. Linux ローカル (Wayland環境)
+    elif command -v wl-copy >/dev/null 2>&1; then
+        echo "map global user y '<a-|> wl-copy<ret>' -docstring 'Copy to Wayland clipboard'"
+        echo "map global user p '<a-!> wl-paste<ret>' -docstring 'Paste from Wayland clipboard'"
+
+    # 4. Linux ローカル (X11環境)
+    elif command -v xsel >/dev/null 2>&1; then
+        echo "map global user y '<a-|> xsel --input --clipboard<ret>' -docstring 'Copy to X11 clipboard'"
+        echo "map global user p '<a-!> xsel --output --clipboard<ret>' -docstring 'Paste from X11 clipboard'"
+    elif command -v xclip >/dev/null 2>&1; then
+        echo "map global user y '<a-|> xclip -selection clipboard<ret>' -docstring 'Copy to X11 clipboard'"
+        echo "map global user p '<a-!> xclip -selection clipboard -o<ret>' -docstring 'Paste from X11 clipboard'"
+    fi
+}
+
