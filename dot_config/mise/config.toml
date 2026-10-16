@@ -12,7 +12,3 @@ starship = "latest"
 tmux = "latest"
 yazi = "latest"
 zoxide = "latest"
-{{ if eq .chezmoi.os "linux" }}
-# Current upstream btop binaries are Linux-only; macOS uses Homebrew.
-btop = "latest"
-{{ end -}}
