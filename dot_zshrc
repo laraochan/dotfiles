@@ -1,0 +1,52 @@
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+
+# Environment
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR="kak"
+export VISUAL="$EDITOR"
+
+# History
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY
+
+# Options
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP
+
+# Completion
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# mise
+eval "$(mise activate zsh)"
+
+# Sheldon
+eval "$(sheldon source)"
+
+# fzf
+export FZF_DEFAULT_OPTS="
+  --color=fg:#797593,bg:#faf4ed,hl:#d7827e
+  --color=fg+:#575279,bg+:#f2e9e1,hl+:#d7827e
+  --color=border:#dfdad9,header:#286983,gutter:#faf4ed
+  --color=spinner:#ea9d34,info:#56949f
+  --color=pointer:#907aa9,marker:#b4637a,prompt:#797593"
+
+source <(fzf --zsh)
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# Starship
+eval "$(starship init zsh)"
