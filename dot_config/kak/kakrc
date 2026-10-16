@@ -1,28 +1,26 @@
 evaluate-commands %sh{
-    # 1. macOS (pbcopy が存在する場合)
-    if command -v pbcopy >/dev/null 2>&1; then
-        echo "map global user y '<a-|> pbcopy<ret>' -docstring 'Copy to macOS clipboard'"
-        echo "map global user p '<a-!> pbpaste<ret>' -docstring 'Paste from macOS clipboard'"
-
-    # 2. SSH接続時 (OSC 52 を使用)
-    elif [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ]; then
-        # awkのエスケープを避けるため、shのヒアドキュメント形式で安全に出力
+    # SSH must take priority over clipboard tools on the remote host.
+    if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
         cat << 'EOF'
-        map global user y '<a-|> base64 | tr -d "\n" | awk "{print \"\033]52;c;\" \$0 \"\007\"}" > /dev/tty<ret>' -docstring 'Copy via OSC 52'
+        map -docstring 'Copy via OSC 52' global user y '<a-|> { printf "\033]52;c;"; base64 | tr -d "\n"; printf "\007"; } > /dev/tty<ret>'
 EOF
+
+    elif command -v pbcopy >/dev/null 2>&1; then
+        echo "map -docstring 'Copy to macOS clipboard' global user y '<a-|> pbcopy<ret>'"
+        echo "map -docstring 'Paste from macOS clipboard' global user p '<a-!> pbpaste<ret>'"
 
     # 3. Linux ローカル (Wayland環境)
     elif command -v wl-copy >/dev/null 2>&1; then
-        echo "map global user y '<a-|> wl-copy<ret>' -docstring 'Copy to Wayland clipboard'"
-        echo "map global user p '<a-!> wl-paste<ret>' -docstring 'Paste from Wayland clipboard'"
+        echo "map -docstring 'Copy to Wayland clipboard' global user y '<a-|> wl-copy<ret>'"
+        echo "map -docstring 'Paste from Wayland clipboard' global user p '<a-!> wl-paste<ret>'"
 
     # 4. Linux ローカル (X11環境)
     elif command -v xsel >/dev/null 2>&1; then
-        echo "map global user y '<a-|> xsel --input --clipboard<ret>' -docstring 'Copy to X11 clipboard'"
-        echo "map global user p '<a-!> xsel --output --clipboard<ret>' -docstring 'Paste from X11 clipboard'"
+        echo "map -docstring 'Copy to X11 clipboard' global user y '<a-|> xsel --input --clipboard<ret>'"
+        echo "map -docstring 'Paste from X11 clipboard' global user p '<a-!> xsel --output --clipboard<ret>'"
     elif command -v xclip >/dev/null 2>&1; then
-        echo "map global user y '<a-|> xclip -selection clipboard<ret>' -docstring 'Copy to X11 clipboard'"
-        echo "map global user p '<a-!> xclip -selection clipboard -o<ret>' -docstring 'Paste from X11 clipboard'"
+        echo "map -docstring 'Copy to X11 clipboard' global user y '<a-|> xclip -selection clipboard<ret>'"
+        echo "map -docstring 'Paste from X11 clipboard' global user p '<a-!> xclip -selection clipboard -o<ret>'"
     fi
 }
 
