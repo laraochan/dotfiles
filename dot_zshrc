@@ -1,10 +1,16 @@
 # Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+if (( $+commands[brew] )); then
+  eval "$(brew shellenv zsh)"
+elif [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv zsh)"
+elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+fi
 
 # Environment
 export PATH="$HOME/.local/bin:$PATH"
-export EDITOR="kak"
-export VISUAL="$EDITOR"
 
 # History
 HISTFILE="$HOME/.zsh_history"
@@ -30,10 +36,22 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # mise
-eval "$(mise activate zsh)"
+if (( $+commands[mise] )); then
+  eval "$(mise env --quiet -s zsh)"
+  eval "$(mise activate zsh)"
+fi
+
+if (( $+commands[kak] )); then
+  export EDITOR="kak"
+else
+  export EDITOR="vi"
+fi
+export VISUAL="$EDITOR"
 
 # Sheldon
-eval "$(sheldon source)"
+if (( $+commands[sheldon] )); then
+  eval "$(sheldon source)"
+fi
 
 # fzf
 export FZF_DEFAULT_OPTS="
@@ -43,10 +61,16 @@ export FZF_DEFAULT_OPTS="
   --color=spinner:#ea9d34,info:#56949f
   --color=pointer:#907aa9,marker:#b4637a,prompt:#797593"
 
-source <(fzf --zsh)
+if (( $+commands[fzf] )) && fzf --zsh >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 # zoxide
-eval "$(zoxide init zsh)"
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
 
 # Starship
-eval "$(starship init zsh)"
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+fi

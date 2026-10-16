@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+
+export PATH="$HOME/.local/bin:$PATH"
+{{ if eq .chezmoi.os "darwin" }}
+{{ template "brew-shellenv.sh" . }}
+if ! command -v mise >/dev/null 2>&1; then
+  brew install mise
+fi
+{{ else if eq .chezmoi.os "linux" }}
+if ! command -v mise >/dev/null 2>&1; then
+  installer=$(mktemp)
+  trap 'rm -f "$installer"' EXIT
+  curl -fsSL https://mise.run -o "$installer"
+  MISE_INSTALL_PATH="$HOME/.local/bin/mise" sh "$installer"
+fi
+{{ end -}}

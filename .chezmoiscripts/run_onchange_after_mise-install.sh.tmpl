@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+# mise config checksum: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
+export PATH="$HOME/.local/bin:$PATH"
+{{ if eq .chezmoi.os "darwin" }}
+{{ template "brew-shellenv.sh" . }}
+{{ end }}
+# Avoid installing tools from a project in the caller's working directory.
+cd "$HOME"
+mise install --yes

@@ -1,0 +1,18 @@
+[tools]
+node = "lts"
+pnpm = "latest"
+bat = "latest"
+fd = "latest"
+fzf = "latest"
+gh = "latest"
+jq = "latest"
+ripgrep = "latest"
+sheldon = "latest"
+starship = "latest"
+tmux = "latest"
+yazi = "latest"
+zoxide = "latest"
+{{ if eq .chezmoi.os "linux" }}
+# Current upstream btop binaries are Linux-only; macOS uses Homebrew.
+btop = "latest"
+{{ end -}}
